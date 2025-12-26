@@ -1,0 +1,512 @@
+/* 🎬 KINEMATIK BOOKING PAGE */
+
+.main {
+    min-height: 100vh;
+    background: #0d0d0d;
+}
+
+/* ==================== HERO ==================== */
+.hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.videoContainer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.bgVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.videoOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(26, 10, 46, 0.9) 0%,
+            rgba(74, 44, 109, 0.8) 50%,
+            rgba(26, 10, 46, 0.9) 100%);
+}
+
+.heroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.heroIcon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    padding: 20px;
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.heroIcon svg {
+    width: 100%;
+    height: 100%;
+    color: #ffd700;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.heroTitle {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #ffd700, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.heroDescription {
+    font-size: 20px;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ==================== VENUE SELECTION ==================== */
+.venueSelection {
+    padding: 80px 0;
+    background: linear-gradient(180deg, #0d0d0d 0%, #1a1a2e 100%);
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.sectionIcon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    padding: 15px;
+    background: rgba(255, 107, 157, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 107, 157, 0.4);
+}
+
+.sectionIcon svg {
+    width: 100%;
+    height: 100%;
+    color: #ff6b9d;
+}
+
+.sectionHeader h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+}
+
+.venueGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.venueCard {
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: left;
+}
+
+.venueCard:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 107, 157, 0.5);
+}
+
+.venueCard.selected {
+    border-color: #ffd700;
+    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+}
+
+.venueImage {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.venueImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.venueCard:hover .venueImage img {
+    transform: scale(1.1);
+}
+
+.selectedBadge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: scaleIn 0.3s ease;
+}
+
+.selectedBadge svg {
+    width: 20px;
+    height: 20px;
+    color: #4a2c6d;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.venueInfo {
+    padding: 20px;
+}
+
+.venueInfo h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.venueDetails {
+    display: flex;
+    gap: 16px;
+}
+
+.venueDetails span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.venueDetails svg {
+    width: 16px;
+    height: 16px;
+    color: #ff6b9d;
+}
+
+/* ==================== FORM SECTION ==================== */
+.formSection {
+    padding: 80px 0;
+    background: #0d0d0d;
+}
+
+.formWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(40, 20, 60, 0.9));
+    border-radius: 32px;
+    padding: 48px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+}
+
+.formHeader {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.formIcon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 157, 0.2));
+    border-radius: 50%;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+}
+
+.formIcon svg {
+    width: 100%;
+    height: 100%;
+    color: #ffd700;
+}
+
+.formHeader h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.formHeader p {
+    font-size: 16px;
+    color: #ff6b9d;
+    font-weight: 600;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formGroup label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}
+
+.formGroup label svg {
+    width: 18px;
+    height: 18px;
+    color: #ffd700;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 18px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    font-size: 16px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.05);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+}
+
+.formGroup input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.submitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 22px 40px;
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    color: #4a2c6d;
+    font-size: 18px;
+    font-weight: 800;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4);
+    margin-top: 16px;
+}
+
+.submitBtn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.submitBtn:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 25px 70px rgba(255, 215, 0, 0.5);
+}
+
+/* ==================== SUCCESS ==================== */
+.successSection {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a0a2e, #4a2c6d);
+    padding: 40px 20px;
+}
+
+.successContent {
+    text-align: center;
+    max-width: 500px;
+}
+
+.successIcon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 32px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+    border-radius: 50%;
+    border: 3px solid rgba(34, 197, 94, 0.5);
+    animation: successPulse 2s ease-in-out infinite;
+}
+
+.successIcon svg {
+    width: 100%;
+    height: 100%;
+    color: #22c55e;
+}
+
+@keyframes successPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px 10px rgba(34, 197, 94, 0.2);
+    }
+}
+
+.successContent h1 {
+    font-size: 36px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.successContent>p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 32px;
+}
+
+.successDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.successItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.successItem svg {
+    width: 22px;
+    height: 22px;
+    color: #ffd700;
+}
+
+.homeBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #ff6b9d, #a855c7);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 50px rgba(255, 107, 157, 0.4);
+}
+
+.homeBtn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.homeBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(255, 107, 157, 0.5);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .venueGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 32px;
+    }
+
+    .heroDescription {
+        font-size: 16px;
+    }
+
+    .venueGrid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .formWrapper {
+        padding: 32px 24px;
+        margin: 0 16px;
+    }
+
+    .formHeader h2 {
+        font-size: 24px;
+    }
+
+    .sectionHeader h2 {
+        font-size: 28px;
+    }
+}

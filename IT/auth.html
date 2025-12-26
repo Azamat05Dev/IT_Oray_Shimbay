@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT Center - Talaba kabinetiga kirish va ro'yxatdan o'tish">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-weight='bold' font-family='Arial'>it</text></svg>">
+  <title>Kirish | IT Center Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .auth-header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+    .auth-header p { color: #94a3b8; font-size: 0.9rem; }
+
+    /* Tabs */
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 6px;
+      border-radius: 12px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .auth-tab:hover { color: #e5e7eb; }
+    .auth-tab.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+    }
+
+    /* Panels */
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Form */
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      color: #f1f5f9;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group input {
+      padding-right: 50px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 4px;
+    }
+
+    .toggle-password:hover { color: #94a3b8; }
+
+    /* Password strength */
+    .password-strength {
+      margin-top: 8px;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .strength-fill.weak { width: 25%; background: #ef4444; }
+    .strength-fill.fair { width: 50%; background: #f59e0b; }
+    .strength-fill.good { width: 75%; background: #10b981; }
+    .strength-fill.strong { width: 100%; background: #22c55e; }
+
+    .strength-text {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-google {
+      width: 100%;
+      padding: 14px;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      color: #1f2937;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .btn-google:hover {
+      background: #f8fafc;
+      border-color: #3b82f6;
+    }
+
+    .btn-google img { width: 20px; height: 20px; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 20px 0;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(148, 163, 184, 0.2);
+    }
+
+    .msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .msg-success { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; }
+    .msg-error { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+    .msg-info { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
+
+    .code-input {
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 12px;
+      font-weight: 600;
+    }
+
+    .timer { text-align: center; margin: 16px 0; color: #94a3b8; }
+    .timer span { color: #f59e0b; font-weight: 600; }
+
+    .resend-btn {
+      background: none;
+      border: none;
+      color: #60a5fa;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      display: block;
+      width: 100%;
+    }
+
+    .resend-btn:disabled { color: #64748b; cursor: not-allowed; }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .check input { width: 18px; height: 18px; accent-color: #3b82f6; }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0;
+    }
+
+    .forgot-link {
+      color: #60a5fa;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .forgot-link:hover { text-decoration: underline; }
+
+    .step { display: none; }
+    .step.active { display: block; }
+
+    /* Login activity badge */
+    .login-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #10b981;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="bg">
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow--a"></div>
+    <div class="bg-glow bg-glow--b"></div>
+  </div>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">it</div>
+        <h1>IT Center Portal</h1>
+        <p>Talaba kabineti</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Kirish</button>
+        <button class="auth-tab" data-tab="register">Ro'yxatdan o'tish</button>
+      </div>
+
+      <!-- ============== LOGIN PANEL ============== -->
+      <div class="auth-panel active" id="panel-login">
+        <!-- Google Login -->
+        <button class="btn-google" id="google-login-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google bilan kirish
+        </button>
+
+        <form id="login-form">
+          <div class="field">
+            <label>👤 Login (Email, Telefon yoki Username)</label>
+            <input type="text" id="login-identifier" placeholder="email / telefon / username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label>🔐 Parol</label>
+            <div class="input-group">
+              <input type="password" id="login-password" placeholder="Parolingiz" autocomplete="current-password" required>
+              <button type="button" class="toggle-password" data-target="login-password">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="check">
+              <input type="checkbox" id="remember-me">
+              <span>Eslab qolish</span>
+            </label>
+            <a href="#" class="forgot-link" id="forgot-link">Parolni unutdim</a>
+          </div>
+
+          <button type="submit" class="btn-primary">🚀 Kirish</button>
+          <div id="login-msg"></div>
+        </form>
+      </div>
+
+      <!-- ============== REGISTER PANEL ============== -->
+      <div class="auth-panel" id="panel-register">
+        <!-- Step 1: Form -->
+        <div class="step active" id="reg-step-1">
+          <button class="btn-google" id="google-register-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Google bilan ro'yxatdan o'tish
+          </button>
+
+          <div class="divider">yoki email bilan</div>
+
+          <form id="register-form">
+            <div class="field">
+              <label>To'liq ism-familiya *</label>
+              <input type="text" id="reg-name" required placeholder="Ism Familiya">
+            </div>
+            <div class="field">
+              <label>📧 Gmail manzil *</label>
+              <input type="email" id="reg-email" required placeholder="example@gmail.com">
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label>Tug'ilgan sana *</label>
+                <input type="date" id="reg-birthdate" required>
+              </div>
+              <div class="field">
+                <label>Yo'nalish *</label>
+                <select id="reg-course" required>
+                  <option value="">Tanlang</option>
+                  <option value="1">Frontend</option>
+                  <option value="2">Python</option>
+                  <option value="3">Kids IT</option>
+                  <option value="4">UI/UX</option>
+                  <option value="5">Mobile</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>🔐 Parol *</label>
+              <div class="input-group">
+                <input type="password" id="reg-password" required minlength="6" placeholder="Kamida 6 belgi">
+                <button type="button" class="toggle-password" data-target="reg-password">👁️</button>
+              </div>
+              <div class="password-strength" id="password-strength">
+                <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+                <span class="strength-text" id="strength-text"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label>🔐 Parolni tasdiqlang *</label>
+              <div class="input-group">
+                <input type="password" id="reg-password2" required placeholder="Qayta kiriting">
+                <button type="button" class="toggle-password" data-target="reg-password2">👁️</button>
+              </div>
+            </div>
+            <label class="check" style="margin: 16px 0;">
+              <input type="checkbox" id="reg-agree" required>
+              <span>Email orqali tasdiqlashga roziman</span>
+            </label>
+            <button type="submit" class="btn-primary" id="reg-submit-btn">📧 Tasdiqlash kodini yuborish</button>
+            <div id="reg-step1-msg"></div>
+          </form>
+        </div>
+
+        <!-- Step 2: Verify -->
+        <div class="step" id="reg-step-2">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 3rem;">📧</div>
+            <p style="color: #94a3b8;">Kod yuborildi:</p>
+            <p style="color: #60a5fa; font-weight: 600;" id="sent-email"></p>
+          </div>
+          <div class="field">
+            <label>6 xonali tasdiqlash kodi</label>
+            <input type="text" id="verify-code" class="code-input" maxlength="6" placeholder="______">
+          </div>
+          <div class="timer">Kod <span id="timer-display">10:00</span> ichida amal qiladi</div>
+          <button type="button" class="btn-primary" id="verify-btn">✅ Tasdiqlash</button>
+          <button type="button" class="resend-btn" id="resend-btn" disabled>🔄 Qayta yuborish (<span id="resend-timer">60</span>s)</button>
+          <div id="reg-step2-msg"></div>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div class="step" id="reg-step-3">
+          <div style="text-align: center;">
+            <div style="font-size: 4rem;">🎉</div>
+            <h2 style="margin: 16px 0;">Muvaffaqiyatli!</h2>
+            <p style="color: #94a3b8; margin-bottom: 24px;">Ro'yxatdan o'tdingiz! Kabinetga kirishingiz mumkin.</p>
+            <button type="button" class="btn-primary" onclick="window.location.href='student/index.html'">🚀 Kabinetga kirish</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== FORGOT PASSWORD PANEL ============== -->
+      <div class="auth-panel" id="panel-forgot">
+        <div class="step active" id="forgot-step-1">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 3rem;">🔑</div>
+            <h2>Parolni tiklash</h2>
+            <p style="color: #94a3b8;">Email manzilingizni kiriting</p>
+          </div>
+          <form id="forgot-form">
+            <div class="field">
+              <label>📧 Email manzil</label>
+              <input type="email" id="forgot-email" required placeholder="example@gmail.com">
+            </div>
+            <button type="submit" class="btn-primary">📧 Kod yuborish</button>
+            <div id="forgot-step1-msg"></div>
+          </form>
+          <button type="button" class="resend-btn" onclick="showPanel('login')" style="margin-top: 16px;">← Kirishga qaytish</button>
+        </div>
+
+        <div class="step" id="forgot-step-2">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 3rem;">📧</div>
+            <p style="color: #94a3b8;">Kod yuborildi:</p>
+            <p style="color: #60a5fa; font-weight: 600;" id="forgot-sent-email"></p>
+          </div>
+          <div class="field">
+            <label>6 xonali tasdiqlash kodi</label>
+            <input type="text" id="forgot-code" class="code-input" maxlength="6" placeholder="______">
+          </div>
+          <button type="button" class="btn-primary" id="forgot-verify-btn">✅ Tasdiqlash</button>
+          <div id="forgot-step2-msg"></div>
+        </div>
+
+        <div class="step" id="forgot-step-3">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 3rem;">🔐</div>
+            <h2>Yangi parol</h2>
+          </div>
+          <form id="new-password-form">
+            <div class="field">
+              <label>Yangi parol</label>
+              <div class="input-group">
+                <input type="password" id="new-password" required minlength="6" placeholder="Kamida 6 belgi">
+                <button type="button" class="toggle-password" data-target="new-password">👁️</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Parolni tasdiqlang</label>
+              <div class="input-group">
+                <input type="password" id="new-password2" required placeholder="Qayta kiriting">
+                <button type="button" class="toggle-password" data-target="new-password2">👁️</button>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">✅ Parolni yangilash</button>
+            <div id="forgot-step3-msg"></div>
+          </form>
+        </div>
+
+        <div class="step" id="forgot-step-4">
+          <div style="text-align: center;">
+            <div style="font-size: 4rem;">✅</div>
+            <h2 style="margin: 16px 0;">Parol yangilandi!</h2>
+            <p style="color: #94a3b8; margin-bottom: 24px;">Endi yangi parol bilan kirishingiz mumkin.</p>
+            <button type="button" class="btn-primary" onclick="showPanel('login')">🚀 Kirish</button>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-link">← Bosh sahifaga qaytish</a>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script>
+    const API_URL = 'http://localhost:3001/api';
+    let formData = {};
+    let forgotEmail = '';
+    let timerInterval = null;
+
+    // ========== TAB SWITCHING ==========
+    function showPanel(panelName) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+      
+      const tab = document.querySelector(`[data-tab="${panelName}"]`);
+      if (tab) tab.classList.add('active');
+      
+      document.getElementById('panel-' + panelName).classList.add('active');
+    }
+
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => showPanel(tab.dataset.tab));
+    });
+
+    // URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'register') showPanel('register');
+
+    // ========== PASSWORD VISIBILITY TOGGLE ==========
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById(btn.dataset.target);
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.textContent = '🙈';
+        } else {
+          input.type = 'password';
+          btn.textContent = '👁️';
+        }
+      });
+    });
+
+    // ========== PASSWORD STRENGTH ==========
+    document.getElementById('reg-password').addEventListener('input', (e) => {
+      const password = e.target.value;
+      const fill = document.getElementById('strength-fill');
+      const text = document.getElementById('strength-text');
+
+      let strength = 0;
+      if (password.length >= 6) strength++;
+      if (password.length >= 8) strength++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      if (/\d/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+      fill.className = 'strength-fill';
+      if (strength <= 1) { fill.classList.add('weak'); text.textContent = 'Juda zaif'; }
+      else if (strength === 2) { fill.classList.add('fair'); text.textContent = 'Zaif'; }
+      else if (strength === 3) { fill.classList.add('good'); text.textContent = 'Yaxshi'; }
+      else { fill.classList.add('strong'); text.textContent = 'Juda kuchli 💪'; }
+    });
+
+    // ========== FORGOT PASSWORD LINK ==========
+    document.getElementById('forgot-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      showPanel('forgot');
+    });
+
+    // ========== REMEMBER ME - Load saved email ==========
+    const savedEmail = localStorage.getItem('remembered_email');
+    if (savedEmail) {
+      document.getElementById('login-email').value = savedEmail;
+      document.getElementById('remember-me').checked = true;
+    }
+
+    // ========== UNIFIED LOGIN ==========
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgEl = document.getElementById('login-msg');
+      const identifier = document.getElementById('login-identifier').value.trim();
+      const password = document.getElementById('login-password').value;
+      const rememberMe = document.getElementById('remember-me').checked;
+      
+      if (!identifier || !password) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Login va parolni kiriting';
+        return;
+      }
+
+      const db = window.ITCenterDB;
+      if (!db) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Database yuklanmadi';
+        return;
+      }
+
+      // Show loading
+      msgEl.className = 'msg msg-info';
+      msgEl.textContent = '⏳ Tekshirilmoqda...';
+
+      // Remember login
+      if (rememberMe) {
+        localStorage.setItem('remembered_login', identifier);
+      } else {
+        localStorage.removeItem('remembered_login');
+      }
+
+      // Normalize identifier for comparison
+      const normalizedId = identifier.toLowerCase().replace(/\s/g, '');
+      const phoneClean = identifier.replace(/\D/g, '');
+
+      // ===== CHECK ADMIN USERS FIRST =====
+      const admins = db.adminUsers?.getAll ? db.adminUsers.getAll() : (db.data?.adminUsers || []);
+      const hashedPw = await db.hashPassword(password);
+      const admin = admins.find(a => 
+        (a.username?.toLowerCase() === normalizedId ||
+        a.email?.toLowerCase() === normalizedId ||
+        (a.phone && a.phone.replace(/\D/g, '').includes(phoneClean.slice(-9)))) &&
+        a.password === hashedPw
+      );
+
+      if (admin) {
+        // Admin login success
+        const adminSession = {
+          adminId: admin.id,
+          adminName: admin.fullName,
+          username: admin.username,
+          role: admin.role,
+          loginTime: Date.now()
+        };
+        localStorage.setItem('admin_session', JSON.stringify(adminSession));
+        db.logActivity('admin_login', admin.fullName, 'Admin panelga kirdi');
+
+        msgEl.className = 'msg msg-success';
+        msgEl.textContent = '✅ Admin! Yo\'naltirilmoqda...';
+        setTimeout(() => { window.location.href = 'admin/admin.html'; }, 1000);
+        return;
+      }
+
+      // ===== CHECK STUDENTS =====
+      const students = db.students.getAll();
+      console.log("🔍 Searching for:", normalizedId, "| Phone:", phoneClean);
+      
+      const student = students.find(s => {
+        const emailMatch = s.email?.toLowerCase() === normalizedId;
+        // Only check phone if user entered at least 9 digits
+        const phoneMatch = phoneClean.length >= 9 && s.phone && s.phone.replace(/\D/g, '').includes(phoneClean.slice(-9));
+        const nameMatch = s.fullName?.toLowerCase() === normalizedId;
+        
+        return (emailMatch || phoneMatch || nameMatch) && s.password === hashedPw;
+      });
+
+      if (student) {
+        // Student login success
+        const session = {
+          studentId: student.id,
+          studentName: student.fullName,
+          email: student.email,
+          phone: student.phone,
+          courseId: student.courseId,
+          loginTime: Date.now()
+        };
+        // Clear any existing session first
+        localStorage.removeItem('student_session');
+        sessionStorage.removeItem('student_session');
+        localStorage.setItem('student_session', JSON.stringify(session));
+        db.logActivity('student_login', student.fullName, 'Kabinetga kirdi');
+
+        msgEl.className = 'msg msg-success';
+        msgEl.textContent = '✅ Muvaffaqiyatli! Yo\'naltirilmoqda...';
+        setTimeout(() => { window.location.href = 'student/index.html'; }, 1000);
+        return;
+      }
+
+      // No match found
+      msgEl.className = 'msg msg-error';
+      msgEl.textContent = '❌ Login yoki parol noto\'g\'ri';
+    });
+
+    // Load saved login
+    const savedLogin = localStorage.getItem('remembered_login');
+    if (savedLogin) {
+      const loginInput = document.getElementById('login-identifier');
+      if (loginInput) loginInput.value = savedLogin;
+      document.getElementById('remember-me').checked = true;
+    }
+
+    // ========== REGISTER - Step 1 ==========
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const birthdate = document.getElementById('reg-birthdate').value;
+      const course = document.getElementById('reg-course').value;
+      const password = document.getElementById('reg-password').value;
+      const password2 = document.getElementById('reg-password2').value;
+      const msgEl = document.getElementById('reg-step1-msg');
+      const btn = document.getElementById('reg-submit-btn');
+
+      if (password !== password2) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Parollar mos kelmaydi';
+        return;
+      }
+
+      const db = window.ITCenterDB;
+      if (db) {
+        const existing = db.students.getAll().find(s => s.email === email);
+        if (existing) {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Bu email allaqachon ro\'yxatdan o\'tgan';
+          return;
+        }
+      }
+
+      formData = { name, email, birthdate, course, password };
+      btn.disabled = true;
+      btn.textContent = '⏳ Yuborilmoqda...';
+
+      try {
+        const res = await fetch(`${API_URL}/send-code`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('reg-step-1').classList.remove('active');
+          document.getElementById('reg-step-2').classList.add('active');
+          document.getElementById('sent-email').textContent = email;
+          startTimer(600);
+          startResendTimer(60);
+          
+          if (data.demo) {
+            document.getElementById('reg-step2-msg').className = 'msg msg-info';
+            document.getElementById('reg-step2-msg').innerHTML = `Demo: <strong>${data.code}</strong>`;
+          }
+        }
+      } catch (err) {
+        // DEMO MODE: Server unavailable - register directly
+        console.log('🔧 Demo mode: Server unavailable, registering locally');
+        
+        const db = window.ITCenterDB;
+        if (db) {
+          const newStudent = {
+            fullName: formData.name,
+            email: formData.email,
+            phone: '',
+            birthDate: formData.birthdate,
+            courseId: parseInt(formData.course) || 1,
+            groupId: '',  // Admin will assign group
+            status: 'applied',  // Waiting for admin approval
+            paymentStatus: 'unpaid',
+            enrollDate: new Date().toISOString().split('T')[0],
+            password: await db.hashPassword(formData.password),
+            applicationDate: new Date().toISOString(),
+            applicationNote: ''
+          };
+          const student = db.students.add(newStudent);
+          db.logActivity('student_register_demo', formData.name, 'Yangi ariza (demo): ' + formData.email);
+
+          // Clear any existing session first
+          localStorage.removeItem('student_session');
+          sessionStorage.removeItem('student_session');
+          localStorage.setItem('student_session', JSON.stringify({
+            studentId: student.id,
+            studentName: student.fullName,
+            email: student.email,
+            courseId: student.courseId,
+            status: 'applied',
+            loginTime: Date.now()
+          }));
+
+          msgEl.className = 'msg msg-success';
+          msgEl.textContent = '✅ Demo: Ro\'yxatdan o\'tdingiz! Yo\'naltirilmoqda...';
+          setTimeout(() => { window.location.href = 'student/index.html'; }, 1500);
+          return;
+        }
+        
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Server bilan aloqa yo\'q';
+      }
+
+      btn.disabled = false;
+      btn.textContent = '📧 Tasdiqlash kodini yuborish';
+    });
+
+    // ========== REGISTER - Step 2 Verify ==========
+    document.getElementById('verify-btn').addEventListener('click', async () => {
+      const code = document.getElementById('verify-code').value.trim();
+      const msgEl = document.getElementById('reg-step2-msg');
+      const btn = document.getElementById('verify-btn');
+
+      if (code.length !== 6) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ 6 xonali kod kiriting';
+        return;
+      }
+
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_URL}/verify-code`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, code })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          clearInterval(timerInterval);
+
+          const db = window.ITCenterDB;
+          if (db) {
+            const newStudent = {
+              fullName: formData.name,
+              email: formData.email,
+              phone: '',
+              birthDate: formData.birthdate,
+              courseId: parseInt(formData.course) || 1,
+              groupId: '',  // Admin will assign group
+              status: 'applied',  // Waiting for admin approval
+              paymentStatus: 'unpaid',
+              enrollDate: new Date().toISOString().split('T')[0],
+              password: await db.hashPassword(formData.password),
+              applicationDate: new Date().toISOString(),
+              applicationNote: ''
+            };
+            const student = db.students.add(newStudent);
+            db.logActivity('student_register', formData.name, 'Yangi ariza: ' + formData.email);
+
+            // Clear any existing session first
+            localStorage.removeItem('student_session');
+            sessionStorage.removeItem('student_session');
+            localStorage.setItem('student_session', JSON.stringify({
+              studentId: student.id,
+              studentName: student.fullName,
+              email: student.email,
+              courseId: student.courseId,
+              status: 'applied',
+              loginTime: Date.now()
+            }));
+          }
+
+          document.getElementById('reg-step-2').classList.remove('active');
+          document.getElementById('reg-step-3').classList.add('active');
+        } else {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ ' + (data.message || 'Kod noto\'g\'ri');
+        }
+      } catch (err) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Server xatosi';
+      }
+
+      btn.disabled = false;
+    });
+
+    // ========== FORGOT PASSWORD ==========
+    document.getElementById('forgot-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('forgot-email').value.trim();
+      const msgEl = document.getElementById('forgot-step1-msg');
+
+      const db = window.ITCenterDB;
+      if (db) {
+        const student = db.students.getAll().find(s => s.email === email);
+        if (!student) {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Bu email ro\'yxatdan o\'tmagan';
+          return;
+        }
+      }
+
+      forgotEmail = email;
+      msgEl.className = 'msg msg-info';
+      msgEl.textContent = '⏳ Kod yuborilmoqda...';
+
+      try {
+        const res = await fetch(`${API_URL}/forgot-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('forgot-step-1').classList.remove('active');
+          document.getElementById('forgot-step-2').classList.add('active');
+          document.getElementById('forgot-sent-email').textContent = email;
+          
+          if (data.demo) {
+            document.getElementById('forgot-step2-msg').className = 'msg msg-info';
+            document.getElementById('forgot-step2-msg').innerHTML = `Demo: <strong>${data.code}</strong>`;
+          } else {
+            document.getElementById('forgot-step2-msg').className = 'msg msg-success';
+            document.getElementById('forgot-step2-msg').textContent = '✅ Kod emailga yuborildi!';
+          }
+        } else {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ ' + data.message;
+        }
+      } catch (err) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Server bilan aloqa yo\'q';
+      }
+    });
+
+    // Store forgot code for final reset
+    let forgotResetCode = '';
+
+    document.getElementById('forgot-verify-btn').addEventListener('click', async () => {
+      const code = document.getElementById('forgot-code').value.trim();
+      const msgEl = document.getElementById('forgot-step2-msg');
+
+      if (!code || code.length !== 6) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ 6 xonali kodni kiriting';
+        return;
+      }
+
+      // Save code for password reset step
+      forgotResetCode = code;
+      document.getElementById('forgot-step-2').classList.remove('active');
+      document.getElementById('forgot-step-3').classList.add('active');
+    });
+
+    document.getElementById('new-password-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('new-password').value;
+      const password2 = document.getElementById('new-password2').value;
+      const msgEl = document.getElementById('forgot-step3-msg');
+
+      if (password !== password2) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Parollar mos kelmaydi';
+        return;
+      }
+
+      if (password.length < 6) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Parol kamida 6 belgi bo\'lishi kerak';
+        return;
+      }
+
+      msgEl.className = 'msg msg-info';
+      msgEl.textContent = '⏳ Parol yangilanmoqda...';
+
+      try {
+        const res = await fetch(`${API_URL}/reset-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email: forgotEmail, 
+            code: forgotResetCode, 
+            newPassword: await db.hashPassword(password)
+          })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Update password in local DB
+          const db = window.ITCenterDB;
+          if (db) {
+            const students = db.students.getAll();
+            const student = students.find(s => s.email === forgotEmail);
+            if (student) {
+              student.password = password;
+              db.students.update(student);
+              db.logActivity('password_reset', student.fullName, 'Parol yangilandi');
+            }
+          }
+
+          document.getElementById('forgot-step-3').classList.remove('active');
+          document.getElementById('forgot-step-4').classList.add('active');
+        } else {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ ' + data.message;
+        }
+      } catch (err) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Server bilan aloqa yo\'q';
+      }
+    });
+
+    // ========== RESEND ==========
+    document.getElementById('resend-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('resend-btn');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_URL}/send-code`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, name: formData.name })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('reg-step2-msg').className = 'msg msg-success';
+          document.getElementById('reg-step2-msg').textContent = '✅ Yangi kod yuborildi!';
+          startTimer(600);
+          startResendTimer(60);
+          
+          if (data.demo) {
+            setTimeout(() => {
+              document.getElementById('reg-step2-msg').innerHTML = `Demo: <strong>${data.code}</strong>`;
+            }, 2000);
+          }
+        }
+      } catch (err) {}
+    });
+
+    // ========== FIREBASE CONFIG ==========
+    // 📌 FIREBASE SOZLASH:
+    // 1. https://console.firebase.google.com ga boring
+    // 2. Yangi loyiha yarating
+    // 3. Authentication > Sign-in method > Google ni yoqing
+    // 4. Project Settings > Your apps > Web tanlang
+    // 5. Quyidagi config'ni real kalitlar bilan almashtiring
+    
+    const FIREBASE_CONFIGURED = false; // Bu ni true qiling real config qo'shgandan keyin
+    
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY_HERE",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase (only if configured)
+    let firebaseApp = null;
+    let googleProvider = null;
+    
+    if (FIREBASE_CONFIGURED && typeof firebase !== 'undefined') {
+      try {
+        firebaseApp = firebase.initializeApp(firebaseConfig);
+        googleProvider = new firebase.auth.GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+        console.log('✅ Firebase initialized');
+      } catch (e) {
+        console.log('Firebase init error:', e.message);
+      }
+    }
+
+    // ========== GOOGLE AUTH ==========
+    async function handleGoogleAuth(isRegister = false) {
+      const msgEl = document.getElementById(isRegister ? 'reg-step1-msg' : 'login-msg');
+      
+      if (!FIREBASE_CONFIGURED) {
+        msgEl.className = 'msg msg-warning';
+        msgEl.innerHTML = '⚠️ Google kirish hali sozlanmagan.<br>📧 Email bilan kiring yoki admin bilan bog\'laning.';
+        return;
+      }
+
+      if (!firebaseApp || !googleProvider) {
+        msgEl.className = 'msg msg-error';
+        msgEl.textContent = '❌ Firebase xatosi. Sahifani yangilang.';
+        return;
+      }
+
+      try {
+        const result = await firebase.auth().signInWithPopup(googleProvider);
+        const user = result.user;
+        
+        console.log('✅ Google auth success:', user.email);
+        
+        const db = window.ITCenterDB;
+        if (!db) {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Database yuklanmadi';
+          return;
+        }
+
+        // Check if user exists
+        const students = db.students.getAll();
+        let student = students.find(s => s.email === user.email);
+
+        if (!student && isRegister) {
+          // Create new student from Google data
+          student = {
+            id: Date.now(),
+            fullName: user.displayName || 'Google User',
+            email: user.email,
+            phone: user.phoneNumber || '',
+            password: 'google_oauth_' + user.uid,
+            courseId: 1,
+            groupId: 'Yangi',
+            status: 'active',
+            paymentStatus: 'unpaid',
+            registeredAt: new Date().toISOString(),
+            photoURL: user.photoURL || ''
+          };
+          db.students.add(student);
+          db.logActivity('google_register', student.fullName, 'Google orqali ro\'yxatdan o\'tdi');
+        } else if (!student) {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Bu email ro\'yxatdan o\'tmagan. Avval ro\'yxatdan o\'ting.';
+          return;
+        }
+
+        // Create session
+        const session = {
+          studentId: student.id,
+          studentName: student.fullName,
+          email: student.email,
+          courseId: student.courseId,
+          photoURL: user.photoURL || '',
+          loginTime: Date.now(),
+          authMethod: 'google'
+        };
+        // Clear any existing session first
+        localStorage.removeItem('student_session');
+        sessionStorage.removeItem('student_session');
+        localStorage.setItem('student_session', JSON.stringify(session));
+        db.logActivity('google_login', student.fullName, 'Google orqali kirdi');
+
+        msgEl.className = 'msg msg-success';
+        msgEl.textContent = '✅ Muvaffaqiyatli! Yo\'naltirilmoqda...';
+        setTimeout(() => { window.location.href = 'student/index.html'; }, 1000);
+
+      } catch (error) {
+        console.error('Google auth error:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+          msgEl.className = 'msg msg-info';
+          msgEl.textContent = 'ℹ️ Kirish bekor qilindi';
+        } else if (error.code === 'auth/network-request-failed') {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Internet aloqasi yo\'q';
+        } else {
+          msgEl.className = 'msg msg-error';
+          msgEl.textContent = '❌ Google kirish xatosi: ' + (error.message || error.code);
+        }
+      }
+    }
+
+    document.getElementById('google-login-btn').addEventListener('click', () => {
+      handleGoogleAuth(false);
+    });
+
+    document.getElementById('google-register-btn').addEventListener('click', () => {
+      handleGoogleAuth(true);
+    });
+
+    // ========== HELPERS ==========
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      const display = document.getElementById('timer-display');
+      timerInterval = setInterval(() => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        display.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        if (seconds <= 0) { clearInterval(timerInterval); display.textContent = 'tugadi'; }
+        seconds--;
+      }, 1000);
+    }
+
+    function startResendTimer(seconds) {
+      const btn = document.getElementById('resend-btn');
+      const display = document.getElementById('resend-timer');
+      btn.disabled = true;
+      const interval = setInterval(() => {
+        display.textContent = seconds;
+        if (seconds <= 0) { clearInterval(interval); btn.disabled = false; btn.innerHTML = '🔄 Qayta yuborish'; }
+        seconds--;
+      }, 1000);
+    }
+
+    document.getElementById('verify-code').addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 6);
+    });
+
+    document.getElementById('forgot-code').addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 6);
+    });
+  </script>
+</body>
+</html>

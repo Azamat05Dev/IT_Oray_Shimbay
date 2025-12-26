@@ -1,0 +1,3326 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link
+      rel="icon"
+      type="image/svg+2xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-weight='bold' font-family='Arial'>it</text></svg>"
+    />
+    <title>IT Center Admin Panel</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Umumiy style (agar kerak bo‘lsa) -->
+    <link rel="stylesheet" href="../style.css" />
+    <!-- Faqat admin panel uchun maxsus style -->
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-body">
+    <!-- GLOBAL LOADER -->
+    <div class="admin-loader" id="admin-loader">
+      <div class="admin-loader-logo">IT</div>
+      <div class="admin-loader-text">Admin panel yuklanmoqda...</div>
+    </div>
+
+    <div class="admin-layout">
+      <!-- SIDEBAR -->
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+          <div class="admin-logo-mark">IT</div>
+          <div class="admin-logo-text">
+            <span class="admin-logo-title">IT Center</span>
+            <span class="admin-logo-subtitle">Admin panel</span>
+          </div>
+        </div>
+
+        <div class="admin-user-mini">
+          <div class="admin-user-avatar" id="sidebar-admin-avatar">A</div>
+          <div>
+            <div class="admin-user-name" id="sidebar-admin-name">
+              Yuklanmoqda...
+            </div>
+            <div class="admin-user-role" id="sidebar-admin-role">—</div>
+          </div>
+        </div>
+
+        <nav class="admin-menu">
+          <button
+            class="admin-menu-item admin-menu-item-active"
+            data-section="dashboard"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">📊</span>
+            <span>Asosiy panel</span>
+            <span class="admin-menu-badge">Live</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="students"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">🧑‍🎓</span>
+            <span>Talabalar</span>
+          </button>
+          <button class="admin-menu-item" data-section="groups" data-role="all">
+            <span class="admin-menu-icon">👥</span>
+            <span>Guruhlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="courses"
+            data-role="admin,super_admin"
+          >
+            <span class="admin-menu-icon">📚</span>
+            <span>Kurslar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="mentors"
+            data-role="admin,super_admin"
+          >
+            <span class="admin-menu-icon">🧑‍🏫</span>
+            <span>Mentorlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="registrations"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">📋</span>
+            <span>Yangi Ro'yxatlar</span>
+            <span class="admin-menu-badge" id="registrations-count">0</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="applications"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">📝</span>
+            <span>Tez arizalar</span>
+            <span class="admin-menu-dot"></span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="payments"
+            data-role="admin,super_admin"
+          >
+            <span class="admin-menu-icon">💳</span>
+            <span>To'lovlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="attendance"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">📋</span>
+            <span>Davomat</span>
+            <span class="admin-menu-badge admin-menu-badge--live">LIVE</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="schedule"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">📅</span>
+            <span>Jadval</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="messages"
+            data-role="all"
+          >
+            <span class="admin-menu-icon">💬</span>
+            <span>Xabarlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="reports"
+            data-role="admin,super_admin"
+          >
+            <span class="admin-menu-icon">📊</span>
+            <span>Hisobotlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="videos"
+            data-role="admin,super_admin"
+          >
+            <span class="admin-menu-icon">🎬</span>
+            <span>Video Darslar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="admins"
+            data-role="super_admin"
+          >
+            <span class="admin-menu-icon">👤</span>
+            <span>Adminlar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="settings"
+            data-role="super_admin"
+          >
+            <span class="admin-menu-icon">⚙️</span>
+            <span>Sozlamalar</span>
+          </button>
+          <button
+            class="admin-menu-item"
+            data-section="logs"
+            data-role="super_admin"
+          >
+            <span class="admin-menu-icon">🧾</span>
+            <span>Aktivlik loglari</span>
+          </button>
+        </nav>
+
+        <div class="admin-sidebar-footer">
+          <button class="admin-sidebar-btn" id="admin-go-portal">
+            ⬅ Portalga qaytish
+          </button>
+          <button
+            class="admin-sidebar-btn admin-sidebar-btn-danger"
+            id="admin-logout"
+          >
+            ⏻ Chiqish
+          </button>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <div class="admin-main">
+        <!-- TOPBAR -->
+        <header class="admin-topbar">
+          <div class="admin-topbar-left">
+            <div class="admin-breadcrumb" id="admin-breadcrumb">
+              Admin panel / <span>Asosiy panel</span>
+            </div>
+            <div class="admin-topbar-subtitle">
+              Portal va filial ishini to‘liq boshqarish oynasi.
+            </div>
+            <!-- QUICK SEARCH (Ctrl+K) -->
+            <div class="admin-quick-search">
+              <input
+                type="text"
+                id="admin-quick-search-input"
+                placeholder="Ctrl + K — tezkor qidiruv (talaba, guruh, kurs)..."
+                autocomplete="off"
+              />
+              <div
+                class="admin-quick-search-results"
+                id="admin-quick-search-results"
+              >
+                <!-- JS orqali demo natijalar tushadi -->
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-topbar-right">
+            <button
+              class="mobile-menu-btn"
+              id="mobile-menu-btn"
+              aria-label="Menyu"
+            >
+              ☰
+            </button>
+            <div class="admin-topbar-info">
+              <span id="admin-status-indicator" data-status="online"
+                >Online</span
+              >
+              <span class="admin-topbar-dot"></span>
+              <span
+                id="admin-online-users"
+                class="admin-online-badge"
+                title="Hozir saytda"
+                >👥 0</span
+              >
+              <span class="admin-topbar-dot"></span>
+              <span id="admin-date">—</span>
+              <span>•</span>
+              <span id="admin-time">—</span>
+            </div>
+
+            <!-- NOTIFICATION BELL (ADMIN ICHKI NOTIF) -->
+            <button
+              class="admin-topbar-icon-btn"
+              id="admin-notify-bell"
+              aria-label="Bildirishnomalar"
+            >
+              <span class="admin-bell-icon">🔔</span>
+              <span class="admin-bell-dot" id="admin-bell-dot"></span>
+            </button>
+
+            <button class="admin-topbar-btn" id="admin-quick-sync">
+              🔄 Sinxronlash
+            </button>
+
+            <button class="admin-topbar-avatar" id="admin-profile-menu">
+              <span class="admin-topbar-avatar-circle" id="topbar-admin-avatar"
+                >A</span
+              >
+            </button>
+          </div>
+
+          <!-- NOTIFICATION PANEL (DROPDOWN) -->
+          <div class="admin-notify-panel" id="admin-notify-panel">
+            <div class="admin-notify-header">
+              <span>Bildirishnomalar</span>
+              <button id="admin-notify-clear">Tozalash</button>
+            </div>
+            <ul class="admin-notify-list" id="admin-notify-list">
+              <!-- JS demo bildirishnomalar -->
+              <li class="admin-notify-item admin-notify-item-unread">
+                <div class="admin-notify-title">Yangi tez ariza</div>
+                <div class="admin-notify-sub">
+                  Mohira Qodirova • Frontend • Offlayn
+                </div>
+                <div class="admin-notify-time">Bir necha soniya oldin</div>
+              </li>
+            </ul>
+            <div class="admin-notify-footer">
+              Demo rejim: bildirishnomalar real vaqt backend ulanmaguncha
+              saqlanmaydi.
+            </div>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <main class="admin-content">
+          <!-- DASHBOARD SECTION -->
+          <section
+            class="admin-section admin-section-active"
+            id="admin-section-dashboard"
+            data-section-name="Asosiy panel"
+          >
+            <div class="admin-section-header">
+              <h1>Asosiy panel</h1>
+              <p>
+                Bu yerda portal bo‘yicha eng muhim ko‘rsatkichlar, tez arizalar
+                va bugungi darslar bo‘yicha umumiy ko‘rinish mavjud.
+              </p>
+            </div>
+
+            <!-- KPI CARDS -->
+            <div class="admin-kpi-grid">
+              <article class="admin-kpi-card" data-kpi="students">
+                <div class="admin-kpi-label">Umumiy talabalar</div>
+                <div class="admin-kpi-value" data-kpi-target="1200">0</div>
+                <div class="admin-kpi-meta">
+                  <span class="admin-kpi-trend admin-kpi-trend-up">+32</span>
+                  <span class="admin-kpi-note">Bu oy qo‘shilgan</span>
+                </div>
+              </article>
+
+              <article class="admin-kpi-card" data-kpi="groups">
+                <div class="admin-kpi-label">Aktiv guruhlar</div>
+                <div class="admin-kpi-value" data-kpi-target="35">0</div>
+                <div class="admin-kpi-meta">
+                  <span class="admin-kpi-trend admin-kpi-trend-up">+3</span>
+                  <span class="admin-kpi-note">Yangi ochilgan</span>
+                </div>
+              </article>
+
+              <article class="admin-kpi-card" data-kpi="payments">
+                <div class="admin-kpi-label">Bu oy tushgan to‘lovlar</div>
+                <div class="admin-kpi-value" data-kpi-target="18400000">0</div>
+                <div class="admin-kpi-meta">
+                  <span class="admin-kpi-trend admin-kpi-trend-up">+18%</span>
+                  <span class="admin-kpi-note">O‘tgan oyga nisbatan</span>
+                </div>
+              </article>
+
+              <article class="admin-kpi-card" data-kpi="overdue">
+                <div class="admin-kpi-label">Qarzdor o‘quvchilar</div>
+                <div class="admin-kpi-value" data-kpi-target="14">0</div>
+                <div class="admin-kpi-meta">
+                  <span class="admin-kpi-trend admin-kpi-trend-down">−6</span>
+                  <span class="admin-kpi-note">Qarzdorlar soni kamaygan</span>
+                </div>
+              </article>
+            </div>
+
+            <!-- ADDITIONAL STATS ROW -->
+            <div class="admin-stats-mini-row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0;">
+              <div class="admin-stat-mini" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 14px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: #4ade80;" id="stat-today-attendance">0%</div>
+                <div style="font-size: 0.8rem; color: #9ca3af;">Bugungi davomat</div>
+              </div>
+              <div class="admin-stat-mini" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: #60a5fa;" id="stat-new-applications">0</div>
+                <div style="font-size: 0.8rem; color: #9ca3af;">Yangi arizalar</div>
+              </div>
+              <div class="admin-stat-mini" style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 14px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: #a78bfa;" id="stat-course-count">0</div>
+                <div style="font-size: 0.8rem; color: #9ca3af;">Faol kurslar</div>
+              </div>
+              <div class="admin-stat-mini" style="background: rgba(251, 146, 60, 0.1); border: 1px solid rgba(251, 146, 60, 0.3); border-radius: 12px; padding: 14px; text-align: center;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: #fb923c;" id="stat-mentor-count">0</div>
+                <div style="font-size: 0.8rem; color: #9ca3af;">Mentorlar</div>
+              </div>
+            </div>
+
+            <!-- DASHBOARD 2-COLUMN: LIVE QUEUES + TIMETABLE -->
+            <div class="admin-grid-2">
+              <!-- Tez arizalar / navbat -->
+              <div class="admin-card admin-card-elevated">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>Tez arizalar (live)</h2>
+                    <p>
+                      Kursga yozilish formasi orqali kelgan so‘nggi arizalar.
+                    </p>
+                  </div>
+                  <button
+                    class="admin-chip-btn"
+                    data-section-jump="applications"
+                  >
+                    Hammasini ko‘rish
+                  </button>
+                </div>
+
+                <!-- Skeleton loader (demo) -->
+                <div
+                  class="admin-skeleton-list"
+                  id="applications-skeleton"
+                  aria-hidden="true"
+                >
+                  <div class="admin-skeleton-line"></div>
+                  <div class="admin-skeleton-line"></div>
+                  <div class="admin-skeleton-line"></div>
+                </div>
+
+                <ul class="admin-list" id="admin-applications-list">
+                  <li class="admin-list-item">
+                    <div class="admin-list-main">
+                      <div class="admin-pill admin-pill-course">Frontend</div>
+                      <span class="admin-list-title">Mohira Qodirova</span>
+                      <span class="admin-list-sub"
+                        >+998 90 123 45 67 • Offlayn</span
+                      >
+                    </div>
+                    <span class="admin-list-time">Yangi</span>
+                  </li>
+                  <li class="admin-list-item">
+                    <div class="admin-list-main">
+                      <div class="admin-pill admin-pill-course">Python</div>
+                      <span class="admin-list-title">Javlon Tursunov</span>
+                      <span class="admin-list-sub"
+                        >+998 93 555 44 11 • Onlayn</span
+                      >
+                    </div>
+                    <span class="admin-list-time">2 daqiqa oldin</span>
+                  </li>
+                  <li class="admin-list-item">
+                    <div class="admin-list-main">
+                      <div class="admin-pill admin-pill-course">Kids IT</div>
+                      <span class="admin-list-title">Akmalov Aziz (ota)</span>
+                      <span class="admin-list-sub"
+                        >9 yosh farzandi uchun • Aralash</span
+                      >
+                    </div>
+                    <span class="admin-list-time">7 daqiqa oldin</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Bugungi jadval -->
+              <div class="admin-card admin-card-elevated">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>Bugungi darslar jadvali</h2>
+                    <p>Frontend, Python va Kids IT bo‘yicha darslar.</p>
+                  </div>
+                  <button class="admin-chip-btn" data-section-jump="groups">
+                    Guruhlarni boshqarish
+                  </button>
+                </div>
+
+                <div class="admin-timetable">
+                  <div class="admin-timetable-row admin-timetable-head">
+                    <span>Vaqt</span>
+                    <span>Kurs / guruh</span>
+                    <span>Mentor</span>
+                    <span>Xona</span>
+                  </div>
+
+                  <div class="admin-timetable-row">
+                    <span>18:00 – 19:30</span>
+                    <span>Frontend Zero → Hero (Guruh F-12)</span>
+                    <span>Aliyev Jamshid</span>
+                    <span>203</span>
+                  </div>
+
+                  <div class="admin-timetable-row">
+                    <span>19:00 – 20:30</span>
+                    <span>Python asoslari (Guruh P-07)</span>
+                    <span>Nurmetova Dilnoza</span>
+                    <span>305</span>
+                  </div>
+
+                  <div class="admin-timetable-row">
+                    <span>16:00 – 17:00</span>
+                    <span>Kids IT (Guruh K-03)</span>
+                    <span>Rahmonov Aziz</span>
+                    <span>Kids-1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="admin-card admin-quick-actions">
+              <h2>Tezkor amallar</h2>
+              <div class="admin-quick-grid">
+                <button
+                  class="admin-quick-item"
+                  data-section-jump="applications"
+                >
+                  <span class="admin-quick-icon">➕</span>
+                  <span class="admin-quick-text">
+                    Yangi arizani qo‘lda qo‘shish
+                  </span>
+                </button>
+                <button class="admin-quick-item" data-section-jump="groups">
+                  <span class="admin-quick-icon">👥</span>
+                  <span class="admin-quick-text"> Yangi guruh ochish </span>
+                </button>
+                <button class="admin-quick-item" data-section-jump="courses">
+                  <span class="admin-quick-icon">📚</span>
+                  <span class="admin-quick-text"> Yangi kurs yaratish </span>
+                </button>
+                <button class="admin-quick-item" data-section-jump="payments">
+                  <span class="admin-quick-icon">💳</span>
+                  <span class="admin-quick-text">
+                    To‘lovni qo‘lda kiritish
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ANALYTICS (CHART.JS) -->
+            <div class="admin-grid-2 admin-analytics-grid">
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>📊 Oyma-oy to'lovlar</h2>
+                    <p>So'nggi 6 oy ichida tushgan umumiy tushum.</p>
+                  </div>
+                  <button class="admin-chip-btn" id="export-payments-chart">
+                    📥 Export
+                  </button>
+                </div>
+                <div class="admin-chart-wrapper" style="height: 250px">
+                  <canvas id="chart-payments-canvas"></canvas>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>📈 Kurslar bo'yicha talabalar</h2>
+                    <p>Frontend, Python, Kids IT bo'yicha taqsimot.</p>
+                  </div>
+                </div>
+                <div class="admin-chart-wrapper" style="height: 250px">
+                  <canvas id="chart-courses-canvas"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPORT & EMAIL MARKETING -->
+            <div class="admin-card" style="margin-top: 24px">
+              <div class="admin-card-header">
+                <div>
+                  <h2>📤 Ma'lumotlarni eksport qilish</h2>
+                  <p>
+                    Talabalar, to'lovlar va boshqa ma'lumotlarni yuklab oling.
+                  </p>
+                </div>
+              </div>
+              <div class="admin-export-grid">
+                <button class="admin-export-btn" id="export-students-excel">
+                  <span class="export-icon">📊</span>
+                  <span class="export-text">Talabalar (Excel)</span>
+                </button>
+                <button class="admin-export-btn" id="export-payments-excel">
+                  <span class="export-icon">💰</span>
+                  <span class="export-text">To'lovlar (Excel)</span>
+                </button>
+                <button class="admin-export-btn" id="export-groups-excel">
+                  <span class="export-icon">👥</span>
+                  <span class="export-text">Guruhlar (Excel)</span>
+                </button>
+                <button class="admin-export-btn" id="export-all-pdf">
+                  <span class="export-icon">📄</span>
+                  <span class="export-text">To'liq hisobot (PDF)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- EMAIL MARKETING -->
+            <div class="admin-card" style="margin-top: 24px">
+              <div class="admin-card-header">
+                <div>
+                  <h2>📧 Email marketing</h2>
+                  <p>Talabalar va arizachilarga xabar yuborish.</p>
+                </div>
+              </div>
+              <div class="admin-email-form">
+                <div class="email-recipients">
+                  <label>Qabul qiluvchilar:</label>
+                  <select id="email-recipients" class="admin-input">
+                    <option value="all">Barcha talabalar</option>
+                    <option value="active">Faqat faol talabalar</option>
+                    <option value="debt">Qarzdor talabalar</option>
+                    <option value="new">Yangi arizalar</option>
+                  </select>
+                  <span class="recipient-count" id="recipient-count"
+                    >0 ta qabul qiluvchi</span
+                  >
+                </div>
+                <div class="email-content">
+                  <label>Mavzu:</label>
+                  <input
+                    type="text"
+                    id="email-subject"
+                    class="admin-input"
+                    placeholder="Xabar mavzusi..."
+                  />
+                </div>
+                <div class="email-content">
+                  <label>Xabar matni:</label>
+                  <textarea
+                    id="email-body"
+                    class="admin-input"
+                    rows="4"
+                    placeholder="Xabar matnini yozing..."
+                  ></textarea>
+                </div>
+                <div class="email-actions">
+                  <button
+                    class="admin-btn admin-btn-primary"
+                    id="send-email-btn"
+                  >
+                    📧 Xabarni yuborish
+                  </button>
+                  <button
+                    class="admin-btn admin-btn-secondary"
+                    id="preview-email-btn"
+                  >
+                    👁️ Ko'rib chiqish
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- STUDENTS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-students"
+            data-section-name="Talabalar"
+          >
+            <div class="admin-section-header">
+              <h1>Talabalar</h1>
+              <p>
+                Barcha ro‘yxatdan o‘tgan talabalar, ularning guruhlari va to‘lov
+                holati.
+              </p>
+            </div>
+
+            <!-- FILTER PRESETS -->
+            <div class="admin-filter-presets">
+              <button class="admin-chip-btn" data-students-preset="all">
+                Barcha talabalar
+              </button>
+              <button class="admin-chip-btn" data-students-preset="debt">
+                Faqat qarzdorlar
+              </button>
+              <button class="admin-chip-btn" data-students-preset="new">
+                So‘nggi 7 kunda qo‘shilganlar
+              </button>
+              <button
+                class="admin-btn admin-btn-primary"
+                id="add-student-btn"
+                style="margin-left: auto"
+              >
+                ➕ Talaba qo'shish
+              </button>
+            </div>
+
+            <!-- BULK ACTIONS BAR -->
+            <div class="bulk-actions-bar" id="bulk-actions-bar">
+              <input
+                type="checkbox"
+                id="select-all-students"
+                class="row-checkbox"
+              />
+              <span class="bulk-count"
+                ><span id="selected-count">0</span> ta tanlangan</span
+              >
+              <div class="bulk-actions">
+                <button class="bulk-btn" id="bulk-change-status">
+                  📋 Statusni o'zgartirish
+                </button>
+                <button class="bulk-btn" id="bulk-change-group">
+                  👥 Guruhni o'zgartirish
+                </button>
+                <button class="bulk-btn" id="bulk-send-sms">
+                  📱 SMS yuborish
+                </button>
+                <button class="bulk-btn bulk-btn-danger" id="bulk-delete">
+                  🗑️ O'chirish
+                </button>
+              </div>
+            </div>
+
+            <div class="admin-filters-row">
+              <div class="admin-filter-group">
+                <label for="students-search"
+                  >Ism, telefon yoki ID bo‘yicha qidirish</label
+                >
+                <input
+                  type="text"
+                  id="students-search"
+                  placeholder="Masalan: Mohira, +99890..."
+                />
+              </div>
+              <div class="admin-filter-group">
+                <label for="students-course">Kurs</label>
+                <select id="students-course">
+                  <option value="all">Barchasi</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="python">Python</option>
+                  <option value="kids">Kids IT</option>
+                </select>
+              </div>
+              <div class="admin-filter-group">
+                <label for="students-status">Status</label>
+                <select id="students-status">
+                  <option value="all">Barchasi</option>
+                  <option value="active">Aktiv</option>
+                  <option value="frozen">Muzlatilgan</option>
+                  <option value="finished">Bitirgan</option>
+                </select>
+              </div>
+              <div class="admin-filter-group">
+                <label for="students-payment">To'lov holati</label>
+                <select id="students-payment">
+                  <option value="all">Barchasi</option>
+                  <option value="paid">To'langan</option>
+                  <option value="partial">Qisman</option>
+                  <option value="debt">Qarzdor</option>
+                  <option value="unpaid">To'lanmagan</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Skeleton table (demo yuklanish effekti) -->
+            <div
+              class="admin-skeleton-table"
+              id="students-skeleton"
+              aria-hidden="true"
+            >
+              <div class="admin-skeleton-row"></div>
+              <div class="admin-skeleton-row"></div>
+              <div class="admin-skeleton-row"></div>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="students-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40px">
+                      <input
+                        type="checkbox"
+                        id="header-select-all"
+                        class="row-checkbox"
+                      />
+                    </th>
+                    <th>ID</th>
+                    <th>Talaba</th>
+                    <th>Kurs / Guruh</th>
+                    <th>Telefon</th>
+                    <th>Status</th>
+                    <th>To‘lov</th>
+                    <th>Amal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-student-id="ST-1023">
+                    <td>#ST-1023</td>
+                    <td data-st-name="Mohira Qodirova">Mohira Qodirova</td>
+                    <td data-st-course="Frontend" data-st-group="F-12">
+                      Frontend • F-12
+                    </td>
+                    <td data-st-phone="+998 90 123 45 67">+998 90 123 45 67</td>
+                    <td data-st-status="Aktiv">
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                    <td data-st-payment="To‘langan">
+                      <span class="admin-status admin-status-paid"
+                        >To‘langan</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        class="admin-table-action admin-student-view"
+                        data-row="ST-1023"
+                      >
+                        Ko‘rish
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-student-id="ST-1007">
+                    <td>#ST-1007</td>
+                    <td data-st-name="Javlon Tursunov">Javlon Tursunov</td>
+                    <td data-st-course="Python" data-st-group="P-07">
+                      Python • P-07
+                    </td>
+                    <td data-st-phone="+998 93 555 44 11">+998 93 555 44 11</td>
+                    <td data-st-status="Aktiv">
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                    <td data-st-payment="Qisman">
+                      <span class="admin-status admin-status-partial"
+                        >Qisman</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        class="admin-table-action admin-student-view"
+                        data-row="ST-1007"
+                      >
+                        Ko‘rish
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-student-id="ST-0991">
+                    <td>#ST-0991</td>
+                    <td data-st-name="Akmalov Aziz">Akmalov Aziz</td>
+                    <td data-st-course="Kids IT" data-st-group="K-03">
+                      Kids IT • K-03
+                    </td>
+                    <td data-st-phone="+998 91 111 22 33">+998 91 111 22 33</td>
+                    <td data-st-status="Muzlatilgan">
+                      <span class="admin-status admin-status-frozen"
+                        >Muzlatilgan</span
+                      >
+                    </td>
+                    <td data-st-payment="Qarzdor">
+                      <span class="admin-status admin-status-debt"
+                        >Qarzdor</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        class="admin-table-action admin-student-view"
+                        data-row="ST-0991"
+                      >
+                        Ko‘rish
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- GROUPS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-groups"
+            data-section-name="Guruhlar"
+          >
+            <div class="admin-section-header">
+              <h1>Guruhlar</h1>
+              <p>
+                Har bir guruh bo‘yicha jadval, mentor, auditoriya va talabalar
+                soni.
+              </p>
+            </div>
+
+            <div class="admin-filters-row">
+              <div class="admin-filter-group">
+                <label for="groups-search">Qidirish</label>
+                <input
+                  type="text"
+                  id="groups-search"
+                  placeholder="Guruh ID, mentor, xona..."
+                />
+              </div>
+              <div class="admin-filter-group">
+                <label for="groups-course">Kurs</label>
+                <select id="groups-course">
+                  <option value="all">Barchasi</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="python">Python</option>
+                  <option value="kids">Kids IT</option>
+                </select>
+              </div>
+
+              <div class="admin-filter-group">
+                <label for="groups-status">Status</label>
+                <select id="groups-status">
+                  <option value="all">Barchasi</option>
+                  <option value="active">Aktiv</option>
+                  <option value="full">To‘la</option>
+                  <option value="recruiting">Yangi to‘planyapti</option>
+                </select>
+              </div>
+
+              <button
+                class="admin-quick-item admin-quick-item-compact"
+                id="add-group-btn"
+              >
+                <span class="admin-quick-icon">➕</span>
+                <span class="admin-quick-text">Yangi guruh ochish</span>
+              </button>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="groups-table">
+                <thead>
+                  <tr>
+                    <th>Guruh ID</th>
+                    <th>Kurs</th>
+                    <th>Mentor</th>
+                    <th>Kun/vaqt</th>
+                    <th>Xona</th>
+                    <th>Talabalar</th>
+                    <th>Status</th>
+                    <th>Amal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-group-id="F-12">
+                    <td>F-12</td>
+                    <td data-g-course="Web dasturlash (Frontend)">
+                      Web dasturlash (Frontend)
+                    </td>
+                    <td data-g-mentor="Aliyev Jamshid">Aliyev Jamshid</td>
+                    <td data-g-schedule="Dush / Chor / Jum • 18:00">
+                      Dush / Chor / Jum • 18:00
+                    </td>
+                    <td data-g-room="203">203</td>
+                    <td data-g-capacity="18" data-g-count="14">14 / 18</td>
+                    <td data-g-status="Aktiv">
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                    <td>
+                      <button class="admin-table-action group-edit-btn">
+                        Tahrirlash
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-group-id="P-07">
+                    <td>P-07</td>
+                    <td data-g-course="Python asoslari">Python asoslari</td>
+                    <td data-g-mentor="Nurmetova Dilnoza">Nurmetova Dilnoza</td>
+                    <td data-g-schedule="Sesh / Pay • 19:00">
+                      Sesh / Pay • 19:00
+                    </td>
+                    <td data-g-room="305">305</td>
+                    <td data-g-capacity="15" data-g-count="10">10 / 15</td>
+                    <td data-g-status="Yangi to‘planyapti">
+                      <span class="admin-status admin-status-recruiting"
+                        >Yangi to‘planyapti</span
+                      >
+                    </td>
+                    <td>
+                      <button class="admin-table-action group-edit-btn">
+                        Tahrirlash
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-group-id="K-03">
+                    <td>K-03</td>
+                    <td data-g-course="Kids IT">Kids IT</td>
+                    <td data-g-mentor="Rahmonov Aziz">Rahmonov Aziz</td>
+                    <td data-g-schedule="Dush / Chor / Jum • 16:00">
+                      Dush / Chor / Jum • 16:00
+                    </td>
+                    <td data-g-room="Kids-1">Kids-1</td>
+                    <td data-g-capacity="16" data-g-count="16">16 / 16</td>
+                    <td data-g-status="To‘la">
+                      <span class="admin-status admin-status-full">To‘la</span>
+                    </td>
+                    <td>
+                      <button class="admin-table-action group-edit-btn">
+                        Tahrirlash
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- COURSES SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-courses"
+            data-section-name="Kurslar"
+          >
+            <div class="admin-section-header">
+              <h1>Kurslar</h1>
+              <p>
+                Kurslar ro‘yxatini tahrirlash, narxlarini, davomiyligini va
+                aktiv holatini boshqarish.
+              </p>
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h2>Kurslar ro‘yxati</h2>
+                  <button class="admin-chip-btn" id="add-course-btn">
+                    ➕ Yangi kurs
+                  </button>
+                </div>
+
+                <div class="admin-table-wrapper admin-table-compact">
+                  <table class="admin-table" id="courses-table">
+                    <thead>
+                      <tr>
+                        <th>Kurs nomi</th>
+                        <th>Daraja</th>
+                        <th>Davomiyligi</th>
+                        <th>Narx (oyiga)</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-course-id="frontend">
+                        <td>Web dasturlash (Frontend)</td>
+                        <td>Boshlang‘ich → Junior</td>
+                        <td>4 oy</td>
+                        <td>1 200 000 so‘m</td>
+                        <td>
+                          <span class="admin-status admin-status-active"
+                            >Aktiv</span
+                          >
+                        </td>
+                      </tr>
+                      <tr data-course-id="python">
+                        <td>Python dasturlash asoslari</td>
+                        <td>Boshlang‘ich</td>
+                        <td>3 oy</td>
+                        <td>1 000 000 so‘m</td>
+                        <td>
+                          <span class="admin-status admin-status-active"
+                            >Aktiv</span
+                          >
+                        </td>
+                      </tr>
+                      <tr data-course-id="kids">
+                        <td>Bolalar uchun IT (9–14 yosh)</td>
+                        <td>Kids IT</td>
+                        <td>2 oy</td>
+                        <td>900 000 so‘m</td>
+                        <td>
+                          <span class="admin-status admin-status-active"
+                            >Aktiv</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h2>Tanlangan kursni tahrirlash (demo)</h2>
+                  <p>
+                    Haqiqiy admin panelda bu forma orqali kurs ma’lumotlarini
+                    backend bilan saqlaysiz.
+                  </p>
+                </div>
+
+                <form class="admin-form" id="course-edit-form">
+                  <div class="admin-filter-group">
+                    <label for="course-name">Kurs nomi</label>
+                    <input
+                      type="text"
+                      id="course-name"
+                      value="Web dasturlash (Frontend)"
+                    />
+                  </div>
+                  <div class="admin-filter-group">
+                    <label for="course-duration">Davomiyligi</label>
+                    <input type="text" id="course-duration" value="4 oy" />
+                  </div>
+                  <div class="admin-filter-group">
+                    <label for="course-price">Narx (oyiga, so‘m)</label>
+                    <input type="number" id="course-price" value="1200000" />
+                  </div>
+                  <div class="admin-filter-group">
+                    <label for="course-status">Status</label>
+                    <select id="course-status">
+                      <option value="active">Aktiv</option>
+                      <option value="hidden">Yashirilgan</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="admin-save-btn">
+                    💾 O‘zgarishlarni saqlash (demo)
+                  </button>
+                  <div
+                    class="admin-form-message"
+                    id="course-edit-message"
+                  ></div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <!-- MENTORS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-mentors"
+            data-section-name="Mentorlar"
+          >
+            <div class="admin-section-header">
+              <h1>Mentorlar</h1>
+              <p>
+                Mentorlarni qo‘shish, guruhlarga biriktirish va ularning
+                yuklamasini ko‘rish.
+              </p>
+            </div>
+
+            <div class="admin-filters-row">
+              <div class="admin-filter-group">
+                <label for="mentors-search">Ism bo‘yicha qidirish</label>
+                <input
+                  type="text"
+                  id="mentors-search"
+                  placeholder="Masalan: Jamshid"
+                />
+              </div>
+
+              <button
+                class="admin-quick-item admin-quick-item-compact"
+                id="add-mentor-btn"
+              >
+                <span class="admin-quick-icon">➕</span>
+                <span class="admin-quick-text">Yangi mentor qo‘shish</span>
+              </button>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="mentors-table">
+                <thead>
+                  <tr>
+                    <th>Ism</th>
+                    <th>Yo‘nalish</th>
+                    <th>Aktiv guruhlar</th>
+                    <th>Kontakt</th>
+                    <th>Status</th>
+                    <th>Amallar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Aliyev Jamshid</td>
+                    <td>Frontend</td>
+                    <td>F-11, F-12</td>
+                    <td>@jamshid_front • +998 90 000 00 00</td>
+                    <td>
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nurmetova Dilnoza</td>
+                    <td>Python / Backend</td>
+                    <td>P-07</td>
+                    <td>@dilnoza_python • +998 93 000 00 00</td>
+                    <td>
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Rahmonov Aziz</td>
+                    <td>Kids IT</td>
+                    <td>K-03</td>
+                    <td>@aziz_kids • +998 91 000 00 00</td>
+                    <td>
+                      <span class="admin-status admin-status-active"
+                        >Aktiv</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- REGISTRATIONS SECTION - New Student Registrations -->
+          <section
+            class="admin-section"
+            id="admin-section-registrations"
+            data-section-name="Yangi Ro'yxatlar"
+          >
+            <div class="admin-section-header">
+              <h1>📋 Yangi Ro'yxatdan O'tganlar</h1>
+              <p>Ro'yxatdan o'tgan talabalar - admin tasdiqlashni kutmoqda</p>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2>Kutilayotgan Arizalar</h2>
+                <select
+                  id="reg-filter-course"
+                  class="admin-select"
+                  style="width: 180px"
+                >
+                  <option value="">Barcha kurslar</option>
+                  <option value="1">Frontend</option>
+                  <option value="2">Python</option>
+                  <option value="3">Bolalar IT</option>
+                  <option value="4">UI/UX</option>
+                  <option value="5">Mobile</option>
+                </select>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table" id="registrations-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Ism</th>
+                      <th>Telefon</th>
+                      <th>Email</th>
+                      <th>Kurs</th>
+                      <th>Tug'ilgan sana</th>
+                      <th>Manzil</th>
+                      <th>Format</th>
+                      <th>Ariza Sanasi</th>
+                      <th>Status</th>
+                      <th>Amallar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="registrations-table-body">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- APPLICATIONS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-applications"
+            data-section-name="Tez arizalar"
+          >
+            <div class="admin-section-header">
+              <h1>Tez arizalar</h1>
+              <p>
+                Saytdagi “Kursga yozilish (tez ariza)” formasi orqali kelgan
+                barcha arizalar.
+              </p>
+            </div>
+
+            <div class="admin-filters-row">
+              <div class="admin-filter-group">
+                <label for="applications-status">Status</label>
+                <select id="applications-status">
+                  <option value="all">Barchasi</option>
+                  <option value="new">Yangi</option>
+                  <option value="called">Qo‘ng‘iroq qilindi</option>
+                  <option value="enrolled">Guruhga qo‘shildi</option>
+                  <option value="closed">Yopilgan</option>
+                </select>
+              </div>
+              <div class="admin-filter-group">
+                <label for="applications-course">Kurs</label>
+                <select id="applications-course">
+                  <option value="all">Barchasi</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="python">Python</option>
+                  <option value="kids">Kids IT</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table" id="applications-table">
+                <thead>
+                  <tr>
+                    <th>Vaqt</th>
+                    <th>Ism</th>
+                    <th>Telefon</th>
+                    <th>Kurs</th>
+                    <th>Format</th>
+                    <th>Status</th>
+                    <th>Amal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>15:23</td>
+                    <td>Mohira Qodirova</td>
+                    <td>+998 90 123 45 67</td>
+                    <td>Frontend</td>
+                    <td>Offlayn</td>
+                    <td>
+                      <span class="admin-status admin-status-new">Yangi</span>
+                    </td>
+                    <td>
+                      <button class="admin-table-action">
+                        Qo‘ng‘iroq qilindi
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>14:10</td>
+                    <td>Javlon Tursunov</td>
+                    <td>+998 93 555 44 11</td>
+                    <td>Python</td>
+                    <td>Onlayn</td>
+                    <td>
+                      <span class="admin-status admin-status-called"
+                        >Qo‘ng‘iroq qilindi</span
+                      >
+                    </td>
+                    <td>
+                      <button class="admin-table-action">
+                        Guruhga qo‘shish
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>12:05</td>
+                    <td>Akmalov Aziz</td>
+                    <td>+998 91 111 22 33</td>
+                    <td>Kids IT</td>
+                    <td>Aralash</td>
+                    <td>
+                      <span class="admin-status admin-status-enrolled"
+                        >Guruhga qo‘shilgan</span
+                      >
+                    </td>
+                    <td><button class="admin-table-action">Yopish</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- PAYMENTS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-payments"
+            data-section-name="To'lovlar"
+          >
+            <div class="admin-section-header">
+              <h1>💰 To'lovlar</h1>
+              <p>
+                Barcha talabalar to'lov tarixi, naqd va onlayn to'lovlar,
+                qarzdorlik nazorati.
+              </p>
+            </div>
+
+            <!-- Stats cards -->
+            <div class="admin-stats-row" style="margin-bottom: 20px">
+              <div class="admin-stat-card">
+                <span class="admin-stat-value" style="color: #4ade80">💵</span>
+                <span class="admin-stat-label">Naqd</span>
+              </div>
+              <div class="admin-stat-card">
+                <span class="admin-stat-value" style="color: #60a5fa">💳</span>
+                <span class="admin-stat-label">Payme/Click</span>
+              </div>
+              <div class="admin-stat-card">
+                <span class="admin-stat-value" style="color: #a78bfa">📱</span>
+                <span class="admin-stat-label">Uzcard/Humo</span>
+              </div>
+            </div>
+
+            <!-- Add payment button -->
+            <button
+              class="admin-btn admin-btn-primary"
+              id="add-payment-btn"
+              style="margin-bottom: 20px"
+            >
+              ➕ Yangi to'lov qo'shish
+            </button>
+
+            <!-- Recent payments table -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2>📝 So'nggi to'lovlar</h2>
+                <p>Oxirgi 15 ta to'lov operatsiyasi</p>
+              </div>
+              <div class="admin-table-wrapper admin-table-compact">
+                <table class="admin-table" id="payments-table">
+                  <thead>
+                    <tr>
+                      <th>Sana</th>
+                      <th>Talaba</th>
+                      <th>Summa</th>
+                      <th>Usul</th>
+                      <th>Status</th>
+                      <th>Tahrirlash</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamic content -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Student payment summary -->
+            <div class="admin-card" style="margin-top: 20px">
+              <div class="admin-card-header">
+                <h2>👥 Talabalar to'lov holati</h2>
+                <p>
+                  Barcha talabalar (faol, bitirgan, muzlatilgan) to'lov balansi
+                </p>
+              </div>
+              <div id="student-payment-summary">
+                <!-- Dynamic content -->
+              </div>
+            </div>
+          </section>
+
+          <!-- ATTENDANCE SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-attendance"
+            data-section-name="Davomat"
+          >
+            <div class="admin-section-header">
+              <h1>📋 Davomat</h1>
+              <p>
+                Real vaqtda davomat qilish. Guruhni tanlang va talabalarning
+                borligini belgilang.
+              </p>
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h2>Guruhni tanlang</h2>
+                  <p>Bugungi dars uchun davomat qiling</p>
+                </div>
+                <div class="admin-form-group">
+                  <select id="attendance-group-select" class="admin-select">
+                    <option value="">-- Guruh tanlang --</option>
+                  </select>
+                </div>
+
+                <div
+                  id="attendance-students-list"
+                  class="attendance-students-list"
+                >
+                  <!-- Talabalar ro'yxati JS orqali yuklanadi -->
+                  <div class="attendance-placeholder">
+                    👆 Guruh tanlang va talabalar ro'yxati ko'rinadi
+                  </div>
+                </div>
+
+                <div
+                  id="attendance-actions"
+                  class="attendance-actions"
+                  style="display: none"
+                >
+                  <button
+                    id="attendance-save-btn"
+                    class="admin-btn admin-btn-primary"
+                  >
+                    ✅ Davomatni saqlash
+                  </button>
+                  <button id="attendance-select-all" class="admin-btn">
+                    ☑️ Hammasini belgilash
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <div class="admin-card-header">
+                  <h2>Bugungi statistika</h2>
+                  <p>Barcha guruhlar bo'yicha davomat</p>
+                </div>
+                <div id="attendance-today-stats" class="attendance-today-stats">
+                  <!-- JS orqali yuklanadi -->
+                  <div class="attendance-placeholder">
+                    Hali davomat qilinmagan
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- VIDEO DARSLAR SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-videos"
+            data-section-name="Video Darslar"
+          >
+            <div class="admin-section-header">
+              <h1>🎬 Video Darslar Boshqaruvi</h1>
+              <p>
+                Kurslar uchun YouTube video darslarni qo'shish va boshqarish
+              </p>
+            </div>
+
+            <div class="admin-card" style="margin-bottom: 24px">
+              <h2>➕ Yangi Video Qo'shish</h2>
+              <form id="add-video-form" class="admin-form-grid">
+                <div class="admin-form-group">
+                  <label>📚 Kurs</label>
+                  <select
+                    id="video-course-select"
+                    class="admin-select"
+                    required
+                  >
+                    <option value="">Kurs tanlang</option>
+                    <!-- Dynamic courses loaded by JS -->
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label>🎬 Video nomi</label>
+                  <input
+                    type="text"
+                    id="video-title"
+                    class="admin-input"
+                    placeholder="Masalan: React asoslari - 1-dars"
+                    required
+                  />
+                </div>
+                <div class="admin-form-group">
+                  <label>🔗 YouTube Video ID</label>
+                  <input
+                    type="text"
+                    id="video-youtube-id"
+                    class="admin-input"
+                    placeholder="Masalan: dQw4w9WgXcQ"
+                    required
+                  />
+                  <small class="help-text"
+                    >youtube.com/watch?v=<strong>VIDEO_ID</strong> dan
+                    oling</small
+                  >
+                </div>
+                <div class="admin-form-group">
+                  <label>⏱️ Davomiyligi</label>
+                  <input
+                    type="text"
+                    id="video-duration"
+                    class="admin-input"
+                    placeholder="Masalan: 1:30:00"
+                    required
+                  />
+                </div>
+                <div class="admin-form-actions">
+                  <button type="submit" class="admin-btn admin-btn-primary">
+                    ➕ Video Qo'shish
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2>📋 Barcha Videolar</h2>
+                <select
+                  id="filter-video-course"
+                  class="admin-select"
+                  style="width: 200px"
+                >
+                  <option value="">Barcha kurslar</option>
+                  <!-- Dynamic courses loaded by JS -->
+                </select>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table" id="videos-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Preview</th>
+                      <th>Nomi</th>
+                      <th>Kurs</th>
+                      <th>Davomiyligi</th>
+                      <th>Amallar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="videos-table-body">
+                    <!-- Dynamic -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ADMINS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-admins"
+            data-section-name="Adminlar"
+          >
+            <div class="admin-section-header">
+              <h1>👤 Admin foydalanuvchilar</h1>
+              <p>Adminlar ro'yxati, rollar va huquqlar, login tarixi.</p>
+            </div>
+
+            <button
+              class="admin-btn admin-btn-primary"
+              id="add-admin-btn"
+              style="margin-bottom: 20px"
+            >
+              ➕ Yangi admin qo'shish
+            </button>
+
+            <div class="admin-grid-2">
+              <div class="admin-card">
+                <h2>👥 Adminlar ro'yxati</h2>
+                <div class="admin-table-wrapper">
+                  <table class="admin-table" id="admins-table">
+                    <thead>
+                      <tr>
+                        <th>Ism</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Status</th>
+                        <th>Oxirgi login</th>
+                        <th>Amallar</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admins-table-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <h2>📜 Login tarixi</h2>
+                <div
+                  class="admin-table-wrapper"
+                  style="max-height: 350px; overflow-y: auto"
+                >
+                  <table class="admin-table" id="login-history-table">
+                    <thead>
+                      <tr>
+                        <th>Vaqt</th>
+                        <th>Admin</th>
+                        <th>Amal</th>
+                        <th>IP</th>
+                        <th>Brauzer</th>
+                      </tr>
+                    </thead>
+                    <tbody id="login-history-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-card" style="margin-top: 20px">
+              <h2>🔐 Rollar va huquqlar</h2>
+              <div class="roles-grid">
+                <div class="role-card role-super">
+                  <h3>👑 Super Admin</h3>
+                  <ul>
+                    <li>✅ Barcha bo'limlarga kirish</li>
+                    <li>✅ Adminlarni boshqarish</li>
+                    <li>✅ Sozlamalarni o'zgartirish</li>
+                    <li>✅ Ma'lumotlarni o'chirish</li>
+                  </ul>
+                </div>
+                <div class="role-card role-admin">
+                  <h3>🛡️ Admin</h3>
+                  <ul>
+                    <li>✅ Talabalar/Guruhlarni boshqarish</li>
+                    <li>✅ To'lovlarni kiritish</li>
+                    <li>✅ Arizalarni ko'rish</li>
+                    <li>❌ Adminlarni boshqarish</li>
+                  </ul>
+                </div>
+                <div class="role-card role-viewer">
+                  <h3>👁️ Ko'ruvchi</h3>
+                  <ul>
+                    <li>✅ Ma'lumotlarni ko'rish</li>
+                    <li>❌ O'zgartirishlar kiritish</li>
+                    <li>❌ Sozlamalar</li>
+                    <li>❌ Adminlarni boshqarish</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add Admin Modal -->
+            <div
+              class="admin-modal-overlay"
+              id="admin-modal-overlay"
+              style="display: none"
+            >
+              <div class="admin-modal" id="admin-modal">
+                <div class="admin-modal-header">
+                  <h2 id="admin-modal-title">➕ Yangi admin qo'shish</h2>
+                  <button class="admin-modal-close" id="admin-modal-close">
+                    ✕
+                  </button>
+                </div>
+                <form id="admin-form" class="admin-modal-body">
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>To'liq ism *</label>
+                      <input
+                        type="text"
+                        id="admin-fullname"
+                        class="admin-input"
+                        required
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Login (username) *</label>
+                      <input
+                        type="text"
+                        id="admin-username"
+                        class="admin-input"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Email *</label>
+                      <input
+                        type="email"
+                        id="admin-email"
+                        class="admin-input"
+                        required
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Rol *</label>
+                      <select id="admin-role" class="admin-input" required>
+                        <option value="admin">🛡️ Admin</option>
+                        <option value="viewer">👁️ Ko'ruvchi</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Parol *</label>
+                      <input
+                        type="password"
+                        id="admin-password"
+                        class="admin-input"
+                        placeholder="Kamida 6 ta belgi"
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Parolni tasdiqlash *</label>
+                      <input
+                        type="password"
+                        id="admin-password-confirm"
+                        class="admin-input"
+                      />
+                    </div>
+                  </div>
+                  <input type="hidden" id="admin-edit-id" value="" />
+                  <div class="admin-modal-footer">
+                    <button
+                      type="button"
+                      class="admin-btn admin-btn-secondary"
+                      id="admin-cancel-btn"
+                    >
+                      Bekor qilish
+                    </button>
+                    <button type="submit" class="admin-btn admin-btn-primary">
+                      💾 Saqlash
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <!-- SETTINGS SECTION - COMPREHENSIVE -->
+          <section
+            class="admin-section"
+            id="admin-section-settings"
+            data-section-name="Sozlamalar"
+          >
+            <div class="admin-section-header">
+              <h1>⚙️ Sozlamalar</h1>
+              <p>
+                Portal, tashqi ko'rinish, til, xavfsizlik, bildirishnomalar,
+                integratsiyalar va tizim sozlamalari.
+              </p>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="settings-tabs">
+              <button class="settings-tab active" data-tab="portal">
+                🏢 Portal
+              </button>
+              <button class="settings-tab" data-tab="appearance">
+                🎨 Ko'rinish
+              </button>
+              <button class="settings-tab" data-tab="localization">
+                🌐 Til va format
+              </button>
+              <button class="settings-tab" data-tab="security">
+                🔐 Xavfsizlik
+              </button>
+              <button class="settings-tab" data-tab="notifications">
+                🔔 Bildirishnomalar
+              </button>
+              <button class="settings-tab" data-tab="integrations">
+                🔗 Integratsiyalar
+              </button>
+              <button class="settings-tab" data-tab="data">
+                💾 Ma'lumotlar
+              </button>
+              <button class="settings-tab" data-tab="system">📊 Tizim</button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="settings-tab-content active" id="settings-tab-portal">
+              <div class="admin-card">
+                <h2>🏢 Portal ma'lumotlari</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Portal nomi</label>
+                    <input
+                      type="text"
+                      id="set-portalName"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Tavsif</label>
+                    <input
+                      type="text"
+                      id="set-portalDescription"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Telefon</label>
+                    <input
+                      type="text"
+                      id="set-contactPhone"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      id="set-contactEmail"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-group">
+                  <label>Manzil</label>
+                  <input
+                    type="text"
+                    id="set-contactAddress"
+                    class="admin-input"
+                    value=""
+                  />
+                </div>
+                <h3 style="margin-top: 20px">Ijtimoiy tarmoqlar</h3>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Telegram</label>
+                    <input
+                      type="url"
+                      id="set-socialTelegram"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Instagram</label>
+                    <input
+                      type="url"
+                      id="set-socialInstagram"
+                      class="admin-input"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-group">
+                  <label>YouTube</label>
+                  <input
+                    type="url"
+                    id="set-socialYoutube"
+                    class="admin-input"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-appearance">
+              <div class="admin-card">
+                <h2>🎨 Tashqi ko'rinish</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Asosiy rang</label>
+                    <input
+                      type="color"
+                      id="set-primaryColor"
+                      class="admin-input"
+                      value="#3b82f6"
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-group">
+                  <label>Accent rang</label>
+                  <input
+                    type="color"
+                    id="set-accentColor"
+                    class="admin-input"
+                    value="#8b5cf6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-localization">
+              <div class="admin-card">
+                <h2>🌐 Til va format</h2>
+                <p
+                  style="
+                    margin-bottom: 16px;
+                    color: var(--text-secondary);
+                    font-size: 0.9rem;
+                  "
+                >
+                  Portal va admin panel uchun to'liq til sozlamalari. Real
+                  vaqtda o'zgarishlar ko'rinadi.
+                </p>
+
+                <!-- Translation Management -->
+                <div
+                  style="
+                    margin-bottom: 24px;
+                    padding: 16px;
+                    background: rgba(59, 130, 246, 0.1);
+                    border-radius: 8px;
+                    border: 1px solid rgba(59, 130, 246, 0.3);
+                  "
+                >
+                  <h3 style="margin: 0 0 12px 0; font-size: 1rem">
+                    📝 Tarjima boshqaruvi
+                  </h3>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                    <button id="edit-translations-btn" class="admin-btn">
+                      📝 Matnlarni tahrirlash
+                    </button>
+                    <button
+                      id="export-translations-btn"
+                      class="admin-btn"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        border-color: rgba(16, 185, 129, 0.4);
+                      "
+                    >
+                      📥 Export (JSON)
+                    </button>
+                    <button
+                      id="import-translations-btn"
+                      class="admin-btn"
+                      style="
+                        background: rgba(251, 191, 36, 0.2);
+                        border-color: rgba(251, 191, 36, 0.4);
+                      "
+                    >
+                      📤 Import (JSON)
+                    </button>
+                    <input
+                      type="file"
+                      id="import-translations-file"
+                      accept=".json"
+                      style="display: none"
+                    />
+                    <button
+                      id="reset-translations-btn"
+                      class="admin-btn"
+                      style="
+                        background: rgba(239, 68, 68, 0.2);
+                        border-color: rgba(239, 68, 68, 0.4);
+                      "
+                    >
+                      🔄 Standartga qaytarish
+                    </button>
+                  </div>
+                  <div
+                    id="translations-stats"
+                    style="
+                      margin-top: 12px;
+                      font-size: 0.85rem;
+                      color: var(--text-secondary);
+                    "
+                  >
+                    <span
+                      >📊 Jami:
+                      <strong id="total-translations-count">0</strong> ta</span
+                    >
+                    <span style="margin-left: 16px"
+                      >✏️ Tahrirlangan:
+                      <strong id="custom-translations-count">0</strong> ta</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Translation Table -->
+                <div class="admin-card" style="margin-top: 20px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="margin: 0;">📋 Tarjimalar ro'yxati</h3>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                      <!-- Search -->
+                      <input 
+                        type="text" 
+                        id="translation-search" 
+                        class="admin-input" 
+                        placeholder="🔍 Qidirish..." 
+                        style="width: 250px; margin: 0;"
+                      />
+                      <!-- Category Filter -->
+                      <select id="translation-category-filter" class="admin-select" style="width: 180px; margin: 0;">
+                        <option value="all">📂 Barcha bo'limlar</option>
+                        <option value="navigation">🧭 Navigation</option>
+                        <option value="common">🔤 Common</option>
+                        <option value="hero">🎯 Hero</option>
+                        <option value="courses">📚 Courses</option>
+                        <option value="auth">🔐 Auth</option>
+                        <option value="footer">📄 Footer</option>
+                        <option value="days">📅 Days</option>
+                        <option value="payment">💳 Payment</option>
+                        <option value="enroll">✍️ Enrollment</option>
+                        <option value="other">📦 Boshqa</option>
+                      </select>
+                      <!-- Export CSV Button -->
+                      <button id="export-csv-btn" class="admin-btn" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
+                        📊 CSV
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Stats Bar -->
+                  <div style="
+                    display: flex; 
+                    gap: 20px; 
+                    padding: 12px; 
+                    background: rgba(59, 130, 246, 0.05); 
+                    border-radius: 8px; 
+                    margin-bottom: 16px;
+                    font-size: 0.85rem;
+                  ">
+                    <span>
+                      📊 Jami: <strong id="translation-total">0</strong>
+                    </span>
+                    <span>
+                      🇺🇿 O'zbek: <strong id="translation-uz-count">0</strong>
+                    </span>
+                    <span>
+                      🇬🇧 English: <strong id="translation-en-count">0</strong>
+                    </span>
+                    <span style="margin-left: auto;">
+                      🔍 Ko'rsatilgan: <strong id="translation-filtered">0</strong>
+                    </span>
+                  </div>
+
+                  <!-- Table Container with scroll -->
+                  <div style="max-height: 500px; overflow-y: auto; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px;">
+                    <table class="admin-table" id="translations-table">
+                      <thead style="position: sticky; top: 0; background: #0f172a; z-index: 1;">
+                        <tr>
+                          <th style="width: 50px;">#</th>
+                          <th style="width: 150px;">Bo'lim</th>
+                          <th style="width: 40%;">🇺🇿 O'zbekcha</th>
+                          <th style="width: 40%;">🇬🇧 Inglizcha</th>
+                        </tr>
+                      </thead>
+                      <tbody id="translations-table-body">
+                        <tr>
+                          <td colspan="4" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">⏳</div>
+                            <div>Yuklanmoqda...</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Pagination (if needed in future) -->
+                  <div style="margin-top: 12px; text-align: center; font-size: 0.85rem; color: var(--text-secondary);">
+                    <span id="translation-page-info"></span>
+                  </div>
+                </div>
+
+                <!-- Language Settings -->
+                <div class="admin-form-row" style="margin-top: 24px;">
+                  <div class="admin-form-group">
+                    <label>Asosiy til (Portal)</label>
+                    <select id="set-language" class="admin-select">
+                      <option value="uz">🇺🇿 O'zbekcha</option>
+                      <option value="ru">🇷🇺 Ruscha</option>
+                      <option value="en">🇬🇧 Inglizcha</option>
+                    </select>
+                    <small
+                      style="
+                        color: var(--text-muted);
+                        font-size: 0.75rem;
+                        margin-top: 4px;
+                        display: block;
+                      "
+                    >
+                      Asosiy sahifaning default tili
+                    </small>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Admin panel tili</label>
+                    <select id="set-admin-language" class="admin-select">
+                      <option value="uz">🇺🇿 O'zbekcha</option>
+                      <option value="ru">🇷🇺 Ruscha</option>
+                      <option value="en">🇬🇧 Inglizcha</option>
+                    </select>
+                    <small
+                      style="
+                        color: var(--text-muted);
+                        font-size: 0.75rem;
+                        margin-top: 4px;
+                        display: block;
+                      "
+                    >
+                      Admin panel uchun alohida til
+                    </small>
+                  </div>
+                </div>
+
+                <!-- Date & Time Format -->
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Sana formati</label>
+                    <select id="set-dateFormat" class="admin-select">
+                      <option value="DD.MM.YYYY">
+                        DD.MM.YYYY (14.12.2024)
+                      </option>
+                      <option value="MM/DD/YYYY">
+                        MM/DD/YYYY (12/14/2024)
+                      </option>
+                      <option value="YYYY-MM-DD">
+                        YYYY-MM-DD (2024-12-14)
+                      </option>
+                      <option value="DD MMMM YYYY">
+                        DD MMMM YYYY (14 Dekabr 2024)
+                      </option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Vaqt formati</label>
+                    <select id="set-timeFormat" class="admin-select">
+                      <option value="24">24 soat (14:30)</option>
+                      <option value="12">12 soat (2:30 PM)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Currency & Timezone -->
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Valyuta belgisi</label>
+                    <input
+                      type="text"
+                      id="set-currencySymbol"
+                      class="admin-input"
+                      value="so'm"
+                      placeholder="so'm, $, €, ₽"
+                    />
+                    <small
+                      style="
+                        color: var(--text-muted);
+                        font-size: 0.75rem;
+                        margin-top: 4px;
+                        display: block;
+                      "
+                    >
+                      To'lovlarda ko'rsatiladigan valyuta
+                    </small>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Vaqt zonasi</label>
+                    <select id="set-timezone" class="admin-select">
+                      <option value="Asia/Tashkent">
+                        Asia/Tashkent (UTC+5)
+                      </option>
+                      <option value="Asia/Samarkand">
+                        Asia/Samarkand (UTC+5)
+                      </option>
+                      <option value="Europe/Moscow">
+                        Europe/Moscow (UTC+3)
+                      </option>
+                      <option value="UTC">UTC (UTC+0)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Number Format -->
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Raqam formatlash</label>
+                    <select id="set-numberFormat" class="admin-select">
+                      <option value="space">1 000 000 (bo'shliq)</option>
+                      <option value="comma">1,000,000 (vergul)</option>
+                      <option value="dot">1.000.000 (nuqta)</option>
+                      <option value="none">1000000 (formatsiz)</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Avtomatik tarjima</label>
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-autoTranslate" />
+                      <span>Yo'qolgan tarjimalarni avtomatik to'ldirish</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Language Preview -->
+                <div
+                  style="
+                    margin-top: 24px;
+                    padding: 16px;
+                    background: rgba(148, 163, 184, 0.1);
+                    border-radius: 8px;
+                  "
+                >
+                  <h3 style="margin: 0 0 12px 0; font-size: 0.95rem">
+                    👁️ Ko'rinish namunasi
+                  </h3>
+                  <div
+                    id="language-preview"
+                    style="font-size: 0.9rem; color: var(--text-secondary)"
+                  >
+                    <div>
+                      <strong>Sana:</strong> <span id="preview-date">—</span>
+                    </div>
+                    <div style="margin-top: 8px">
+                      <strong>Vaqt:</strong> <span id="preview-time">—</span>
+                    </div>
+                    <div style="margin-top: 8px">
+                      <strong>Summa:</strong> <span id="preview-amount">—</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal for editing translations -->
+              <div
+                id="translations-modal"
+                class="admin-modal-overlay"
+                style="display: none; z-index: 9999"
+              >
+                <div class="admin-modal-content" style="max-width: 700px">
+                  <div class="admin-modal-header">
+                    <h2>📝 Matnlarni tahrirlash</h2>
+                    <button
+                      class="admin-modal-close"
+                      id="translations-modal-close"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div
+                    class="admin-modal-body"
+                    id="translations-modal-body"
+                    style="max-height: 60vh; overflow: auto"
+                  ></div>
+                  <div class="admin-modal-footer" style="text-align: right">
+                    <button class="admin-btn" id="save-translations-btn">
+                      💾 Saqlash
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-security">
+              <!-- Basic Security Settings -->
+              <div class="admin-card">
+                <h2>🔐 Asosiy Xavfsizlik</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Sessiya muddati (daqiqa)</label>
+                    <input
+                      type="number"
+                      id="set-sessionTimeout"
+                      class="admin-input"
+                      value="30"
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Max login urinishlari</label>
+                    <input
+                      type="number"
+                      id="set-maxLoginAttempts"
+                      class="admin-input"
+                      value="5"
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Bloklash muddati (daqiqa)</label>
+                    <input
+                      type="number"
+                      id="set-lockoutDuration"
+                      class="admin-input"
+                      value="15"
+                    />
+                    <small class="help-text">Noto'g'ri urinishlardan keyin</small>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>&nbsp;</label>
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-autoLogoutInactive" checked />
+                      <span>Nofaol sessiyani avtomatik yakunlash</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Password Policy -->
+              <div class="admin-card" style="margin-top: 20px">
+                <h2>🔑 Parol Siyosati</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>Min parol uzunligi</label>
+                    <input
+                      type="number"
+                      id="set-passwordMinLength"
+                      class="admin-input"
+                      value="8"
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Parol muddati (kun)</label>
+                    <input
+                      type="number"
+                      id="set-passwordExpiry"
+                      class="admin-input"
+                      value="90"
+                      placeholder="0 = cheksiz"
+                    />
+                  </div>
+                </div>
+                <div class="settings-checkboxes" style="margin-top: 12px">
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-requireStrongPassword" />
+                    <span>Kuchli parol talab qilinsin (raqam + katta harf + belgi)</span>
+                  </label>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-preventPasswordReuse" />
+                    <span>Oxirgi 5 ta parolni qayta ishlatishga ruxsat bermang</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Two-Factor Authentication -->
+              <div class="admin-card" style="margin-top: 20px">
+                <h2>🔐 Ikki Bosqichli Autentifikatsiya (2FA)</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-2faEnabled" />
+                      <span><strong>2FA yoqish</strong> - barcha adminlar uchun</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>2FA usuli</label>
+                    <select id="set-2faMethod" class="admin-select">
+                      <option value="email">📧 Email orqali kod</option>
+                      <option value="sms">📱 SMS orqali kod</option>
+                      <option value="app">📲 Authenticator ilovasi (TOTP)</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Kod amal qilish muddati (soniya)</label>
+                    <input
+                      type="number"
+                      id="set-2faCodeExpiry"
+                      class="admin-input"
+                      value="300"
+                    />
+                  </div>
+                </div>
+                <div class="security-status" id="2fa-status" style="margin-top: 12px; padding: 12px; background: var(--admin-bg-tertiary); border-radius: 8px;">
+                  <span style="color: var(--admin-danger)">⚠️ 2FA hozirda O'CHIRILGAN</span>
+                </div>
+              </div>
+
+              <!-- IP Whitelist -->
+              <div class="admin-card" style="margin-top: 20px">
+                <h2>🌐 IP Cheklovlari</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-ipWhitelistEnabled" />
+                      <span>IP whitelist yoqish (faqat ruxsat berilgan IP lar)</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group" style="flex: 2">
+                    <label>Ruxsat berilgan IP manzillar</label>
+                    <textarea
+                      id="set-ipWhitelist"
+                      class="admin-textarea"
+                      rows="3"
+                      placeholder="Har bir qatorda bitta IP yoki CIDR (masalan: 192.168.1.0/24)"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-blockSuspiciousIp" checked />
+                      <span>Shubhali IP larni avtomatik bloklash</span>
+                    </label>
+                  </div>
+                </div>
+                <div id="current-ip-info" style="margin-top: 12px; padding: 12px; background: var(--admin-bg-tertiary); border-radius: 8px;">
+                  <span>🌐 Sizning IP: <strong id="user-current-ip">Aniqlanmoqda...</strong></span>
+                </div>
+              </div>
+
+              <!-- Active Sessions -->
+              <div class="admin-card" style="margin-top: 20px">
+                <h2>📱 Faol Sessiyalar</h2>
+                <p style="margin-bottom: 12px; color: var(--admin-text-muted)">Hozirda tizimga kirgan barcha qurilmalar</p>
+                <div id="active-sessions-list" class="active-sessions-list">
+                  <div class="session-item current-session">
+                    <div class="session-info">
+                      <span class="session-device">🖥️ Windows • Chrome</span>
+                      <span class="session-details">Hozirgi sessiya • Toshkent, UZ</span>
+                    </div>
+                    <span class="session-status active">Faol</span>
+                  </div>
+                </div>
+                <button class="admin-btn admin-btn-danger" id="logout-all-sessions" style="margin-top: 12px">
+                  🚪 Barcha boshqa sessiyalardan chiqish
+                </button>
+              </div>
+
+              <!-- Security Logs -->
+              <div class="admin-card" style="margin-top: 20px">
+                <h2>📜 Xavfsizlik loglari</h2>
+                <div class="admin-table-wrapper" style="max-height: 250px; overflow-y: auto">
+                  <table class="admin-table" id="security-logs-table">
+                    <thead>
+                      <tr>
+                        <th>Vaqt</th>
+                        <th>Hodisa</th>
+                        <th>Foydalanuvchi</th>
+                        <th>IP</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="security-logs-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Save Button -->
+              <button class="admin-btn admin-btn-primary" id="save-security-settings" style="margin-top: 20px; width: 100%">
+                💾 Xavfsizlik sozlamalarini saqlash
+              </button>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-notifications">
+              <div class="admin-card">
+                <h2>🔔 Bildirishnomalar</h2>
+                <div class="settings-checkboxes">
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-notifyOnNewApplication" />
+                    <span>Yangi ariza tushganda</span>
+                  </label>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-notifyOnPayment" />
+                    <span>To'lov qilinganda</span>
+                  </label>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-notifyOnNewGroup" />
+                    <span>Yangi guruh ochilganda</span>
+                  </label>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-emailNotifications" />
+                    <span>📧 Email bildirishnomalar</span>
+                  </label>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-smsNotifications" />
+                    <span>📱 SMS bildirishnomalar</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-integrations">
+              <div class="admin-card">
+                <h2>💳 To'lov tizimlari</h2>
+                <div class="integration-block">
+                  <h3>Payme</h3>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-paymeEnabled" />
+                    <span>Payme yoqilgan</span>
+                  </label>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Merchant ID</label>
+                      <input
+                        type="text"
+                        id="set-paymeMerchantId"
+                        class="admin-input"
+                        placeholder="merchant_id"
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Secret Key</label>
+                      <input
+                        type="password"
+                        id="set-paymeSecretKey"
+                        class="admin-input"
+                        placeholder="••••••••"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="integration-block">
+                  <h3>Click</h3>
+                  <label class="settings-checkbox">
+                    <input type="checkbox" id="set-clickEnabled" />
+                    <span>Click yoqilgan</span>
+                  </label>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Merchant ID</label>
+                      <input
+                        type="text"
+                        id="set-clickMerchantId"
+                        class="admin-input"
+                        placeholder="merchant_id"
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Secret Key</label>
+                      <input
+                        type="password"
+                        id="set-clickSecretKey"
+                        class="admin-input"
+                        placeholder="••••••••"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <h2 style="margin-top: 24px">📨 SMS va Email</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>SMS Gateway</label>
+                    <select id="set-smsGateway" class="admin-select">
+                      <option value="eskiz">Eskiz.uz</option>
+                      <option value="playmobile">Play Mobile</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>SMS API Key</label>
+                    <input
+                      type="password"
+                      id="set-smsApiKey"
+                      class="admin-input"
+                      placeholder="API key"
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>SMTP Host</label>
+                    <input
+                      type="text"
+                      id="set-smtpHost"
+                      class="admin-input"
+                      placeholder="smtp.gmail.com"
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>SMTP Port</label>
+                    <input
+                      type="number"
+                      id="set-smtpPort"
+                      class="admin-input"
+                      value="587"
+                    />
+                  </div>
+                </div>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label>SMTP User</label>
+                    <input
+                      type="text"
+                      id="set-smtpUser"
+                      class="admin-input"
+                      placeholder="email@gmail.com"
+                    />
+                  </div>
+                  <div class="admin-form-group">
+                    <label>SMTP Password</label>
+                    <input
+                      type="password"
+                      id="set-smtpPassword"
+                      class="admin-input"
+                      placeholder="••••••••"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-data">
+              <div class="admin-card">
+                <h2>💾 Ma'lumotlar boshqaruvi</h2>
+                <div class="admin-form-row">
+                  <div class="admin-form-group">
+                    <label class="settings-checkbox">
+                      <input type="checkbox" id="set-autoBackup" />
+                      <span>Avtomatik backup</span>
+                    </label>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Backup chastotasi</label>
+                    <select id="set-backupFrequency" class="admin-select">
+                      <option value="daily">Har kuni</option>
+                      <option value="weekly">Har hafta</option>
+                      <option value="monthly">Har oy</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="data-actions">
+                  <button
+                    class="admin-btn admin-btn-primary"
+                    id="btn-backup-data"
+                    onclick="window.backupAllData()"
+                  >
+                    💾 Backup yuklash
+                  </button>
+                  <label
+                    class="admin-btn admin-btn-secondary"
+                    style="cursor: pointer"
+                  >
+                    📂 Backupdan tiklash
+                    <input
+                      type="file"
+                      id="backup-file-input"
+                      accept=".json"
+                      style="display: none"
+                      onchange="window.restoreFromBackup(this.files[0])"
+                    />
+                  </label>
+                  <button class="admin-btn" id="btn-export-json">
+                    📥 JSON export
+                  </button>
+                  <button class="admin-btn" id="btn-export-excel">
+                    📊 Excel export
+                  </button>
+                  <button
+                    class="admin-btn admin-btn-danger"
+                    id="btn-reset-data"
+                  >
+                    🗑️ Ma'lumotlarni tozalash
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-tab-content" id="settings-tab-system">
+              <div class="admin-card">
+                <h2>📊 Tizim ma'lumotlari</h2>
+                <div class="system-info-grid">
+                  <div class="system-info-item">
+                    <span class="system-info-label">Versiya</span>
+                    <span class="system-info-value" id="sys-version"
+                      >2.1.0</span
+                    >
+                  </div>
+                  <div class="system-info-item">
+                    <span class="system-info-label">Oxirgi backup</span>
+                    <span class="system-info-value" id="sys-lastBackup">—</span>
+                  </div>
+                  <div class="system-info-item">
+                    <span class="system-info-label">LocalStorage hajmi</span>
+                    <span class="system-info-value" id="sys-storageSize"
+                      >—</span
+                    >
+                  </div>
+                  <div class="system-info-item">
+                    <span class="system-info-label">Talabalar soni</span>
+                    <span class="system-info-value" id="sys-studentsCount"
+                      >—</span
+                    >
+                  </div>
+                  <div class="system-info-item">
+                    <span class="system-info-label">Guruhlar soni</span>
+                    <span class="system-info-value" id="sys-groupsCount"
+                      >—</span
+                    >
+                  </div>
+                  <div class="system-info-item">
+                    <span class="system-info-label">Brauzer</span>
+                    <span class="system-info-value" id="sys-browser">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="settings-save-bar">
+              <button
+                class="admin-btn admin-btn-primary"
+                id="settings-save-all"
+              >
+                💾 Barcha sozlamalarni saqlash
+              </button>
+              <span
+                class="settings-save-message"
+                id="settings-save-message"
+              ></span>
+            </div>
+          </section>
+
+          <!-- SCHEDULE SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-schedule"
+            data-section-name="Jadval"
+          >
+            <div class="admin-section-header">
+              <h1>📅 Dars jadvali</h1>
+              <p>
+                Haftalik dars jadvali - guruhlar, mentorlar va xonalar bo'yicha.
+              </p>
+            </div>
+
+            <div class="schedule-controls">
+              <div class="schedule-week-nav">
+                <button class="admin-btn" id="schedule-prev-week">
+                  ⬅ Oldingi hafta
+                </button>
+                <span class="schedule-week-label" id="schedule-week-label"
+                  >Bu hafta</span
+                >
+                <button class="admin-btn" id="schedule-next-week">
+                  Keyingi hafta ➡
+                </button>
+              </div>
+              <button class="admin-btn admin-btn-primary" id="add-schedule-btn">
+                ➕ Dars qo'shish
+              </button>
+            </div>
+
+            <div class="schedule-grid" id="schedule-grid">
+              <div class="schedule-header">
+                <div class="schedule-time-col">Vaqt</div>
+                <div class="schedule-day-col">Dushanba</div>
+                <div class="schedule-day-col">Seshanba</div>
+                <div class="schedule-day-col">Chorshanba</div>
+                <div class="schedule-day-col">Payshanba</div>
+                <div class="schedule-day-col">Juma</div>
+                <div class="schedule-day-col">Shanba</div>
+              </div>
+              <div class="schedule-body" id="schedule-body">
+                <!-- Dynamic content -->
+              </div>
+            </div>
+
+            <!-- Add Lesson Modal -->
+            <div
+              class="admin-modal-overlay"
+              id="schedule-modal-overlay"
+              style="display: none"
+            >
+              <div
+                class="admin-modal-content"
+                id="schedule-modal"
+                style="max-width: 600px"
+              >
+                <div class="admin-modal-header">
+                  <h2 id="schedule-modal-title">➕ Yangi dars qo'shish</h2>
+                  <button class="admin-modal-close" id="schedule-modal-close">
+                    ✕
+                  </button>
+                </div>
+                <form id="schedule-form" class="admin-modal-body">
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Hafta kuni *</label>
+                      <select id="schedule-day" class="admin-input" required>
+                        <option value="1">Dushanba</option>
+                        <option value="2">Seshanba</option>
+                        <option value="3">Chorshanba</option>
+                        <option value="4">Payshanba</option>
+                        <option value="5">Juma</option>
+                        <option value="6">Shanba</option>
+                      </select>
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Vaqt *</label>
+                      <select id="schedule-time" class="admin-input" required>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Guruh *</label>
+                      <select id="schedule-group" class="admin-input" required>
+                        <!-- Dynamic groups -->
+                      </select>
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Davomiyligi (daqiqa)</label>
+                      <select id="schedule-duration" class="admin-input">
+                        <option value="60">60 daqiqa (1 soat)</option>
+                        <option value="90" selected>
+                          90 daqiqa (1.5 soat)
+                        </option>
+                        <option value="120">120 daqiqa (2 soat)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="admin-form-row">
+                    <div class="admin-form-group">
+                      <label>Xona *</label>
+                      <input
+                        type="text"
+                        id="schedule-room"
+                        class="admin-input"
+                        placeholder="203, Kids-1..."
+                        required
+                      />
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Mentor *</label>
+                      <select id="schedule-mentor" class="admin-input" required>
+                        <!-- Dynamic mentors -->
+                      </select>
+                    </div>
+                  </div>
+                  <input type="hidden" id="schedule-edit-id" value="" />
+                  <div class="admin-modal-footer">
+                    <button
+                      type="button"
+                      class="admin-btn admin-btn-secondary"
+                      id="schedule-cancel-btn"
+                    >
+                      Bekor qilish
+                    </button>
+                    <button type="submit" class="admin-btn admin-btn-primary">
+                      💾 Saqlash
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <!-- MESSAGES SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-messages"
+            data-section-name="Xabarlar"
+          >
+            <div class="admin-section-header">
+              <h1>💬 SMS va Email xabarlar</h1>
+              <p>
+                Tanlangan guruhlarga yoki individual talabalariga xabar
+                yuborish.
+              </p>
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-card">
+                <h2>📨 Yangi xabar yuborish</h2>
+                <div class="admin-form">
+                  <div class="admin-form-group">
+                    <label>Yuborish usuli</label>
+                    <div class="message-type-selector">
+                      <button class="message-type-btn active" data-type="sms">
+                        📱 SMS
+                      </button>
+                      <button class="message-type-btn" data-type="email">
+                        📧 Email
+                      </button>
+                      <button class="message-type-btn" data-type="both">
+                        📱📧 Ikkalasi
+                      </button>
+                    </div>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Qabul qiluvchilar</label>
+                    <select id="msg-recipients" class="admin-select">
+                      <option value="all">👥 Barcha talabalar</option>
+                      <option value="active">✅ Faqat faol talabalar</option>
+                      <option value="debt">⚠️ Qarzdor talabalar</option>
+                      <option value="group">📚 Guruh bo'yicha</option>
+                    </select>
+                  </div>
+                  <div
+                    class="admin-form-group"
+                    id="msg-group-select"
+                    style="display: none"
+                  >
+                    <label>Guruh tanlash</label>
+                    <select id="msg-group-id" class="admin-select">
+                      <!-- Dynamic -->
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Shablon</label>
+                    <select id="msg-template" class="admin-select">
+                      <option value="">— Bo'sh xabar —</option>
+                      <option value="payment">💰 To'lov eslatmasi</option>
+                      <option value="attendance">📋 Davomat haqida</option>
+                      <option value="lesson">📚 Dars haqida</option>
+                      <option value="holiday">🎉 Bayram tabriki</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Xabar matni</label>
+                    <textarea
+                      id="msg-content"
+                      class="admin-textarea"
+                      rows="5"
+                      placeholder="Xabar matnini kiriting..."
+                    ></textarea>
+                  </div>
+                  <div class="message-preview">
+                    <span class="message-char-count">0 / 160 belgi</span>
+                  </div>
+                  <button
+                    class="admin-btn admin-btn-primary"
+                    id="send-message-btn"
+                  >
+                    📤 Xabar yuborish
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-card">
+                <h2>📜 Yuborilgan xabarlar tarixi</h2>
+                <div
+                  class="admin-table-wrapper admin-table-compact"
+                  style="max-height: 400px; overflow-y: auto"
+                >
+                  <table class="admin-table" id="messages-history-table">
+                    <thead>
+                      <tr>
+                        <th>Sana</th>
+                        <th>Turi</th>
+                        <th>Qabul qiluvchi</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="messages-history-body">
+                      <!-- Dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- REPORTS SECTION -->
+          <section
+            class="admin-section"
+            id="admin-section-reports"
+            data-section-name="Hisobotlar"
+          >
+            <div class="admin-section-header">
+              <h1>📊 Hisobotlar</h1>
+              <p>PDF va Excel formatda turli hisobotlarni yuklab olish.</p>
+            </div>
+
+            <div class="reports-grid">
+              <div class="report-card">
+                <div class="report-icon">👥</div>
+                <h3>Talabalar ro'yxati</h3>
+                <p>Barcha talabalar to'liq ma'lumotlari bilan</p>
+                <div class="report-options">
+                  <select id="report-students-status" class="admin-select">
+                    <option value="all">Hammasi</option>
+                    <option value="active">Faqat faol</option>
+                    <option value="graduated">Bitirganlar</option>
+                  </select>
+                </div>
+                <button
+                  class="admin-btn admin-btn-primary"
+                  data-report="students"
+                >
+                  📥 PDF yuklash
+                </button>
+              </div>
+
+              <div class="report-card">
+                <div class="report-icon">💰</div>
+                <h3>Moliyaviy hisobot</h3>
+                <p>To'lovlar, qarzdorlik va daromad</p>
+                <div class="report-options">
+                  <input
+                    type="month"
+                    id="report-payments-month"
+                    class="admin-input"
+                  />
+                </div>
+                <button
+                  class="admin-btn admin-btn-primary"
+                  data-report="payments"
+                >
+                  📥 PDF yuklash
+                </button>
+              </div>
+
+              <div class="report-card">
+                <div class="report-icon">📋</div>
+                <h3>Davomat hisoboti</h3>
+                <p>Guruhlar bo'yicha davomat statistikasi</p>
+                <div class="report-options">
+                  <select id="report-attendance-group" class="admin-select">
+                    <option value="all">Barcha guruhlar</option>
+                  </select>
+                </div>
+                <button
+                  class="admin-btn admin-btn-primary"
+                  data-report="attendance"
+                >
+                  📥 PDF yuklash
+                </button>
+              </div>
+
+              <div class="report-card">
+                <div class="report-icon">📈</div>
+                <h3>Oylik statistika</h3>
+                <p>O'sish ko'rsatkichlari va trendlar</p>
+                <div class="report-options">
+                  <input
+                    type="month"
+                    id="report-stats-month"
+                    class="admin-input"
+                  />
+                </div>
+                <button
+                  class="admin-btn admin-btn-primary"
+                  data-report="statistics"
+                >
+                  📥 PDF yuklash
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- LOGS SECTION - REAL DATA -->
+          <section
+            class="admin-section"
+            id="admin-section-logs"
+            data-section-name="Aktivlik loglari"
+          >
+            <div class="admin-section-header">
+              <h1>📝 Aktivlik loglari</h1>
+              <p>
+                Admin panel ichidagi barcha amallar tarixi - real vaqtda
+                yangilanadi.
+              </p>
+            </div>
+
+            <div class="admin-filter-presets" style="margin-bottom: 16px">
+              <button class="admin-chip-btn active" data-log-filter="all">
+                Hammasi
+              </button>
+              <button class="admin-chip-btn" data-log-filter="login">
+                🔐 Login
+              </button>
+              <button class="admin-chip-btn" data-log-filter="payment">
+                💰 To'lovlar
+              </button>
+              <button class="admin-chip-btn" data-log-filter="student">
+                👤 Talabalar
+              </button>
+              <button class="admin-chip-btn" data-log-filter="group">
+                👥 Guruhlar
+              </button>
+              <button
+                class="admin-btn admin-btn-sm admin-btn-danger"
+                id="btn-clear-logs"
+                style="margin-left: auto"
+              >
+                🗑️ Loglarni tozalash
+              </button>
+            </div>
+
+            <div class="admin-table-wrapper admin-table-compact">
+              <table class="admin-table" id="logs-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40px">🔔</th>
+                    <th>Vaqt</th>
+                    <th>Admin</th>
+                    <th>Amal</th>
+                    <th>Obyekt</th>
+                    <th>Tafsilot</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-table-body">
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- TALABA PROFILI DRAWER (O‘NG PANEL) -->
+    <div class="admin-drawer-overlay" id="student-drawer-overlay"></div>
+    <aside class="admin-drawer" id="student-drawer">
+      <header class="admin-drawer-header">
+        <div>
+          <h2 id="drawer-student-name">Talaba profili</h2>
+          <p id="drawer-student-id">ID: —</p>
+        </div>
+        <button
+          class="admin-drawer-close"
+          id="student-drawer-close"
+          aria-label="Yopish"
+        >
+          ✕
+        </button>
+      </header>
+
+      <div class="admin-drawer-body">
+        <section class="admin-drawer-section">
+          <h3>Asosiy ma’lumotlar</h3>
+          <div class="admin-drawer-grid">
+            <div>
+              <span class="admin-drawer-label">Telefon</span>
+              <span class="admin-drawer-value" id="drawer-student-phone"
+                >—</span
+              >
+            </div>
+            <div>
+              <span class="admin-drawer-label">Kurs / guruh</span>
+              <span class="admin-drawer-value" id="drawer-student-course"
+                >—</span
+              >
+            </div>
+            <div>
+              <span class="admin-drawer-label">Holat</span>
+              <span class="admin-drawer-value" id="drawer-student-status"
+                >—</span
+              >
+            </div>
+            <div>
+              <span class="admin-drawer-label">To‘lov</span>
+              <span class="admin-drawer-value" id="drawer-student-payment"
+                >—</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-drawer-section">
+          <h3>So‘nggi to‘lovlar (demo)</h3>
+          <ul class="admin-drawer-list" id="drawer-student-payments">
+            <li>
+              Demo: So‘nggi 3 ta to‘lov haqidagi ma’lumotlar bu yerda ko‘rinadi.
+            </li>
+          </ul>
+        </section>
+
+        <section class="admin-drawer-section">
+          <h3>Tez amallar</h3>
+          <div class="admin-drawer-actions">
+            <button class="admin-save-btn admin-drawer-action-btn">
+              💳 To‘lov qo‘shish (demo)
+            </button>
+            <button
+              class="admin-save-btn admin-drawer-action-btn admin-drawer-action-secondary"
+            >
+              ✏️ Statusni o‘zgartirish (demo)
+            </button>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- Shared Database Layer -->
+    <script src="../db.js"></script>
+    <!-- Translations -->
+    <script src="../translations.js"></script>
+    <script src="admin-translations.js"></script>
+    <!-- Admin Modules -->
+    <script src="admin-utils.js"></script>
+    <script src="admin-dashboard.js"></script>
+    <script src="admin-students.js"></script>
+    <script src="admin-payments.js"></script>
+    <script src="admin-groups.js"></script>
+    <!-- ADMIN JS (Main) -->
+    <script src="admin.js"></script>
+
+    <!-- REGISTRATION MODALS (outside all sections) -->
+    <!-- Registration Approval Modal -->
+    <div class="admin-modal" id="approve-modal">
+      <div class="admin-modal-content">
+        <div class="admin-modal-header">
+          <h2>✅ Talabani Tasdiqlash</h2>
+          <button class="admin-modal-close" onclick="closeApproveModal()">
+            ×
+          </button>
+        </div>
+        <div class="admin-modal-body">
+          <p id="approve-student-info"></p>
+          <div class="admin-form-group">
+            <label>Guruh tanlang</label>
+            <select id="approve-group-select" class="admin-select">
+              <option value="">Guruh tanlang...</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label>yoki Yangi guruh yarating</label>
+            <input
+              type="text"
+              id="approve-new-group"
+              class="admin-input"
+              placeholder="Masalan: F-15"
+            />
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button class="admin-btn" onclick="closeApproveModal()">
+            Bekor qilish
+          </button>
+          <button
+            class="admin-btn admin-btn-primary"
+            onclick="confirmApproval()"
+          >
+            ✅ Tasdiqlash
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Reject Modal -->
+    <div class="admin-modal" id="reject-modal">
+      <div class="admin-modal-content">
+        <div class="admin-modal-header">
+          <h2>❌ Arizani Rad Etish</h2>
+          <button class="admin-modal-close" onclick="closeRejectModal()">
+            ×
+          </button>
+        </div>
+        <div class="admin-modal-body">
+          <p id="reject-student-info"></p>
+          <div class="admin-form-group">
+            <label>Rad etish sababi (majburiy)</label>
+            <textarea
+              id="reject-reason"
+              class="admin-textarea"
+              rows="3"
+              placeholder="Masalan: Yosh chegarasi mos emas..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button class="admin-btn" onclick="closeRejectModal()">
+            Bekor qilish
+          </button>
+          <button
+            class="admin-btn admin-btn-danger"
+            onclick="confirmRejection()"
+          >
+            ❌ Rad Etish
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Postpone Modal -->
+    <div class="admin-modal" id="postpone-modal">
+      <div class="admin-modal-content">
+        <div class="admin-modal-header">
+          <h2>⏳ Arizani Kechiktirish</h2>
+          <button class="admin-modal-close" onclick="closePostponeModal()">
+            ×
+          </button>
+        </div>
+        <div class="admin-modal-body">
+          <p id="postpone-student-info"></p>
+          <div class="admin-form-group">
+            <label>Kechiktirilgan sana (majburiy)</label>
+            <input type="date" id="postpone-date" class="admin-input" />
+          </div>
+          <div class="admin-form-group">
+            <label>Izoh (ixtiyoriy)</label>
+            <textarea
+              id="postpone-note"
+              class="admin-textarea"
+              rows="2"
+              placeholder="Masalan: Yangi guruh ochilganda..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button class="admin-btn" onclick="closePostponeModal()">
+            Bekor qilish
+          </button>
+          <button
+            class="admin-btn admin-btn-warning"
+            onclick="confirmPostpone()"
+          >
+            ⏳ Kechiktirish
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

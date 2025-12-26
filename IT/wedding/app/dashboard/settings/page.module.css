@@ -1,0 +1,295 @@
+.dashboardLayout {
+    display: flex;
+    min-height: 100vh;
+    background: #f8f9ff;
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px;
+    max-width: 900px;
+}
+
+/* Header */
+.header {
+    margin-bottom: 32px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0 0 8px;
+}
+
+.header p {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+/* Success Message */
+.successMessage {
+    padding: 16px 24px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+/* Section */
+.section {
+    background: white;
+    border-radius: 20px;
+    border: 2px solid #eee;
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 24px;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.formGroup input {
+    padding: 14px 18px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.phoneInput {
+    display: flex;
+    align-items: stretch;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.phoneInput:focus-within {
+    border-color: #667eea;
+}
+
+.phoneInput span {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: #f8f9ff;
+    font-size: 15px;
+    font-weight: 600;
+    color: #666;
+    border-right: 2px solid #eee;
+}
+
+.phoneInput input {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    font-size: 15px;
+}
+
+.phoneInput input:focus {
+    outline: none;
+}
+
+.saveBtn {
+    align-self: flex-start;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.saveBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(102, 126, 234, 0.3);
+}
+
+/* Notifications */
+.notificationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notificationItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: #f8f9ff;
+    border-radius: 12px;
+}
+
+.notificationInfo h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+}
+
+.notificationInfo p {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+/* Toggle Switch */
+.toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    display: inline-block;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    inset: 0;
+    background: #ddd;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggleSlider::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle input:checked+.toggleSlider {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.toggle input:checked+.toggleSlider::before {
+    transform: translateX(24px);
+}
+
+/* Danger Zone */
+.dangerZone {
+    border-color: #f8d7da;
+}
+
+.dangerZone h2 {
+    color: #721c24;
+}
+
+.dangerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: #fff5f5;
+    border-radius: 12px;
+}
+
+.dangerInfo h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #721c24;
+    margin: 0 0 4px;
+}
+
+.dangerInfo p {
+    font-size: 13px;
+    color: #856404;
+    margin: 0;
+}
+
+.dangerBtn {
+    padding: 12px 24px;
+    background: #dc3545;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dangerBtn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .mainContent {
+        margin-left: 0;
+        padding: 80px 20px 20px;
+        max-width: none;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .notificationItem {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .dangerContent {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+}

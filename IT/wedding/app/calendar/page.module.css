@@ -1,0 +1,250 @@
+.main {
+    min-height: 100vh;
+    padding: 120px 0 80px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+}
+
+.pageHeader {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.pageHeader h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 12px;
+}
+
+.pageHeader p {
+    font-size: 18px;
+    color: #666;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.venueFilter {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 2px solid #eef;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    min-width: 250px;
+}
+
+.calendarCard {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.calendarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.calendarHeader h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.navBtn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9ff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navBtn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.dayNames {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.dayName {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #999;
+    padding: 8px;
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.emptyDay {
+    aspect-ratio: 1;
+}
+
+.calendarDay {
+    min-height: 80px;
+    padding: 8px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.calendarDay:hover {
+    background: #eef;
+    transform: scale(1.02);
+}
+
+.calendarDay.past {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.calendarDay.today {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.calendarDay.today .dayNumber {
+    color: white;
+}
+
+.calendarDay.hasBookings {
+    background: #fff0f0;
+    border: 2px solid #ffccd5;
+}
+
+.dayNumber {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.bookings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.booking {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    background: #ff6b8a;
+    border-radius: 6px;
+    font-size: 10px;
+    color: white;
+}
+
+.bookingTime {
+    font-size: 10px;
+}
+
+.bookingVenue {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eef;
+    flex-wrap: wrap;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.legendDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.legendDot.available {
+    background: #43e97b;
+}
+
+.legendDot.booked {
+    background: #ff6b8a;
+}
+
+.ctaSection {
+    text-align: center;
+    margin-top: 48px;
+}
+
+.ctaSection p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.ctaBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.ctaBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 768px) {
+    .calendarCard {
+        padding: 16px;
+    }
+
+    .calendarDay {
+        min-height: 60px;
+        padding: 4px;
+    }
+
+    .booking {
+        font-size: 8px;
+        padding: 1px 3px;
+    }
+}

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-weight='bold' font-family='Arial'>it</text></svg>">
+  <title>Dashboard - Talaba Kabineti | IT Center</title>
+  <link rel="stylesheet" href="student.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="student-container">
+    <!-- Sidebar -->
+    <aside class="student-sidebar">
+      <div class="student-profile">
+        <div class="profile-avatar" id="profile-avatar">👤</div>
+        <h3 class="profile-name" id="profile-name">Yuklanmoqda...</h3>
+        <p class="profile-group" id="profile-group">—</p>
+      </div>
+
+      <nav class="student-nav">
+        <button class="nav-item active" data-section="section-dashboard">
+          <span class="nav-icon">🏠</span>
+          <span>Bosh sahifa</span>
+        </button>
+        <button class="nav-item" data-section="section-profile">
+          <span class="nav-icon">👤</span>
+          <span>Profilim</span>
+        </button>
+        <button class="nav-item" data-section="section-schedule">
+          <span class="nav-icon">📅</span>
+          <span>Dars jadvali</span>
+        </button>
+        <button class="nav-item" data-section="section-payments">
+          <span class="nav-icon">💰</span>
+          <span>To'lovlarim</span>
+        </button>
+        <button class="nav-item" data-section="section-attendance">
+          <span class="nav-icon">📊</span>
+          <span>Davomat</span>
+        </button>
+        <button class="nav-item" data-section="section-materials">
+          <span class="nav-icon">📚</span>
+          <span>Materiallar</span>
+        </button>
+        <button class="nav-item" data-section="section-certificates">
+          <span class="nav-icon">🏆</span>
+          <span>Sertifikatlar</span>
+        </button>
+        <button class="nav-item" data-section="section-notifications">
+          <span class="nav-icon">🔔</span>
+          <span>Bildirishnomalar</span>
+        </button>
+        <button class="nav-item nav-logout" id="logout-btn">
+          <span class="nav-icon">🚪</span>
+          <span>Chiqish</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="student-main">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+
+      <!-- Dashboard Section -->
+      <section class="student-section active" id="section-dashboard">
+        <div class="student-header">
+          <h1>🏠 Bosh sahifa</h1>
+          <p>Xush kelibsiz! Bu yerda sizning o'quv jarayoningiz haqida ma'lumotlar.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" id="stat-payments">0 so'm</div>
+            <div class="stat-label">Jami to'langan</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value" id="stat-attendance">0%</div>
+            <div class="stat-label">Davomat</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value" id="stat-progress">0%</div>
+            <div class="stat-label">Kurs progressi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value" id="stat-lessons">0</div>
+            <div class="stat-label">O'tilgan darslar</div>
+          </div>
+        </div>
+
+        <!-- Quick Schedule -->
+        <div class="student-card">
+          <div class="card-header">
+            <h2>📅 Bugungi jadval</h2>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Kun</th>
+                <th>Vaqt</th>
+                <th>Kurs</th>
+                <th>Mentor</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table">
+              <!-- Dynamic content -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Profile Section -->
+      <section class="student-section" id="section-profile">
+        <div class="student-header">
+          <h1>👤 Mening profilim</h1>
+          <p>Shaxsiy ma'lumotlaringiz va sozlamalar</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="student-card">
+          <div class="card-header">
+            <h2>📝 Profil ma'lumotlari</h2>
+            <button class="btn-edit" id="edit-profile-btn">✏️ Tahrirlash</button>
+          </div>
+          
+          <!-- View Mode -->
+          <div id="profile-view">
+            <div class="profile-grid">
+              <div class="profile-avatar-section">
+                <div class="profile-avatar-large" id="profile-avatar-large">
+                  <img id="profile-photo-img" src="" alt="Profil rasmi" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                  <span id="profile-photo-placeholder">👤</span>
+                </div>
+                <label class="photo-upload-btn" for="photo-upload-input">
+                  📷 Rasm yuklash
+                  <input type="file" id="photo-upload-input" accept="image/*" style="display:none;">
+                </label>
+                <div id="photo-upload-status" class="upload-status"></div>
+              </div>
+              <div class="profile-info">
+                <div class="info-row"><span class="info-label">Ism:</span> <span id="view-name">-</span></div>
+                <div class="info-row"><span class="info-label">Email:</span> <span id="view-email">-</span></div>
+                <div class="info-row"><span class="info-label">Telefon:</span> <span id="view-phone">-</span></div>
+                <div class="info-row"><span class="info-label">Tug'ilgan sana:</span> <span id="view-birthdate">-</span></div>
+                <div class="info-row"><span class="info-label">Yo'nalish:</span> <span id="view-course">-</span></div>
+                <div class="info-row"><span class="info-label">Guruh:</span> <span id="view-group">-</span></div>
+                <div class="info-row"><span class="info-label">Ro'yxatdan o'tgan:</span> <span id="view-enrolled">-</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Edit Mode -->
+          <div id="profile-edit" style="display:none">
+            <form id="profile-form">
+              <div class="form-grid">
+                <div class="form-field">
+                  <label>Ism-familiya</label>
+                  <input type="text" id="edit-name" class="form-input" required>
+                </div>
+                <div class="form-field">
+                  <label>Email</label>
+                  <input type="email" id="edit-email" class="form-input" readonly>
+                </div>
+                <div class="form-field">
+                  <label>Telefon</label>
+                  <input type="tel" id="edit-phone" class="form-input" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="form-field">
+                  <label>Tug'ilgan sana</label>
+                  <input type="date" id="edit-birthdate" class="form-input">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">💾 Saqlash</button>
+                <button type="button" class="btn-secondary" id="cancel-edit-btn">❌ Bekor qilish</button>
+              </div>
+              <div id="profile-msg"></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Course Progress -->
+        <div class="student-card">
+          <div class="card-header">
+            <h2>📈 Kurs progressi</h2>
+          </div>
+          <div class="progress-section">
+            <div class="progress-overview">
+              <div class="progress-circle" id="overall-progress">
+                <svg viewBox="0 0 100 100">
+                  <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                  <circle class="progress-fill" cx="50" cy="50" r="45" id="progress-circle"></circle>
+                </svg>
+                <div class="progress-text">
+                  <span class="progress-value" id="progress-value">0%</span>
+                  <span class="progress-label">Tugallangan</span>
+                </div>
+              </div>
+              <div class="progress-stats">
+                <div class="progress-stat">
+                  <span class="stat-number" id="lessons-completed">0</span>
+                  <span class="stat-text">darslar o'tildi</span>
+                </div>
+                <div class="progress-stat">
+                  <span class="stat-number" id="videos-watched">0</span>
+                  <span class="stat-text">video ko'rildi</span>
+                </div>
+                <div class="progress-stat">
+                  <span class="stat-number" id="tests-passed">0</span>
+                  <span class="stat-text">test topshirildi</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modules-list">
+              <h3>📚 Modullar</h3>
+              <div id="modules-container">
+                <!-- Dynamic modules -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate -->
+        <div class="student-card">
+          <div class="card-header">
+            <h2>🎓 Sertifikat</h2>
+          </div>
+          <div class="certificate-section" id="certificate-section">
+            <div class="certificate-locked" id="cert-locked">
+              <div class="lock-icon">🔒</div>
+              <p>Sertifikat olish uchun kursni 100% tugallang</p>
+              <div class="cert-progress">
+                <div class="cert-progress-bar">
+                  <div class="cert-progress-fill" id="cert-progress-fill"></div>
+                </div>
+                <span id="cert-progress-text">0% / 100%</span>
+              </div>
+            </div>
+            <div class="certificate-ready" id="cert-ready" style="display:none">
+              <div class="cert-icon">🏆</div>
+              <h3>Tabriklaymiz!</h3>
+              <p>Siz kursni muvaffaqiyatli tamomladingiz!</p>
+              <button class="btn-primary btn-download" id="download-cert-btn">
+                📥 Sertifikatni yuklab olish (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Schedule Section -->
+      <section class="student-section" id="section-schedule">
+        <div class="student-header">
+          <h1>📅 Dars jadvali</h1>
+          <p>Haftalik darslar ro'yxati</p>
+        </div>
+
+        <div class="student-card">
+          <div class="card-header">
+            <h2>Haftali jadval</h2>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Kun</th>
+                <th>Vaqt</th>
+                <th>Kurs</th>
+                <th>Mentor</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-full">
+              <!-- Dynamic content -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Payments Section -->
+      <section class="student-section" id="section-payments">
+        <div class="student-header">
+          <h1>💰 To'lovlarim</h1>
+          <p>To'lov tarixi va qoldiq</p>
+        </div>
+
+        <div class="student-card">
+          <div class="card-header">
+            <h2>To'lovlar tarixi</h2>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Sana</th>
+                <th>Summa</th>
+                <th>Usul</th>
+                <th>Holat</th>
+              </tr>
+            </thead>
+            <tbody id="payments-table">
+              <!-- Dynamic content -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="student-card" style="margin-top: 20px;">
+          <div class="card-header">
+            <h2>💳 Onlayn to'lov</h2>
+          </div>
+          <div class="payment-options">
+            <a href="payment.html" class="payment-btn payment-btn-active">
+              <span style="font-size: 1.5rem;">💳</span>
+              <span>Payme / Click orqali to'lash</span>
+              <span style="margin-left: auto;">→</span>
+            </a>
+            <p class="payment-note" style="color: var(--success);">✅ Onlayn to'lov ishlaydi!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attendance Section -->
+      <section class="student-section" id="section-attendance">
+        <div class="student-header">
+          <h1>📊 Davomat</h1>
+          <p>Darsga qatnashish statistikasi</p>
+        </div>
+
+        <div class="student-card">
+          <div class="card-header">
+            <h2>Oxirgi 10 ta dars</h2>
+          </div>
+          <div id="attendance-list" class="attendance-list">
+            <!-- Dynamic content -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Materials Section -->
+      <section class="student-section" id="section-materials">
+        <div class="student-header">
+          <h1>📚 O'quv materiallari</h1>
+          <p>Sizning kursingiz bo'yicha materiallar va video darslar</p>
+        </div>
+
+        <!-- Course info -->
+        <div class="student-card" style="margin-bottom: 20px;">
+          <div class="course-info-banner" id="course-info-banner">
+            <!-- Dynamic course info -->
+          </div>
+        </div>
+
+        <!-- Materials Tabs -->
+        <div class="materials-tabs">
+          <button class="mat-tab active" data-type="docs">📄 Hujjatlar</button>
+          <button class="mat-tab" data-type="videos">🎬 Video darslar</button>
+          <button class="mat-tab" data-type="links">🔗 Foydali linklar</button>
+        </div>
+
+        <!-- Documents -->
+        <div class="materials-content active" id="materials-docs">
+          <div class="materials-grid" id="materials-grid">
+            <!-- Dynamic -->
+          </div>
+        </div>
+
+        <!-- Videos -->
+        <div class="materials-content" id="materials-videos">
+          <div class="videos-grid" id="course-videos-grid">
+            <!-- Dynamic -->
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="materials-content" id="materials-links">
+          <div class="links-list" id="useful-links">
+            <!-- Dynamic -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Certificates Section -->
+      <section class="student-section" id="section-certificates">
+        <div class="student-header">
+          <h1>🏆 Sertifikatlar</h1>
+          <p>Olgan sertifikatlar va yutuqlar</p>
+        </div>
+
+        <div class="certificates-grid" id="certificates-grid">
+          <div class="certificate-card">
+            <div class="cert-ribbon">🏆</div>
+            <div class="cert-content">
+              <h3>Web Development</h3>
+              <p>Frontend asoslari kursi</p>
+              <span class="cert-date">Berilmagan</span>
+            </div>
+            <div class="cert-progress">
+              <span>Progress: 45%</span>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%"></div>
+              </div>
+            </div>
+            <button class="cert-download" disabled>Kurs tugagandan so'ng</button>
+          </div>
+        </div>
+
+        <div class="student-card" style="margin-top: 24px;">
+          <h3>🎖️ Yutuqlarim</h3>
+          <div class="achievements-grid">
+            <div class="achievement active">
+              <span class="achievement-icon">🌟</span>
+              <span>Birinchi dars</span>
+            </div>
+            <div class="achievement active">
+              <span class="achievement-icon">🔥</span>
+              <span>5 dars ketma-ket</span>
+            </div>
+            <div class="achievement">
+              <span class="achievement-icon">💪</span>
+              <span>10 dars</span>
+            </div>
+            <div class="achievement">
+              <span class="achievement-icon">🏆</span>
+              <span>Kurs tugadi</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications Section -->
+      <section class="student-section" id="section-notifications">
+        <div class="student-header">
+          <h1>� Bildirishnomalar</h1>
+          <p>Muhim xabarlar va eslatmalar</p>
+        </div>
+
+        <div class="notifications-list" id="notifications-list">
+          <div class="notification-item notification-unread">
+            <span class="notification-icon">📢</span>
+            <div class="notification-content">
+              <h4>Yangi dars jadvali</h4>
+              <p>Keyingi haftadan boshlab yangi jadval bo'yicha darslar o'tiladi</p>
+              <span class="notification-time">Bugun, 10:30</span>
+            </div>
+          </div>
+          <div class="notification-item notification-unread">
+            <span class="notification-icon">💰</span>
+            <div class="notification-content">
+              <h4>To'lov eslatmasi</h4>
+              <p>Oylik to'lov muddati yaqinlashmoqda</p>
+              <span class="notification-time">Kecha, 15:00</span>
+            </div>
+          </div>
+          <div class="notification-item">
+            <span class="notification-icon">📚</span>
+            <div class="notification-content">
+              <h4>Yangi material yuklandi</h4>
+              <p>CSS Flexbox bo'yicha yangi material qo'shildi</p>
+              <span class="notification-time">3 kun oldin</span>
+            </div>
+          </div>
+          <div class="notification-item">
+            <span class="notification-icon">🎉</span>
+            <div class="notification-content">
+              <h4>Xush kelibsiz!</h4>
+              <p>IT Center talaba portaliga xush kelibsiz</p>
+              <span class="notification-time">1 hafta oldin</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../db.js"></script>
+  <script src="student.js"></script>
+
+  <style>
+    /* Additional inline styles for dashboard elements */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 1001;
+      width: 44px;
+      height: 44px;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .student-section {
+      display: none;
+    }
+
+    .student-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .schedule-active {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .schedule-active td:first-child {
+      font-weight: 600;
+      color: var(--primary-light);
+    }
+
+    .empty-message {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 24px;
+    }
+
+    .profile-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .profile-info-item {
+      padding: 16px;
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .attendance-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .attendance-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 12px;
+    }
+
+    .attendance-date {
+      font-weight: 500;
+      min-width: 80px;
+    }
+
+    .attendance-stats {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      margin-left: 20px;
+    }
+
+    .attendance-stats .progress-bar {
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .payment-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .payment-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .payment-btn:not(:disabled):hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--primary);
+    }
+
+    .payment-note {
+      text-align: center;
+      color: var(--warning);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+
+    .payment-btn-active {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2)) !important;
+      border-color: var(--primary) !important;
+      text-decoration: none;
+    }
+
+    .payment-btn-active:hover {
+      transform: translateX(4px);
+    }
+
+    /* Materials */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .material-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+
+    .material-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .material-icon {
+      font-size: 2rem;
+    }
+
+    .material-info {
+      flex: 1;
+    }
+
+    .material-info h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .material-info p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .material-download {
+      padding: 8px 14px;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      color: var(--primary-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .material-download:hover {
+      background: rgba(59, 130, 246, 0.3);
+    }
+
+    /* Certificates */
+    .certificates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .certificate-card {
+      background: linear-gradient(135deg, var(--bg-card), rgba(251, 191, 36, 0.1));
+      border: 2px solid rgba(251, 191, 36, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .cert-ribbon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .cert-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .cert-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .cert-date {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 12px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .cert-progress {
+      margin: 16px 0;
+    }
+
+    .cert-progress span {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .cert-download {
+      padding: 10px 20px;
+      background: var(--bg-card-light);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .achievements-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .achievement {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-card-light);
+      border-radius: 8px;
+      opacity: 0.4;
+    }
+
+    .achievement.active {
+      opacity: 1;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .achievement-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Notifications */
+    .notifications-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .notification-item {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+
+    .notification-item:hover {
+      border-color: var(--primary);
+    }
+
+    .notification-unread {
+      border-left: 3px solid var(--primary);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .notification-icon {
+      font-size: 1.5rem;
+    }
+
+    .notification-content {
+      flex: 1;
+    }
+
+    .notification-content h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .notification-content p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .notification-time {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Materials Section Enhanced */
+    .course-info-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+      border-radius: 12px;
+    }
+
+    .course-info-banner .course-icon {
+      font-size: 2.5rem;
+    }
+
+    .course-info-banner h3 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .course-info-banner p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .materials-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .mat-tab {
+      padding: 10px 20px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mat-tab:hover {
+      border-color: var(--primary);
+    }
+
+    .mat-tab.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+
+    .materials-content {
+      display: none;
+    }
+
+    .materials-content.active {
+      display: block;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .video-card {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .video-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #1e293b;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .video-card:hover .video-play {
+      opacity: 1;
+    }
+
+    .play-btn {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .video-duration {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      padding: 2px 6px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+
+    .video-info {
+      padding: 12px;
+    }
+
+    .video-info h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .video-info span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .link-card:hover {
+      border-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .link-icon { font-size: 1.5rem; }
+
+    /* Video Modal */
+    .video-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 90%;
+      max-width: 900px;
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-player {
+      aspect-ratio: 16/9;
+    }
+
+    .modal-player iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="video-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h4 id="modal-title">Video</h4>
+        <button class="modal-close" onclick="closeVideoModal()">✕</button>
+      </div>
+      <div class="modal-player">
+        <iframe id="modal-iframe" src="" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Course-specific content data
+    const courseContent = {
+      1: { // Frontend
+        name: "Web dasturlash (Frontend)",
+        icon: "💻",
+        docs: [
+          { title: "HTML asoslari", desc: "Dars 1-2", icon: "📖" },
+          { title: "CSS selektorlar", desc: "Dars 3-4", icon: "🎨" },
+          { title: "Flexbox va Grid", desc: "Dars 5-6", icon: "📐" },
+          { title: "JavaScript asoslari", desc: "Dars 7-10", icon: "⚡" }
+        ],
+        videos: [
+          { title: "HTML semantik teglar", duration: "32:15", videoId: "pQN-pnXPaVg" },
+          { title: "CSS Flexbox", duration: "48:20", videoId: "fYq5PXgSsbE" },
+          { title: "JavaScript variables", duration: "25:30", videoId: "W6NZfCO5SIk" },
+          { title: "React useState", duration: "28:15", videoId: "O6P86uwfdR0" }
+        ],
+        links: [
+          { title: "MDN Web Docs", url: "https://developer.mozilla.org", icon: "📚" },
+          { title: "W3Schools", url: "https://w3schools.com", icon: "🌐" },
+          { title: "CSS-Tricks", url: "https://css-tricks.com", icon: "🎨" }
+        ]
+      },
+      2: { // Python
+        name: "Python dasturlash",
+        icon: "🐍",
+        docs: [
+          { title: "Python asoslari", desc: "Dars 1-3", icon: "📖" },
+          { title: "Funksiyalar", desc: "Dars 4-5", icon: "🔧" },
+          { title: "OOP", desc: "Dars 6-8", icon: "📦" }
+        ],
+        videos: [
+          { title: "Python asoslari", duration: "55:00", videoId: "rfscVS0vtbw" },
+          { title: "Python funksiyalar", duration: "42:10", videoId: "9Os0o3wzS_I" },
+          { title: "Python data types", duration: "45:20", videoId: "khKv-8q7YmY" }
+        ],
+        links: [
+          { title: "Python.org", url: "https://python.org", icon: "🐍" },
+          { title: "Real Python", url: "https://realpython.com", icon: "📚" }
+        ]
+      },
+      3: { // Kids
+        name: "Bolalar uchun IT",
+        icon: "🎮",
+        docs: [
+          { title: "Scratch boshlash", desc: "Dars 1-2", icon: "🎮" },
+          { title: "O'yin yaratish", desc: "Dars 3-4", icon: "🎯" }
+        ],
+        videos: [
+          { title: "Scratch bilan o'yin", duration: "35:45", videoId: "VIpmkeqJhmQ" }
+        ],
+        links: [
+          { title: "Scratch", url: "https://scratch.mit.edu", icon: "🐱" },
+          { title: "Code.org", url: "https://code.org", icon: "🎓" }
+        ]
+      },
+      4: { // Design
+        name: "UI/UX Dizayn",
+        icon: "🎨",
+        docs: [
+          { title: "Figma asoslari", desc: "Dars 1-2", icon: "🎨" },
+          { title: "UX Research", desc: "Dars 3-4", icon: "🔍" }
+        ],
+        videos: [
+          { title: "Figma asoslari", duration: "50:30", videoId: "FTFaQWZBqQ8" },
+          { title: "UX Research", duration: "40:00", videoId: "v2-QY55qGjI" }
+        ],
+        links: [
+          { title: "Figma", url: "https://figma.com", icon: "🎨" },
+          { title: "Dribbble", url: "https://dribbble.com", icon: "🏀" }
+        ]
+      },
+      5: { // Mobile
+        name: "Mobile Development",
+        icon: "📱",
+        docs: [
+          { title: "Flutter asoslari", desc: "Dars 1-4", icon: "📱" },
+          { title: "Dart language", desc: "Dars 5-6", icon: "🎯" }
+        ],
+        videos: [
+          { title: "Flutter birinchi ilova", duration: "62:00", videoId: "VPvVD8t02U8" }
+        ],
+        links: [
+          { title: "Flutter.dev", url: "https://flutter.dev", icon: "📱" },
+          { title: "Dart.dev", url: "https://dart.dev", icon: "🎯" }
+        ]
+      }
+    };
+
+    // Load course materials
+    function loadCourseMaterials(courseId) {
+      const content = courseContent[courseId] || courseContent[1];
+      
+      // Get videos from db.js - reload fresh data
+      const db = window.ITCenterDB;
+      let dbVideos = [];
+      if (db && db.videoLessons && db.videoLessons.getByCourse) {
+        dbVideos = db.videoLessons.getByCourse(courseId);
+        console.log(`📹 Loading videos for courseId ${courseId}:`, dbVideos.length, "videos");
+      }
+      
+      // Use db videos if available, otherwise fallback to hardcoded
+      const videos = dbVideos.length > 0 ? dbVideos.map(v => ({
+        title: v.title,
+        duration: v.duration,
+        videoId: v.youtubeId
+      })) : content.videos;
+      
+      console.log("📹 Total videos to display:", videos.length);
+
+      // Course banner
+      document.getElementById("course-info-banner").innerHTML = `
+        <span class="course-icon">${content.icon}</span>
+        <div>
+          <h3>${content.name}</h3>
+          <p>${content.docs.length} hujjat • ${videos.length} video dars • ${content.links.length} link</p>
+        </div>
+      `;
+
+      // Documents
+      document.getElementById("materials-grid").innerHTML = content.docs.map(d => `
+        <div class="material-card">
+          <div class="material-icon">${d.icon}</div>
+          <div class="material-info">
+            <h3>${d.title}</h3>
+            <p>${d.desc}</p>
+          </div>
+          <a href="#" class="material-download">📥 Yuklab olish</a>
+        </div>
+      `).join("");
+
+      // Videos from db.js
+      document.getElementById("course-videos-grid").innerHTML = videos.map((v, i) => `
+        <div class="video-card" onclick="openVideoModal('${v.videoId}', '${v.title}')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}">
+            <div class="video-play"><div class="play-btn">▶</div></div>
+            <span class="video-duration">${v.duration}</span>
+            <span class="video-order">${i + 1}-dars</span>
+          </div>
+          <div class="video-info">
+            <h4>${v.title}</h4>
+            <span>⏱️ ${v.duration}</span>
+          </div>
+        </div>
+      `).join("");
+
+      // Links
+      document.getElementById("useful-links").innerHTML = content.links.map(l => `
+        <a href="${l.url}" target="_blank" class="link-card">
+          <span class="link-icon">${l.icon}</span>
+          <span>${l.title}</span>
+        </a>
+      `).join("");
+    }
+
+    // Materials tabs
+    document.querySelectorAll(".mat-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".mat-tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".materials-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("materials-" + tab.dataset.type).classList.add("active");
+        
+        // Auto-load materials when switching tabs
+        const session = JSON.parse(localStorage.getItem("student_session") || sessionStorage.getItem("student_session") || "{}");
+        const courseId = session.courseId || 1;
+        console.log("Loading materials for courseId:", courseId);
+        loadCourseMaterials(courseId);
+      });
+    });
+
+    // Video modal
+    function openVideoModal(videoId, title) {
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-iframe").src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      document.getElementById("video-modal").classList.add("show");
+    }
+
+    function closeVideoModal() {
+      document.getElementById("video-modal").classList.remove("show");
+      document.getElementById("modal-iframe").src = "";
+    }
+
+    document.getElementById("video-modal").addEventListener("click", e => {
+      if (e.target.id === "video-modal") closeVideoModal();
+    });
+
+    // Load on materials section open
+    const origSetupNav = setupNavigation;
+    if (typeof setupNavigation === "function") {
+      // Will be called after student.js loads
+    }
+
+    // Load materials when section is shown
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.addEventListener("click", () => {
+        if (item.dataset.section === "section-materials") {
+          const session = JSON.parse(localStorage.getItem("student_session") || sessionStorage.getItem("student_session") || "{}");
+          loadCourseMaterials(session.courseId || 1);
+        }
+      });
+    });
+
+    // Auto-load materials when page loads (if on materials section or session exists)
+    (function autoLoadMaterials() {
+      const session = JSON.parse(localStorage.getItem("student_session") || sessionStorage.getItem("student_session") || "{}");
+      if (session.courseId) {
+        // Pre-load materials for faster display
+        setTimeout(() => loadCourseMaterials(session.courseId), 500);
+      }
+    })();
+  </script>
+</body>
+</html>

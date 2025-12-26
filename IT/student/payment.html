@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onlayn To'lov - Talaba Kabineti | IT Center</title>
+  <link rel="stylesheet" href="student.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .payment-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .payment-wrapper {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .payment-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .payment-header p {
+      color: var(--text-secondary);
+    }
+
+    .payment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .student-avatar {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .student-details h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .student-details p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .amount-section {
+      margin-bottom: 24px;
+    }
+
+    .amount-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .amount-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .amount-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--bg-card-light);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .amount-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .amount-currency {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    .quick-amounts {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .quick-amount-btn {
+      flex: 1;
+      padding: 10px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-amount-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .payment-methods {
+      margin-bottom: 24px;
+    }
+
+    .payment-methods h3 {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .method-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .method-option {
+      padding: 20px;
+      background: var(--bg-card-light);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .method-option:hover {
+      border-color: var(--border-color);
+    }
+
+    .method-option.selected {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .method-logo {
+      height: 32px;
+      margin-bottom: 8px;
+    }
+
+    .method-name {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+
+    .pay-button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .pay-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .pay-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .security-notice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Payment Success Modal */
+    .payment-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .payment-modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .modal-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-content p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .receipt-details {
+      text-align: left;
+      background: rgba(30, 41, 59, 0.5);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .receipt-row:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-page">
+    <div class="payment-wrapper">
+      <div class="payment-header">
+        <h1>💳 Onlayn To'lov</h1>
+        <p>Kurs to'lovini xavfsiz amalga oshiring</p>
+      </div>
+
+      <div class="payment-card">
+        <div class="student-info" id="student-info">
+          <div class="student-avatar" id="pay-avatar">👤</div>
+          <div class="student-details">
+            <h3 id="pay-name">Yuklanmoqda...</h3>
+            <p id="pay-course">—</p>
+          </div>
+        </div>
+
+        <div class="amount-section">
+          <div class="amount-label">To'lov miqdori</div>
+          <div class="amount-input-wrapper">
+            <input type="number" class="amount-input" id="payment-amount" value="500000" min="10000" step="10000">
+            <span class="amount-currency">so'm</span>
+          </div>
+          <div class="quick-amounts">
+            <button class="quick-amount-btn" data-amount="300000">300 000</button>
+            <button class="quick-amount-btn" data-amount="500000">500 000</button>
+            <button class="quick-amount-btn" data-amount="1000000">1 000 000</button>
+            <button class="quick-amount-btn" data-amount="1200000">To'liq</button>
+          </div>
+        </div>
+
+        <div class="payment-methods">
+          <h3>To'lov usulini tanlang</h3>
+          <div class="method-options">
+            <div class="method-option selected" data-method="payme">
+              <div style="font-size: 2rem;">💳</div>
+              <div class="method-name">Payme</div>
+            </div>
+            <div class="method-option" data-method="click">
+              <div style="font-size: 2rem;">📱</div>
+              <div class="method-name">Click</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="pay-button" id="pay-button">
+          <span>🔒</span>
+          <span>To'lovni amalga oshirish</span>
+        </button>
+
+        <div class="security-notice">
+          <span>🔐</span>
+          <span>Barcha to'lovlar SSL orqali himoyalangan</span>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-link">← Kabinetga qaytish</a>
+    </div>
+  </div>
+
+  <!-- Payment Success Modal -->
+  <div class="payment-modal" id="payment-modal">
+    <div class="modal-content">
+      <div class="success-icon">✅</div>
+      <h2>To'lov muvaffaqiyatli!</h2>
+      <p>Sizning to'lovingiz qabul qilindi</p>
+      <div class="receipt-details">
+        <div class="receipt-row">
+          <span>Tranzaksiya ID</span>
+          <span id="receipt-id">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Sana</span>
+          <span id="receipt-date">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Summa</span>
+          <span id="receipt-amount">—</span>
+        </div>
+      </div>
+      <button class="pay-button" onclick="window.location.href='index.html'">Kabinetga qaytish</button>
+    </div>
+  </div>
+
+  <script src="../db.js"></script>
+  <script>
+    (function() {
+      // Check session
+      const sessionData = localStorage.getItem("student_session") || sessionStorage.getItem("student_session");
+      if (!sessionData) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const session = JSON.parse(sessionData);
+      const db = window.ITCenterDB;
+      const student = db?.students?.getById(session.studentId);
+
+      if (!student) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Load student info
+      const course = db.courses.getById(student.courseId);
+      document.getElementById("pay-name").textContent = student.fullName;
+      document.getElementById("pay-course").textContent = course?.name || "—";
+      document.getElementById("pay-avatar").textContent = student.fullName.split(" ").map(n => n[0]).join("").substring(0, 2);
+
+      // Set default amount to course price
+      if (course?.price) {
+        document.getElementById("payment-amount").value = course.price;
+      }
+
+      // Quick amount buttons
+      document.querySelectorAll(".quick-amount-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.getElementById("payment-amount").value = btn.dataset.amount;
+        });
+      });
+
+      // Method selection
+      let selectedMethod = "payme";
+      document.querySelectorAll(".method-option").forEach(option => {
+        option.addEventListener("click", () => {
+          document.querySelectorAll(".method-option").forEach(o => o.classList.remove("selected"));
+          option.classList.add("selected");
+          selectedMethod = option.dataset.method;
+        });
+      });
+
+      // Pay button
+      document.getElementById("pay-button").addEventListener("click", () => {
+        const amount = parseInt(document.getElementById("payment-amount").value);
+        if (amount < 10000) {
+          alert("Minimal to'lov miqdori 10,000 so'm");
+          return;
+        }
+
+        // Simulate payment processing
+        const btn = document.getElementById("pay-button");
+        btn.disabled = true;
+        btn.innerHTML = "<span>⏳</span><span>Jarayonda...</span>";
+
+        setTimeout(() => {
+          // Create payment record
+          const payment = {
+            studentId: student.id,
+            amount: amount,
+            method: selectedMethod,
+            date: new Date().toISOString().split("T")[0],
+            status: "confirmed",
+            transactionId: "TXN" + Date.now()
+          };
+
+          db.payments.add(payment);
+          db.logActivity("payment_online", student.fullName, `${selectedMethod} orqali ${amount.toLocaleString()} so'm to'ladi`);
+
+          // Update student payment status if paid in full
+          const course = db.courses.getById(student.courseId);
+          const allPayments = db.payments.getAll().filter(p => p.studentId === student.id);
+          const totalPaid = allPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
+          
+          if (course && totalPaid >= course.price) {
+            db.students.update(student.id, { paymentStatus: "paid" });
+          } else if (totalPaid > 0) {
+            db.students.update(student.id, { paymentStatus: "partial" });
+          }
+
+          // Show success modal
+          document.getElementById("receipt-id").textContent = payment.transactionId;
+          document.getElementById("receipt-date").textContent = new Date().toLocaleString("uz-UZ");
+          document.getElementById("receipt-amount").textContent = amount.toLocaleString() + " so'm";
+          document.getElementById("payment-modal").classList.add("show");
+
+          btn.disabled = false;
+          btn.innerHTML = "<span>🔒</span><span>To'lovni amalga oshirish</span>";
+        }, 2000);
+      });
+    })();
+  </script>
+</body>
+</html>
