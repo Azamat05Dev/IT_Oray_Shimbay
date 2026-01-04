@@ -10,25 +10,11 @@ const ITCenterDB = (function () {
     // Default seed data
     const DEFAULT_DATA = {
         adminUsers: [
-            { id: 1, username: "admin", password: "admin123", fullName: "Super Admin", email: "admin@itcenter.uz", role: "super_admin", status: "active", lastLogin: Date.now(), createdAt: Date.now() - 86400000 * 365 },
-            { id: 2, username: "manager", password: "manager123", fullName: "Direktor", email: "manager@itcenter.uz", role: "admin", status: "active", lastLogin: Date.now() - 3600000, createdAt: Date.now() - 86400000 * 180 },
-            { id: 3, username: "operator", password: "operator123", fullName: "O'quv bo'limi", email: "operator@itcenter.uz", role: "viewer", status: "active", lastLogin: Date.now() - 86400000, createdAt: Date.now() - 86400000 * 30 }
+            // Admin users will be created via backend API
         ],
-        loginHistory: [
-            { id: 1, adminId: 1, username: "admin", action: "login", ip: "192.168.1.100", userAgent: "Chrome/Windows", timestamp: Date.now() - 60000 },
-            { id: 2, adminId: 2, username: "manager", action: "login", ip: "192.168.1.101", userAgent: "Firefox/Mac", timestamp: Date.now() - 3600000 },
-            { id: 3, adminId: 1, username: "admin", action: "logout", ip: "192.168.1.100", userAgent: "Chrome/Windows", timestamp: Date.now() - 86400000 }
-        ],
+        loginHistory: [],
         mentors: [
-            { id: 1, name: "Azizbek", role: "Frontend", rating: 4.9, reviews: 120, phone: "+998901234567", telegram: "@azizbek_front", status: "active", groups: ["F-11", "F-12"] },
-            { id: 2, name: "Jasur", role: "Backend", rating: 4.8, reviews: 90, phone: "+998901234568", telegram: "@jasur_backend", status: "active", groups: ["P-07"] },
-            { id: 3, name: "Malika", role: "Kids IT", rating: 4.9, reviews: 140, phone: "+998901234569", telegram: "@malika_kids", status: "active", groups: ["K-03"] },
-            { id: 4, name: "Sabina", role: "Design", rating: 4.8, reviews: 70, phone: "+998901234570", telegram: "@sabina_design", status: "active", groups: [] },
-            { id: 5, name: "Bekzod", role: "Frontend", rating: 4.9, reviews: 110, phone: "+998901234571", telegram: "@bekzod_css", status: "active", groups: [] },
-            { id: 6, name: "Umid", role: "Python", rating: 4.7, reviews: 60, phone: "+998901234572", telegram: "@umid_python", status: "active", groups: [] },
-            { id: 7, name: "Kamron", role: "Robotics", rating: 4.8, reviews: 55, phone: "+998901234573", telegram: "@kamron_stem", status: "active", groups: [] },
-            { id: 8, name: "Shahzod", role: "Mobile", rating: 4.8, reviews: 80, phone: "+998901234574", telegram: "@shahzod_flutter", status: "active", groups: [] },
-            { id: 9, name: "Nilufar", role: "QA", rating: 4.7, reviews: 45, phone: "+998901234575", telegram: "@nilufar_qa", status: "active", groups: [] }
+            // Mentors will be added by admin
         ],
         courses: [
             { id: 1, name: "Web dasturlash (Frontend)", level: "beginner", duration: "4 oy", price: 1200000, discountPercent: 10, monthlyOption: true, fullPaymentDiscount: 5, description: "HTML, CSS, JavaScript, React", status: "active" },
@@ -38,71 +24,28 @@ const ITCenterDB = (function () {
             { id: 5, name: "Mobile Development", level: "intermediate", duration: "4 oy", price: 1300000, discountPercent: 0, monthlyOption: true, fullPaymentDiscount: 10, description: "Flutter, Dart, iOS/Android", status: "active" }
         ],
         students: [
-            { id: 1, fullName: "Mohira Qodirova", phone: "+998901234567", email: "mohira@mail.uz", password: "123456", courseId: 1, groupId: "F-12", status: "active", paymentStatus: "paid", enrollDate: "2024-01-15", birthDate: "2000-05-12" },
-            { id: 2, fullName: "Javlon Tursunov", phone: "+998935554411", email: "javlon@mail.uz", password: "123456", courseId: 2, groupId: "P-07", status: "active", paymentStatus: "partial", enrollDate: "2024-02-01", birthDate: "1999-08-22" },
-            { id: 3, fullName: "Akmalov Aziz", phone: "+998911112233", email: "aziz@mail.uz", password: "123456", courseId: 3, groupId: "K-03", status: "frozen", paymentStatus: "debt", enrollDate: "2024-01-20", birthDate: "2010-03-15" },
-            { id: 4, fullName: "Dilnoza Karimova", phone: "+998901112200", email: "dilnoza@mail.uz", password: "123456", courseId: 1, groupId: "F-11", status: "graduated", paymentStatus: "paid", enrollDate: "2023-09-01", birthDate: "1998-11-08" },
-            { id: 5, fullName: "Sardor Aliyev", phone: "+998907778899", email: "sardor@mail.uz", password: "123456", courseId: 4, groupId: "D-05", status: "active", paymentStatus: "paid", enrollDate: "2024-03-01", birthDate: "2001-02-28" },
-            { id: 6, fullName: "Gulnoza Rahimova", phone: "+998933334455", email: "gulnoza@mail.uz", password: "123456", courseId: 5, groupId: "M-02", status: "active", paymentStatus: "partial", enrollDate: "2024-02-15", birthDate: "2000-07-19" },
-            { id: 7, fullName: "Bekzod Toshev", phone: "+998905556677", email: "bekzod@mail.uz", password: "123456", courseId: 1, groupId: "F-12", status: "active", paymentStatus: "paid", enrollDate: "2024-01-15", birthDate: "1999-04-05" },
-            { id: 8, fullName: "Nilufar Saidova", phone: "+998912223344", email: "nilufar@mail.uz", password: "123456", courseId: 2, groupId: "P-08", status: "active", paymentStatus: "debt", enrollDate: "2024-03-10", birthDate: "2001-09-14" },
-            { id: 9, fullName: "Kamron Yusupov", phone: "+998939998877", email: "kamron@mail.uz", password: "123456", courseId: 3, groupId: "K-04", status: "applied", paymentStatus: "unpaid", enrollDate: "2024-12-10", birthDate: "2012-06-20" },
-            { id: 10, fullName: "Shahzod Ergashev", phone: "+998901239876", email: "shahzod@mail.uz", password: "123456", courseId: 5, groupId: "M-02", status: "graduated", paymentStatus: "paid", enrollDate: "2023-06-01", birthDate: "1997-12-01" },
-            { id: 11, fullName: "Zarina Abdullayeva", phone: "+998945554433", email: "zarina@mail.uz", password: "123456", courseId: 4, groupId: "D-05", status: "active", paymentStatus: "paid", enrollDate: "2024-03-01", birthDate: "2000-01-25" },
-            { id: 12, fullName: "Madina Rakhimova", phone: "+998997776655", email: "madina@mail.uz", password: "123456", courseId: 1, groupId: "", status: "applied", paymentStatus: "unpaid", enrollDate: "2024-12-14", birthDate: "2002-10-30" }
+            // Students will register through the portal
         ],
         groups: [
-            { id: "F-12", courseId: 1, mentorId: 1, schedule: "Dush / Chor / Jum • 18:00", room: "203", capacity: 18, studentCount: 14, status: "active" },
-            { id: "F-11", courseId: 1, mentorId: 5, schedule: "Sesh / Pay / Shan • 10:00", room: "201", capacity: 16, studentCount: 16, status: "full" },
-            { id: "P-07", courseId: 2, mentorId: 2, schedule: "Sesh / Pay • 19:00", room: "305", capacity: 15, studentCount: 10, status: "recruiting" },
-            { id: "P-08", courseId: 2, mentorId: 6, schedule: "Dush / Chor / Jum • 14:00", room: "306", capacity: 15, studentCount: 8, status: "active" },
-            { id: "K-03", courseId: 3, mentorId: 3, schedule: "Dush / Chor / Jum • 16:00", room: "Kids-1", capacity: 16, studentCount: 16, status: "full" },
-            { id: "K-04", courseId: 3, mentorId: 3, schedule: "Sesh / Pay • 15:00", room: "Kids-2", capacity: 12, studentCount: 6, status: "recruiting" },
-            { id: "D-05", courseId: 4, mentorId: 4, schedule: "Dush / Chor / Jum • 17:00", room: "Design-1", capacity: 14, studentCount: 12, status: "active" },
-            { id: "M-02", courseId: 5, mentorId: 8, schedule: "Sesh / Pay / Shan • 18:00", room: "Mobile-1", capacity: 12, studentCount: 9, status: "active" }
+            // Groups will be created by admin
         ],
         payments: [
-            { id: 1, studentId: 1, amount: 1200000, method: "payme", date: "2024-03-15", status: "completed", note: "To'liq oylik to'lov", createdAt: Date.now() - 86400000 * 30 },
-            { id: 2, studentId: 2, amount: 500000, method: "cash", date: "2024-03-14", status: "partial", note: "Birinchi qism", createdAt: Date.now() - 86400000 * 29 },
-            { id: 3, studentId: 1, amount: 1200000, method: "click", date: "2024-04-15", status: "completed", note: "Aprel oyi", createdAt: Date.now() - 86400000 * 15 },
-            { id: 4, studentId: 3, amount: 800000, method: "cash", date: "2024-03-20", status: "completed", note: "Naqd to'lov", createdAt: Date.now() - 86400000 * 25 },
-            { id: 5, studentId: 4, amount: 1500000, method: "uzcard", date: "2024-02-10", status: "completed", note: "3 oylik to'lov", createdAt: Date.now() - 86400000 * 60 },
-            { id: 6, studentId: 5, amount: 1000000, method: "humo", date: "2024-03-25", status: "completed", note: "Mart oyi", createdAt: Date.now() - 86400000 * 20 },
-            { id: 7, studentId: 6, amount: 650000, method: "cash", date: "2024-04-01", status: "partial", note: "Qisman to'lov", createdAt: Date.now() - 86400000 * 14 },
-            { id: 8, studentId: 7, amount: 1200000, method: "payme", date: "2024-04-10", status: "completed", note: "Aprel", createdAt: Date.now() - 86400000 * 5 },
-            { id: 9, studentId: 8, amount: 400000, method: "cash", date: "2024-04-12", status: "partial", note: "Boshlang'ich to'lov", createdAt: Date.now() - 86400000 * 3 },
-            { id: 10, studentId: 2, amount: 700000, method: "click", date: "2024-04-14", status: "completed", note: "Qolgan qism", createdAt: Date.now() - 86400000 * 1 },
-            { id: 11, studentId: 10, amount: 2000000, method: "payme", date: "2023-06-15", status: "completed", note: "Yakuniy to'lov (bitiruvchi)", createdAt: Date.now() - 86400000 * 180 },
-            { id: 12, studentId: 11, amount: 1300000, method: "uzcard", date: "2024-03-30", status: "completed", note: "UI/UX dizayn kursi", createdAt: Date.now() - 86400000 * 16 },
-            { id: 13, studentId: 5, amount: 1000000, method: "payme", date: "2024-04-25", status: "pending", note: "Kutilmoqda", createdAt: Date.now() - 1000 },
-            { id: 14, studentId: 9, amount: 0, method: "", date: "", status: "unpaid", note: "Ariza holati", createdAt: Date.now() }
+            // Payments will be recorded by admin
         ],
         applications: [
-            { id: 1, fullName: "Mohira Qodirova", phone: "+998901234567", course: "Frontend", format: "Offlayn", note: "", status: "new", createdAt: Date.now() - 60000, adminNote: "", callbackDate: "" },
-            { id: 2, fullName: "Javlon Tursunov", phone: "+998935554411", course: "Python", format: "Onlayn", note: "Ingliz tilida darslar bormi?", status: "called", createdAt: Date.now() - 3600000, adminNote: "Qo'ng'iroq qilindi, o'ylayapti", callbackDate: "2024-12-16" },
-            { id: 3, fullName: "Akmalov Aziz", phone: "+998911112233", course: "Kids IT", format: "Aralash", note: "9 yosh farzandi uchun", status: "enrolled", createdAt: Date.now() - 86400000, adminNote: "K-04 guruhiga qo'shildi", callbackDate: "" },
-            { id: 4, fullName: "Dilshoda Karimova", phone: "+998907776655", course: "UI/UX Dizayn", format: "Offlayn", note: "Figma kursi kerak", status: "new", createdAt: Date.now() - 30000, adminNote: "", callbackDate: "" },
-            { id: 5, fullName: "Sardor Alimov", phone: "+998901112233", course: "Frontend", format: "Onlayn", note: "", status: "waiting", createdAt: Date.now() - 7200000, adminNote: "Guruh ochilishini kutmoqda", callbackDate: "2024-12-20" },
-            { id: 6, fullName: "Gulnora Tosheva", phone: "+998933334455", course: "Python", format: "Offlayn", note: "O'zbek tilida darslar", status: "called", createdAt: Date.now() - 14400000, adminNote: "2 kun ichida javob beradi", callbackDate: "2024-12-17" },
-            { id: 7, fullName: "Bekzod Umarov", phone: "+998945556677", course: "Mobile Development", format: "Aralash", note: "Flutter o'rganmoqchiman", status: "new", createdAt: Date.now() - 120000, adminNote: "", callbackDate: "" },
-            { id: 8, fullName: "Nodira Rahimova", phone: "+998997778899", course: "Frontend", format: "Onlayn", note: "Ish bilan birga o'qiy olamanmi?", status: "rejected", createdAt: Date.now() - 172800000, adminNote: "Boshqa shaharda, onlayn guruh yo'q", callbackDate: "" },
-            { id: 9, fullName: "Jasur Qodirov", phone: "+998901239876", course: "Kids IT", format: "Offlayn", note: "7 yosh, kompyuter asoslari", status: "waiting", createdAt: Date.now() - 43200000, adminNote: "Ota-ona bilan uchrashish belgilandi", callbackDate: "2024-12-18" },
-            { id: 10, fullName: "Malika Saidova", phone: "+998939998877", course: "UI/UX Dizayn", format: "Offlayn", note: "", status: "new", createdAt: Date.now() - 5000, adminNote: "", callbackDate: "" }
+            // Applications come from website form
         ],
-        attendance: [
-            // Bugungi davomat yozuvlari
-            // { id: 1, groupId: "F-12", date: "2024-12-14", presentStudents: 12, totalStudents: 14, percentage: 86, timestamp: Date.now() }
-        ],
+        attendance: [],
         settings: {
             // Portal
-            portalName: "IT Center Portal",
-            portalDescription: "O'zbekistondagi zamonaviy IT ta'lim markazi",
-            contactPhone: "+998 71 123 45 67",
-            contactEmail: "info@itcenter.uz",
-            contactAddress: "Toshkent sh., Amir Temur ko'chasi 108",
-            socialTelegram: "https://t.me/itcenter_uz",
-            socialInstagram: "https://instagram.com/itcenter_uz",
-            socialYoutube: "https://youtube.com/@itcenter_uz",
+            portalName: "Shımbay IT O'quv Orayı",
+            portalDescription: "Shımbay rayonındagı zamonaviy IT ta'lim ortalıgı",
+            contactPhone: "+998 XX XXX XX XX",
+            contactEmail: "info@it-oray.uz",
+            contactAddress: "Shımbay rayonı",
+            socialTelegram: "",
+            socialInstagram: "",
+            socialYoutube: "",
 
             // Appearance
             defaultTheme: "dark",
@@ -152,18 +95,7 @@ const ITCenterDB = (function () {
             createdAt: Date.now(),
             lastUpdated: Date.now()
         },
-        activityLogs: [
-            { id: 1, action: "login", admin: "Admin", target: "", details: "Tizimga kirdi", timestamp: Date.now() - 60000 },
-            { id: 2, action: "payment_add", admin: "Admin", target: "Mohira Qodirova", details: "1,200,000 so'm to'lov qo'shildi", timestamp: Date.now() - 120000 },
-            { id: 3, action: "student_add", admin: "Admin", target: "Sardor Alimov", details: "Yangi talaba qo'shildi", timestamp: Date.now() - 300000 },
-            { id: 4, action: "group_create", admin: "Admin", target: "F-13", details: "Yangi guruh yaratildi", timestamp: Date.now() - 600000 },
-            { id: 5, action: "attendance_mark", admin: "Admin", target: "F-12", details: "Davomat belgilandi (12/14)", timestamp: Date.now() - 900000 },
-            { id: 6, action: "application_enroll", admin: "Admin", target: "Javlon Tursunov", details: "Ariza talabaga o'tkazildi", timestamp: Date.now() - 1800000 },
-            { id: 7, action: "settings_update", admin: "Admin", target: "Portal", details: "Sozlamalar yangilandi", timestamp: Date.now() - 3600000 },
-            { id: 8, action: "student_edit", admin: "Admin", target: "Akmalov Aziz", details: "Talaba ma'lumotlari tahrirlandi", timestamp: Date.now() - 7200000 },
-            { id: 9, action: "payment_add", admin: "Admin", target: "Gulnora Tosheva", details: "500,000 so'm to'lov qo'shildi", timestamp: Date.now() - 14400000 },
-            { id: 10, action: "login", admin: "Admin", target: "", details: "Tizimga kirdi", timestamp: Date.now() - 86400000 }
-        ],
+        activityLogs: [],
         videoLessons: [
             // Frontend (courseId: 1)
             { id: 1, courseId: 1, title: "HTML asoslari - Kirish", youtubeId: "qz0aGYrrlhU", duration: "1:08:57", order: 1 },
