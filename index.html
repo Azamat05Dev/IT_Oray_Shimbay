@@ -1,0 +1,1880 @@
+﻿<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#070B18" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="IT Center - O'zbekistondagi zamonaviy IT ta'lim markazi. Frontend, Python, Mobile, UI/UX dizayn kurslari. Professional mentorlar bilan real loyihalar." />
+    <meta name="keywords" content="IT kurslar, dasturlash, frontend, python, mobile, UI/UX, web development, IT ta'lim, O'zbekiston" />
+    <meta name="author" content="IT Center" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IT Center Portal — Zamonaviy IT Ta'lim" />
+    <meta property="og:description" content="Frontend, Python, Mobile, UI/UX kurslari. Professional mentorlar. Real loyihalar." />
+    <meta property="og:image" content="https://itcenter.uz/og-image.jpg" />
+    <meta property="og:url" content="https://itcenter.uz" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IT Center Portal" />
+    <meta name="twitter:description" content="O'zbekistondagi eng yaxshi IT kurslar" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-weight='bold' font-family='Arial'>it</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233b82f6' rx='20' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-weight='bold' font-family='Arial'>it</text></svg>">
+    
+    <title>IT Center Portal — Talaba va Admin</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="theme-dark">
+    <!-- Loader -->
+    <div class="page-loader" aria-hidden="true">
+      <div class="loader-orb"></div>
+      <div class="loader-text">Yuklanmoqda…</div>
+    </div>
+
+    <!-- Background effects -->
+    <div class="bg">
+      <div class="bg-grid" aria-hidden="true"></div>
+      <div class="bg-glow bg-glow--a" aria-hidden="true"></div>
+      <div class="bg-glow bg-glow--b" aria-hidden="true"></div>
+      <div class="bg-orbits" aria-hidden="true"></div>
+    </div>
+
+    <!-- Header (sticky) -->
+    <header class="header" id="top">
+      <div class="header-inner">
+        <a
+          class="brand"
+          href="#top"
+          id="brand-home"
+          aria-label="Bosh sahifaga qaytish"
+        >
+          <span class="brand-mark" aria-hidden="true">it</span>
+        </a>
+
+        <nav class="nav" id="nav">
+          <a class="nav-link nav-active" href="#portal">Portal</a>
+          <a class="nav-link" href="#tracks">Yo‘nalishlar</a>
+          <a class="nav-link" href="#courses" data-i18n="nav.courses">Kurslar</a>
+          <a class="nav-link" href="#mentors" data-i18n="nav.mentors">Mentorlar</a>
+          <a class="nav-link" href="#schedule" data-i18n="nav.schedule">Jadval</a>
+          <a class="nav-link" href="#enroll" data-i18n="nav.enroll">Yozilish</a>
+          <a class="nav-link" href="#results" data-i18n="nav.results">Natijalar</a>
+          <a class="nav-link" href="#faq">FAQ</a>
+          <a class="nav-link" href="#payment" data-i18n="nav.payment">Manzil & To‘lov</a>
+
+          <!-- animated underline -->
+          <span class="nav-underline" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-actions">
+          <button
+            class="icon-btn"
+            id="theme-toggle"
+            type="button"
+            aria-label="Kun/Tun rejimi"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h0m0 20h0M4 12h0m16 12h0M5.6 5.6h0m12.8 12.8h0M18.4 5.6h0M5.6 18.4h0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            class="icon-btn"
+            id="notify-toggle"
+            type="button"
+            aria-label="Bildirishnomalar"
+          >
+            <span class="dot-pulse" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 20a2 2 0 0 0 4 0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            class="chip-btn"
+            id="lang-toggle"
+            type="button"
+            aria-label="Tilni almashtirish"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 3a9 9 0 1 0 0 18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M3 12h18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M12 3c3 3 3 15 0 18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>UZ</span>
+          </button>
+
+          <button class="btn btn-ghost" id="open-register-modal" type="button" data-open="#auth-modal">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 5v14M5 12h14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            Ro‘yxatdan o‘tish
+          </button>
+
+          <button class="btn btn-primary" id="open-auth-modal" type="button" data-open="#auth-modal">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+            Kirish
+          </button>
+
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            type="button"
+            aria-label="Menyuni ochish"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+      <section class="hero" id="portal">
+        <div class="container hero-grid">
+          <div class="hero-left">
+            <div class="pill" data-animate="fade">
+              <span class="pill-dot" aria-hidden="true"></span>
+              O‘zbekiston bo‘yicha yagona raqamli IT portal
+            </div>
+
+            <h1 class="hero-title" data-animate="up">
+              IT Center — <span class="grad">frontend</span>, backend, dizayn va
+              boshqa yo‘nalishlar uchun zamonaviy o‘quv markazi
+            </h1>
+
+            <p class="hero-sub" data-animate="up">
+              Talabalar shaxsiy kabinet, dars jadvali, materiallar va
+              to‘lovlarni ko‘radi. Admin esa kurslar, guruhlar, mentorlar va
+              o‘quvchilarni boshqaradi — barchasi bitta tizimda.
+            </p>
+
+            <div class="hero-cta" data-animate="up">
+              <a class="btn btn-primary btn-xl" href="#courses"
+                >Kurslarni ko‘rish</a
+              >
+              <a class="btn btn-ghost btn-xl" href="#enroll" data-i18n="enroll.submit">Tez ariza</a>
+            </div>
+
+            <div class="hero-badges" data-animate="up">
+              <div class="badge">
+                <span class="badge-ico" aria-hidden="true">🔥</span> 500+
+                bitiruvchilar
+              </div>
+              <div class="badge">
+                <span class="badge-ico" aria-hidden="true">🎯</span> 90% ishga
+                joylashish ko‘rsatkichi
+              </div>
+              <div class="badge">
+                <span class="badge-ico" aria-hidden="true">💳</span> Online
+                to‘lov imkoniyati
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right" data-animate="fade">
+            <!-- Globe Stage (no external libs; JS animates) -->
+            <div
+              class="globe-stage"
+              id="globe-stage"
+              aria-label="Interaktiv 3D Globe animatsiyasi"
+            >
+              <canvas id="globe-canvas"></canvas>
+
+              <div class="globe-hud" aria-hidden="true">
+                <div class="hud-chip hud-chip--top">
+                  <span class="hud-dot"></span>
+                  <span class="hud-title">Live network globe</span>
+                </div>
+
+                <div class="hud-stack">
+                  <div class="hud-card">
+                    <div class="hud-k">Talabalar</div>
+                    <div class="hud-v">
+                      <span id="hud-students">1200+</span> faol
+                    </div>
+                  </div>
+                  <div class="hud-card">
+                    <div class="hud-k">Guruhlar</div>
+                    <div class="hud-v">
+                      <span id="hud-groups">35</span> aktiv
+                    </div>
+                  </div>
+                  <div class="hud-card">
+                    <div class="hud-k">Mentorlar</div>
+                    <div class="hud-v">
+                      <span id="hud-mentors">12</span> mentor
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hud-tip">
+                  Sichqoncha bilan <b>drag</b> qiling — globeni aylantiring.
+                  Scroll — zoom.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRACKS -->
+      <section class="section" id="tracks">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Yo‘nalishlar</h2>
+            <p>
+              Qaysi yo‘nalish sizga mosligini tanlang — portal sizni kerakli
+              kurslarga ulaydi.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <article class="glass-card" data-animate="up">
+              <div class="card-top">
+                <span class="tag tag-green">Boshlang‘ich</span>
+                <span class="mini-ico" aria-hidden="true">⚡</span>
+              </div>
+              <h3>Zero → Hero Frontend</h3>
+              <p>
+                HTML, CSS, JavaScript, React. Noldan boshlab haqiqiy web-saytlar
+                yaratish.
+              </p>
+              <ul class="mini-list">
+                <li>UI dizayn va responsive layoutlar</li>
+                <li>Git & GitHub, teamwork</li>
+                <li>3+ portfolio loyihalar</li>
+              </ul>
+            </article>
+
+            <article class="glass-card" data-animate="up">
+              <div class="card-top">
+                <span class="tag tag-blue">O‘rta daraja</span>
+                <span class="mini-ico" aria-hidden="true">🧠</span>
+              </div>
+              <h3>Python & Backend</h3>
+              <p>
+                Botlar, API’lar, server tomoni va ma’lumotlar bazasi bilan
+                ishlash.
+              </p>
+              <ul class="mini-list">
+                <li>Flask / FastAPI</li>
+                <li>SQL / NoSQL asoslari</li>
+                <li>Authentication & xavfsizlik</li>
+              </ul>
+            </article>
+
+            <article class="glass-card" data-animate="up">
+              <div class="card-top">
+                <span class="tag tag-amber">Kids IT</span>
+                <span class="mini-ico" aria-hidden="true">🎮</span>
+              </div>
+              <h3>Bolalar uchun IT</h3>
+              <p>
+                Scratch, o‘yinlar, robototexnika va mantiqiy fikrlashni
+                rivojlantirish.
+              </p>
+              <ul class="mini-list">
+                <li>9–14 yosh uchun maxsus dastur</li>
+                <li>Gamification va badge tizimi</li>
+                <li>Ota-onalar uchun hisobotlar</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- COURSES -->
+      <section class="section" id="courses">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Eng mashhur kurslar</h2>
+            <p>
+              Har bir kurs bo‘yicha batafsil ma’lumot va guruh jadvalini portal
+              orqali ko‘rasiz.
+            </p>
+          </div>
+
+          <div class="filters" data-animate="up">
+            <div class="field">
+              <label for="course-filter-level">Daraja bo‘yicha filtrlash</label>
+              <select id="course-filter-level" class="select">
+                <option value="all">Barchasi</option>
+                <option value="beginner">Boshlang‘ich</option>
+                <option value="middle">O‘rta</option>
+                <option value="advanced">Yuqori</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="course-search">Kurs nomi bo‘yicha qidirish</label>
+              <input
+                id="course-search"
+                class="input"
+                type="text"
+                placeholder="Masalan: Frontend, Python..."
+              />
+            </div>
+          </div>
+
+          <div class="courses-grid" data-animate="up">
+            <article
+              class="course-card"
+              data-level="beginner"
+              data-course-name="Web dasturlash (Frontend)"
+            >
+              <h3>Web dasturlash (Frontend)</h3>
+              <div class="meta">Boshlang‘ich → Junior</div>
+              <div class="meta">Davomiyligi: 4 oy</div>
+              <div class="desc">HTML, CSS, JavaScript, React</div>
+              <div class="chips">
+                <span class="chip">3+ portfolio</span>
+                <span class="chip">Live code</span>
+                <span class="chip">Mentor review</span>
+              </div>
+              <button
+                class="btn btn-ghost course-details-btn"
+                data-course="Frontend"
+                type="button"
+              >
+                Batafsil ma’lumot
+              </button>
+            </article>
+
+            <article
+              class="course-card"
+              data-level="beginner"
+              data-course-name="Python dasturlash asoslari"
+            >
+              <h3>Python dasturlash asoslari</h3>
+              <div class="meta">0 dan boshlovchilar uchun</div>
+              <div class="meta">Davomiyligi: 3 oy</div>
+              <div class="desc">Algoritmlar, botlar, backend</div>
+              <div class="chips">
+                <span class="chip">Mini-loyihalar</span>
+                <span class="chip">Amaliyot</span>
+                <span class="chip">Testlar</span>
+              </div>
+              <button
+                class="btn btn-ghost course-details-btn"
+                data-course="Python"
+                type="button"
+              >
+                Batafsil ma’lumot
+              </button>
+            </article>
+
+            <article
+              class="course-card"
+              data-level="beginner"
+              data-course-name="Kids IT (9–14)"
+            >
+              <h3>Bolalar uchun IT (9–14 yosh)</h3>
+              <div class="meta">Kids IT</div>
+              <div class="meta">Davomiyligi: 2 oy</div>
+              <div class="desc">Scratch, o‘yinlar, robototexnika</div>
+              <div class="chips">
+                <span class="chip">Gamification</span>
+                <span class="chip">Badge</span>
+                <span class="chip">Hisobot</span>
+              </div>
+              <button
+                class="btn btn-ghost course-details-btn"
+                data-course="Kids IT"
+                type="button"
+              >
+                Batafsil ma’lumot
+              </button>
+            </article>
+
+            <aside class="smart-card">
+              <h3>Smart tavsiya tizimi</h3>
+              <p>
+                Qaysi kursni tanlashni bilmayapsizmi? Portal ichidagi tavsiya
+                tizimi siz uchun mos yo‘nalishni tanlab beradi.
+              </p>
+              <button
+                class="btn btn-primary"
+                id="open-reco-modal"
+                data-open="#reco-modal"
+                type="button"
+              >
+                Kurs tanlashga yordam ber
+              </button>
+              <div class="smart-points">
+                <div class="pt">
+                  <span class="pt-dot"></span> Boshlang‘ichlar uchun alohida
+                  guruhlar
+                </div>
+                <div class="pt">
+                  <span class="pt-dot"></span> Qayta o‘qish kafolati
+                </div>
+                <div class="pt">
+                  <span class="pt-dot"></span> Onlayn va oflayn variantlar
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- MENTORS (creative 9 mentors) -->
+      <section class="section" id="mentors">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Mentorlar</h2>
+            <p>
+              Har bir mentor — real tajriba va amaliy ko‘nikmalar. 9 ta mentor
+              rotatsiya animatsiyasi bilan.
+            </p>
+          </div>
+
+          <div class="mentor-marquee" data-animate="up">
+            <div class="mentor-track" id="mentor-track">
+              <!-- 9 mentor cards -->
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--pro">PRO</span>
+                  <span class="m-role">Frontend</span>
+                </div>
+                <h3>Azizbek</h3>
+                <p>React, UI systems, performance.</p>
+                <div class="m-tags">
+                  <span>React</span><span>TS</span><span>UI</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.9</span><span>120+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--top">TOP</span>
+                  <span class="m-role">Backend</span>
+                </div>
+                <h3>Jasur</h3>
+                <p>FastAPI, auth, scalable APIs.</p>
+                <div class="m-tags">
+                  <span>FastAPI</span><span>Postgres</span><span>JWT</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.8</span><span>90+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--kids">KIDS</span>
+                  <span class="m-role">Kids IT</span>
+                </div>
+                <h3>Malika</h3>
+                <p>Scratch, logic, gamification.</p>
+                <div class="m-tags">
+                  <span>Scratch</span><span>Logic</span><span>Badges</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.9</span><span>140+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--pro">PRO</span>
+                  <span class="m-role">Design</span>
+                </div>
+                <h3>Sabina</h3>
+                <p>Figma, UX, design systems.</p>
+                <div class="m-tags">
+                  <span>Figma</span><span>UX</span><span>DS</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.8</span><span>70+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--top">TOP</span>
+                  <span class="m-role">Frontend</span>
+                </div>
+                <h3>Bekzod</h3>
+                <p>Animations, CSS, UI polish.</p>
+                <div class="m-tags">
+                  <span>CSS</span><span>Motion</span><span>DX</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.9</span><span>110+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--pro">PRO</span>
+                  <span class="m-role">Python</span>
+                </div>
+                <h3>Umid</h3>
+                <p>Python, data, automation.</p>
+                <div class="m-tags">
+                  <span>Python</span><span>ETL</span><span>APIs</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.7</span><span>60+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--kids">KIDS</span>
+                  <span class="m-role">Robotics</span>
+                </div>
+                <h3>Kamron</h3>
+                <p>Arduino, STEM, robotics.</p>
+                <div class="m-tags">
+                  <span>Arduino</span><span>STEM</span><span>Robotics</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.8</span><span>55+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--top">TOP</span>
+                  <span class="m-role">Mobile</span>
+                </div>
+                <h3>Shahzod</h3>
+                <p>Flutter, product thinking.</p>
+                <div class="m-tags">
+                  <span>Flutter</span><span>Dart</span><span>App</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.8</span><span>80+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+
+              <article class="mentor-card">
+                <div class="m-top">
+                  <span class="m-badge m-badge--pro">PRO</span>
+                  <span class="m-role">QA</span>
+                </div>
+                <h3>Nilufar</h3>
+                <p>Testing, automation, quality.</p>
+                <div class="m-tags">
+                  <span>QA</span><span>Automation</span><span>CI</span>
+                </div>
+                <div class="m-proof">
+                  <span>⭐ 4.7</span><span>45+ review</span>
+                </div>
+                <button class="btn btn-ghost">Profil</button>
+              </article>
+            </div>
+
+            <div class="mentor-controls">
+              <button
+                class="icon-btn"
+                id="mentor-prev"
+                type="button"
+                aria-label="Oldingi"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M14 6l-6 6 6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                class="icon-btn"
+                id="mentor-next"
+                type="button"
+                aria-label="Keyingi"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M10 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCESS -->
+      <section class="section" id="process">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>O‘qish jarayoni qanday?</h2>
+            <p>
+              Oddiy “dars” emas — real loyiha, mentor nazorati va portfelga
+              tayyor yo‘l xaritasi.
+            </p>
+          </div>
+
+          <div class="process-flow" data-animate="up">
+            <div class="step">
+              <div class="step-ico">1</div>
+              <div class="step-body">
+                <h3>Diagnostika</h3>
+                <p>Darajangiz aniqlanadi va mos guruh tavsiya qilinadi.</p>
+                <div class="step-chip">5–10 daqiqa</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-ico">2</div>
+              <div class="step-body">
+                <h3>Foundation</h3>
+                <p>
+                  Asosiy konseptlar: algoritm, mantiq, UI/UX va amaliy mashqlar.
+                </p>
+                <div class="step-chip">1–3 hafta</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-ico">3</div>
+              <div class="step-body">
+                <h3>Practice Lab</h3>
+                <p>Har darsda mini-topshiriqlar va real case’lar.</p>
+                <div class="step-chip">Doimiy</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-ico">4</div>
+              <div class="step-body">
+                <h3>Portfolio Build</h3>
+                <p>3+ loyiha: landing, dashboard, API, mini-app.</p>
+                <div class="step-chip">2–8 hafta</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-ico">5</div>
+              <div class="step-body">
+                <h3>Mentor Review</h3>
+                <p>Code review, refactor, best practices.</p>
+                <div class="step-chip">Har hafta</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-ico">6</div>
+              <div class="step-body">
+                <h3>Interview Prep</h3>
+                <p>CV, GitHub, test tasks va mock interview.</p>
+                <div class="step-chip">Final</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCHEDULE -->
+      <section class="section" id="schedule">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Haftalik dars jadvali</h2>
+            <p>
+              Kurslar bo‘yicha namuna jadval. Real jadval talaba kabinetida
+              ko‘rinadi.
+            </p>
+          </div>
+
+          <div class="schedule-tabs" data-animate="up">
+            <button
+              class="schedule-tab schedule-tab-active"
+              data-schedule="frontend"
+              type="button"
+            >
+              Frontend
+            </button>
+            <button class="schedule-tab" data-schedule="python" type="button">
+              Python
+            </button>
+            <button class="schedule-tab" data-schedule="kids" type="button">
+              Kids
+            </button>
+            <button class="schedule-tab" data-schedule="design" type="button">
+              UI/UX
+            </button>
+            <button class="schedule-tab" data-schedule="mobile" type="button">
+              Mobile
+            </button>
+          </div>
+
+          <div class="schedule-panels" data-animate="up">
+            <!-- Frontend -->
+            <div
+              class="schedule-panel schedule-panel-active"
+              data-schedule-panel="frontend"
+            >
+              <div class="week-grid">
+                <div class="day">
+                  <div class="day-head">Dushanba</div>
+                  <div class="slot s-practice">HTML/CSS Lab</div>
+                  <div class="slot s-lecture">JS Basics</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Seshanba</div>
+                  <div class="slot s-practice">Layout Drill</div>
+                  <div class="slot s-review">Mentor Review</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Chorshanba</div>
+                  <div class="slot s-lecture">DOM & Events</div>
+                  <div class="slot s-practice">Mini Project</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Payshanba</div>
+                  <div class="slot s-lecture">React Intro</div>
+                  <div class="slot s-practice">Components</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Juma</div>
+                  <div class="slot s-practice">Portfolio Build</div>
+                  <div class="slot s-review">Quiz / Test</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Shanba</div>
+                  <div class="slot s-support">Support</div>
+                  <div class="slot s-support">Workshop</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Yakshanba</div>
+                  <div class="slot s-off">Dam olish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Python -->
+            <div class="schedule-panel" data-schedule-panel="python">
+              <div class="week-grid">
+                <div class="day">
+                  <div class="day-head">Dushanba</div>
+                  <div class="slot s-lecture">Python Syntax</div>
+                  <div class="slot s-practice">Tasks</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Seshanba</div>
+                  <div class="slot s-lecture">Data Structures</div>
+                  <div class="slot s-practice">Problems</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Chorshanba</div>
+                  <div class="slot s-lecture">API Basics</div>
+                  <div class="slot s-practice">FastAPI Lab</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Payshanba</div>
+                  <div class="slot s-lecture">DB (SQL)</div>
+                  <div class="slot s-practice">CRUD</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Juma</div>
+                  <div class="slot s-review">Code Review</div>
+                  <div class="slot s-practice">Mini Project</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Shanba</div>
+                  <div class="slot s-support">Support</div>
+                  <div class="slot s-support">Workshop</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Yakshanba</div>
+                  <div class="slot s-off">Dam olish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kids -->
+            <div class="schedule-panel" data-schedule-panel="kids">
+              <div class="week-grid">
+                <div class="day">
+                  <div class="day-head">Dushanba</div>
+                  <div class="slot s-lecture">Scratch</div>
+                  <div class="slot s-practice">Game Logic</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Seshanba</div>
+                  <div class="slot s-practice">Quests</div>
+                  <div class="slot s-review">Badges</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Chorshanba</div>
+                  <div class="slot s-lecture">Robotics</div>
+                  <div class="slot s-practice">STEM</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Payshanba</div>
+                  <div class="slot s-lecture">Math logic</div>
+                  <div class="slot s-practice">Puzzles</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Juma</div>
+                  <div class="slot s-review">Show & Tell</div>
+                  <div class="slot s-practice">Project</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Shanba</div>
+                  <div class="slot s-support">Parent report</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Yakshanba</div>
+                  <div class="slot s-off">Dam olish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Design -->
+            <div class="schedule-panel" data-schedule-panel="design">
+              <div class="week-grid">
+                <div class="day">
+                  <div class="day-head">Dushanba</div>
+                  <div class="slot s-lecture">Figma</div>
+                  <div class="slot s-practice">Layouts</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Seshanba</div>
+                  <div class="slot s-lecture">UX</div>
+                  <div class="slot s-practice">Research</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Chorshanba</div>
+                  <div class="slot s-practice">Design System</div>
+                  <div class="slot s-review">Critique</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Payshanba</div>
+                  <div class="slot s-lecture">Prototype</div>
+                  <div class="slot s-practice">Micro-interactions</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Juma</div>
+                  <div class="slot s-practice">Case Study</div>
+                  <div class="slot s-review">Portfolio</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Shanba</div>
+                  <div class="slot s-support">Support</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Yakshanba</div>
+                  <div class="slot s-off">Dam olish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="schedule-panel" data-schedule-panel="mobile">
+              <div class="week-grid">
+                <div class="day">
+                  <div class="day-head">Dushanba</div>
+                  <div class="slot s-lecture">Flutter</div>
+                  <div class="slot s-practice">Widgets</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Seshanba</div>
+                  <div class="slot s-lecture">State</div>
+                  <div class="slot s-practice">Practice</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Chorshanba</div>
+                  <div class="slot s-lecture">API</div>
+                  <div class="slot s-practice">Integration</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Payshanba</div>
+                  <div class="slot s-practice">UI</div>
+                  <div class="slot s-review">Review</div>
+                </div>
+                <div class="day">
+                  <div class="day-head">Juma</div>
+                  <div class="slot s-practice">Mini App</div>
+                  <div class="slot s-review">Demo</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Shanba</div>
+                  <div class="slot s-support">Support</div>
+                </div>
+                <div class="day day--weekend">
+                  <div class="day-head">Yakshanba</div>
+                  <div class="slot s-off">Dam olish</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ENROLL (redesign) -->
+      <section class="section" id="enroll">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Kursga yozilish (tez ariza)</h2>
+            <p>
+              Portal orqali to‘liq ro‘yxatdan o‘tishga ulgurmasangiz, qisqa
+              arizani to‘ldiring — menejerlar SMS va qo‘ng‘iroq orqali
+              bog‘lanadi.
+            </p>
+          </div>
+
+          <div class="apply-grid" data-animate="up">
+            <aside class="apply-side">
+              <div class="apply-perk">
+                <div class="perk-ico">✅</div>
+                <div>
+                  <div class="perk-title">Birinchi tanishuv darsi — bepul</div>
+                  <div class="perk-sub">
+                    Darajangiz aniqlanadi va mos guruh tanlanadi.
+                  </div>
+                </div>
+              </div>
+              <div class="apply-perk">
+                <div class="perk-ico">🔁</div>
+                <div>
+                  <div class="perk-title">Qayta o‘qish kafolati</div>
+                  <div class="perk-sub">
+                    Orqada qolmaslik uchun support va qayta darslar.
+                  </div>
+                </div>
+              </div>
+              <div class="apply-perk">
+                <div class="perk-ico">🧑‍🏫</div>
+                <div>
+                  <div class="perk-title">Mentor nazorati</div>
+                  <div class="perk-sub">
+                    Har haftalik code review va tavsiyalar.
+                  </div>
+                </div>
+              </div>
+              <div class="apply-side-note">
+                <b>SMS tasdiqlash</b> — ariza yuborilgach, telefoningizga
+                xabarnoma boradi.
+              </div>
+            </aside>
+
+            <form class="apply-form" id="enroll-form">
+              <div class="apply-head">
+                <div class="apply-title">Tez ariza</div>
+                <div class="apply-steps" aria-hidden="true">
+                  <span class="st st-on"></span><span class="st"></span><span class="st"></span>
+                </div>
+              </div>
+
+              <div class="apply-fields">
+                <div class="field">
+                  <label>To‘liq ismingiz</label>
+                  <input
+                    class="input"
+                    name="fullName"
+                    type="text"
+                    placeholder="Ism Familiya"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label>Telefon raqamingiz</label>
+                  <input
+                    class="input"
+                    name="phone"
+                    type="tel"
+                    placeholder="+998 __ ___ __ __"
+                    required
+                  />
+                </div>
+
+                <div class="field">
+                  <label>Qaysi kurs sizni qiziqtiradi?</label>
+                  <select class="select" name="course" required>
+                    <option value="">Tanlang</option>
+                    <option>Frontend</option>
+                    <option>Python</option>
+                    <option>Kids IT</option>
+                    <option>UI/UX</option>
+                    <option>Mobile</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>O‘qish formati</label>
+                  <select class="select" name="format" required>
+                    <option value="">Tanlang</option>
+                    <option>Oflayn</option>
+                    <option>Onlayn</option>
+                    <option>Aralash</option>
+                  </select>
+                </div>
+
+                <div class="field field--full">
+                  <label>Qo‘shimcha izoh (ixtiyoriy)</label>
+                  <textarea
+                    class="textarea"
+                    name="note"
+                    rows="3"
+                    placeholder="Masalan: qaysi vaqtda o‘qish qulay, hozirgi darajangiz va hokazo."
+                  ></textarea>
+                </div>
+
+                <label class="check field--full">
+                  <input type="checkbox" required />
+                  <span
+                    >SMS orqali bog‘lanish va ma’lumotlarimni qayta ishlashga
+                    roziman.</span>
+                </label>
+              </div>
+
+              <div class="apply-actions">
+                <button class="btn btn-primary btn-xl" type="submit">
+                  Arizani yuborish
+                </button>
+                <div
+                  class="form-msg"
+                  id="enroll-message"
+                  aria-live="polite"
+                ></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS -->
+      <section class="section" id="results">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Bitiruvchilar natijalari</h2>
+            <p>
+              Real portfel, real ish, real ko‘nikma. Natijalar — bizning
+              standart.
+            </p>
+          </div>
+
+          <div class="results-grid" data-animate="up">
+            <div class="results-stats">
+              <div class="stat-card">
+                <div class="stat-number" data-counter-target="500">0</div>
+                <div class="stat-label">Bitiruvchilar</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" data-counter-target="90">0</div>
+                <div class="stat-label">Ishga joylashish (%)</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" data-counter-target="120">0</div>
+                <div class="stat-label">Real loyihalar</div>
+              </div>
+
+              <div class="results-note">
+                <b>Portfolio tekshiruvi:</b> mentorlar GitHub va Figma
+                ishlaringizni real kompaniya standartida tekshiradi.
+              </div>
+            </div>
+
+            <div class="alumni-wall">
+              <div class="alumni-head">
+                <h3>Alumni stories</h3>
+                <p>
+                  Qisqa feedbacklar (demo). Real tizimda verifikatsiya qilinadi.
+                </p>
+              </div>
+
+              <div class="alumni-track" id="alumni-track">
+                <div class="alumni-card">
+                  <div class="alumni-top">
+                    <span class="alumni-dot"></span><b>Frontend</b> • 4 oy
+                  </div>
+                  <div class="alumni-text">
+                    “Portfolio bilan ishga kirdim. Mentor review juda kuchli.”
+                  </div>
+                  <div class="alumni-meta">— Dilshod, Junior Dev</div>
+                </div>
+                <div class="alumni-card">
+                  <div class="alumni-top">
+                    <span class="alumni-dot"></span><b>Python</b> • 3 oy
+                  </div>
+                  <div class="alumni-text">
+                    “FastAPI + DB ni amalda qildik. Hamma narsasi tushunarli.”
+                  </div>
+                  <div class="alumni-meta">— Mohira, Backend Intern</div>
+                </div>
+                <div class="alumni-card">
+                  <div class="alumni-top">
+                    <span class="alumni-dot"></span><b>UI/UX</b> • 2 oy
+                  </div>
+                  <div class="alumni-text">
+                    “Case study va DS. Dizaynim haqiqiy productga o‘xshab
+                    qoldi.”
+                  </div>
+                  <div class="alumni-meta">— Sanjar, UI Designer</div>
+                </div>
+                <div class="alumni-card">
+                  <div class="alumni-top">
+                    <span class="alumni-dot"></span><b>Kids IT</b> • 2 oy
+                  </div>
+                  <div class="alumni-text">
+                    “Bolam mantiqiy fikrlashni o‘rgandi, motivatsiya juda
+                    kuchli.”
+                  </div>
+                  <div class="alumni-meta">— Ota-ona fikri</div>
+                </div>
+              </div>
+
+              <div class="alumni-controls">
+                <button class="btn btn-ghost" id="alumni-prev" type="button">
+                  Oldingi
+                </button>
+                <button class="btn btn-ghost" id="alumni-next" type="button">
+                  Keyingi
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ (bottom) -->
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Ko‘p beriladigan savollar</h2>
+            <p>Eng ko‘p so‘raladigan savollar — bir joyda.</p>
+          </div>
+
+          <div class="faq" data-animate="up">
+            <details class="faq-item" open>
+              <summary>Ro‘yxatdan o‘tish qanday tasdiqlanadi?</summary>
+              <div class="faq-body">
+                Tasdiqlash <b>faqat SMS</b> orqali amalga oshiriladi. Telefon
+                raqamingizga kod yuboriladi.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Kurs jadvali qayerda ko‘rinadi?</summary>
+              <div class="faq-body">
+                Real jadval talaba shaxsiy kabinetiga kirgach ko‘rinadi. Bu
+                sahifada namuna jadval berilgan.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Online to‘lov qilsa bo‘ladimi?</summary>
+              <div class="faq-body">
+                Ha. Online to‘lovdan oldin o‘quvchi haqida to‘liq ma’lumot
+                olinadi, so‘ng to‘lov usuli tanlanadi.
+              </div>
+            </details>
+            <details class="faq-item">
+              <summary>Admin panelga kirish qayerdan?</summary>
+              <div class="faq-body">
+                Admin panelga kirish faqat “Kirish” oynasi orqali — maxsus
+                login/parol bilan. Alohida tugma yo‘q.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- TO'LOV USULLARI - Premium Payment Section -->
+      <section class="payment-section section" id="payment">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2 data-i18n="payment.title">To'lov usullari</h2>
+            <p>
+              Online to'lovni qulay va xavfsiz amalga oshiring. Click, Payme, Uzcard va Humo orqali to'lash mumkin.
+            </p>
+          </div>
+
+          <div class="payment-wrapper" data-animate="up">
+            <!-- Payment Methods Grid -->
+            <div class="payment-methods">
+              <div class="payment-method-card" data-method="click">
+                <div class="payment-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="5" width="20" height="14" rx="3"/>
+                    <path d="M2 10h20"/>
+                    <path d="M6 15h4"/>
+                  </svg>
+                </div>
+                <div class="payment-method-name">Click</div>
+                <div class="payment-method-desc">Tez va qulay</div>
+                <div class="payment-method-glow"></div>
+              </div>
+
+              <div class="payment-method-card" data-method="payme">
+                <div class="payment-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="5" width="20" height="14" rx="3"/>
+                    <path d="M2 10h20"/>
+                    <circle cx="18" cy="15" r="2"/>
+                  </svg>
+                </div>
+                <div class="payment-method-name">Payme</div>
+                <div class="payment-method-desc">Ishonchli xizmat</div>
+                <div class="payment-method-glow"></div>
+              </div>
+
+              <div class="payment-method-card" data-method="uzcard">
+                <div class="payment-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="5" width="20" height="14" rx="3"/>
+                    <path d="M6 15h2"/>
+                    <path d="M12 15h6"/>
+                  </svg>
+                </div>
+                <div class="payment-method-name">Uzcard</div>
+                <div class="payment-method-desc">Milliy karta</div>
+                <div class="payment-method-glow"></div>
+              </div>
+
+              <div class="payment-method-card" data-method="humo">
+                <div class="payment-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="5" width="20" height="14" rx="3"/>
+                    <path d="M2 10h20"/>
+                    <path d="M6 15h.01"/>
+                    <path d="M10 15h.01"/>
+                  </svg>
+                </div>
+                <div class="payment-method-name">Humo</div>
+                <div class="payment-method-desc">O'zbek kartasi</div>
+                <div class="payment-method-glow"></div>
+              </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div class="payment-form-container">
+              <div class="payment-form-header">
+                <div class="payment-form-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                  </svg>
+                </div>
+                <h3>Online to'lov</h3>
+                <p>To'lov ma'lumotlarini kiriting</p>
+              </div>
+
+              <form class="payment-form" id="payment-form">
+                <div class="payment-form-grid">
+                  <div class="field">
+                    <label for="pay-name">O'quvchi F.I.Sh</label>
+                    <input
+                      class="input"
+                      id="pay-name"
+                      name="studentName"
+                      required
+                      placeholder="To'liq ism-familiya"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="pay-phone">Telefon raqam</label>
+                    <input
+                      class="input"
+                      id="pay-phone"
+                      name="studentPhone"
+                      type="tel"
+                      required
+                      placeholder="+998 __ ___ __ __"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="pay-course">Kurs</label>
+                    <select class="select" id="pay-course" name="course" required>
+                      <option value="">Kursni tanlang</option>
+                      <option value="frontend">Frontend dasturlash</option>
+                      <option value="python">Python dasturlash</option>
+                      <option value="kids">Bolalar uchun IT</option>
+                      <option value="ux">UI/UX Dizayn</option>
+                      <option value="mobile">Mobile dasturlash</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="pay-amount">To'lov miqdori (so'm)</label>
+                    <input
+                      class="input"
+                      id="pay-amount"
+                      name="amount"
+                      type="number"
+                      required
+                      placeholder="1 000 000"
+                      min="100000"
+                    />
+                  </div>
+                  <div class="field field--full">
+                    <label for="pay-method">To'lov usuli</label>
+                    <select class="select" id="pay-method" name="payMethod" required>
+                      <option value="">Usulni tanlang</option>
+                      <option value="click">Click</option>
+                      <option value="payme">Payme</option>
+                      <option value="uzcard">Uzcard</option>
+                      <option value="humo">Humo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary btn-xl payment-submit" type="submit">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                  To'lovga o'tish
+                </button>
+                <div class="form-msg" id="payment-message" aria-live="polite"></div>
+                <div class="payment-note">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4M12 8h.01"/>
+                  </svg>
+                  <span>Hozircha demo rejimda. Real to'lov integratsiyasi tez orada qo'shiladi.</span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Security badges -->
+          <div class="payment-security" data-animate="up">
+            <div class="security-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+              <span>SSL himoyalangan</span>
+            </div>
+            <div class="security-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Xavfsiz to'lov</span>
+            </div>
+            <div class="security-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>Tez tasdiqlash</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- BRANCHES - Premium Section -->
+      <section class="branches-section" id="branches">
+        <div class="container">
+          <div class="branches-header" data-animate="up">
+            <h2 data-i18n="branches.title">Bizning filiallar</h2>
+            <p>Sizga qulay joylashgan filialimizga tashrif buyuring yoki onlayn bog'laning</p>
+          </div>
+
+          <div class="branches-grid" data-animate="up">
+            <!-- Markaz filial -->
+            <div class="branch-item">
+              <span class="branch-status branch-status--open">Ochiq</span>
+              <div class="branch-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <h3 class="branch-name">Markaz filial</h3>
+              <p class="branch-address">IT Park binosi, 2-qavat, 205-xona. Shahar markazi.</p>
+              <div class="branch-info">
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>09:00 – 20:00 (Dushanba – Shanba)</span>
+                </div>
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <span>+998 90 123 45 67</span>
+                </div>
+              </div>
+              <div class="branch-actions">
+                <a href="tel:+998901234567" class="branch-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  Qo'ng'iroq
+                </a>
+                <a href="https://yandex.uz/maps" target="_blank" class="branch-btn branch-btn--primary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                  Xaritada
+                </a>
+              </div>
+            </div>
+
+            <!-- Shimol filial -->
+            <div class="branch-item">
+              <span class="branch-status branch-status--open">Ochiq</span>
+              <div class="branch-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <h3 class="branch-name">Shimol filial</h3>
+              <p class="branch-address">Savdo Markazi yonida, asosiy ko'cha, 45-uy.</p>
+              <div class="branch-info">
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>10:00 – 19:00 (Dushanba – Juma)</span>
+                </div>
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <span>+998 90 234 56 78</span>
+                </div>
+              </div>
+              <div class="branch-actions">
+                <a href="tel:+998902345678" class="branch-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  Qo'ng'iroq
+                </a>
+                <a href="https://yandex.uz/maps" target="_blank" class="branch-btn branch-btn--primary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                  Xaritada
+                </a>
+              </div>
+            </div>
+
+            <!-- Janub filial -->
+            <div class="branch-item">
+              <span class="branch-status branch-status--closed">Yopiq</span>
+              <div class="branch-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <h3 class="branch-name">Janub filial</h3>
+              <p class="branch-address">Stadion yonida, sport kompleksi binosi, 1-qavat.</p>
+              <div class="branch-info">
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>09:00 – 18:00 (Dushanba – Shanba)</span>
+                </div>
+                <div class="branch-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <span>+998 90 345 67 89</span>
+                </div>
+              </div>
+              <div class="branch-actions">
+                <a href="tel:+998903456789" class="branch-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  Qo'ng'iroq
+                </a>
+                <a href="https://yandex.uz/maps" target="_blank" class="branch-btn branch-btn--primary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                  Xaritada
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="branches-cta" data-animate="up">
+            <p>Barcha filiallarda bepul sinov darsi mavjud!</p>
+            <a href="register.html" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/>
+                <line x1="22" y1="11" x2="16" y2="11"/>
+              </svg>
+              Ro'yxatdan o'tish
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT & COMPLAINTS -->
+      <section class="section section--alt" id="contact">
+        <div class="container">
+          <div class="section-head" data-animate="up">
+            <h2>Bog‘lanish va shikoyatlar</h2>
+            <p>
+              Savollaringiz, takliflaringiz yoki shikoyatlaringiz bormi? Bizga yozing, tez orada javob beramiz.
+            </p>
+          </div>
+
+          <div class="contact-grid" data-animate="up">
+            <div class="contact-info">
+              <div class="contact-card">
+                <h3>📍 Manzil</h3>
+                <p>Toshkent sh., Amir Temur ko‘chasi 108</p>
+              </div>
+              <div class="contact-card">
+                <h3>📞 Telefon</h3>
+                <p>+998 71 123 45 67</p>
+              </div>
+              <div class="contact-card">
+                <h3>✉️ Email</h3>
+                <p>info@itcenter.uz</p>
+              </div>
+            </div>
+
+            <form class="glass-form" id="contact-form">
+              <div class="grid-2">
+                <div class="field">
+                  <label>Ismingiz</label>
+                  <input class="input" name="fullName" required placeholder="Ism Familiya" />
+                </div>
+                <div class="field">
+                  <label>Telefon</label>
+                  <input class="input" name="phone" required placeholder="+998" />
+                </div>
+                <div class="field field--full">
+                  <label>Mavzu</label>
+                  <select class="select" name="subject" required>
+                    <option value="question">Saval (Savol-javob)</option>
+                    <option value="complaint">Shikoyat (Jalova)</option>
+                    <option value="suggestion">Taklif</option>
+                    <option value="other">Boshqa</option>
+                  </select>
+                </div>
+                <div class="field field--full">
+                  <label>Xabar matni</label>
+                  <textarea class="textarea" name="message" rows="4" required placeholder="Xabaringizni yozing..."></textarea>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-xl" type="submit">Xabarni yuborish</button>
+              <div class="form-msg" id="contact-msg"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container footer-inner">
+          <div class="footer-left">
+            <div class="footer-brand">
+              <span class="brand-mark small">it</span> IT Center Portal
+            </div>
+            <div class="footer-sub">
+              Talaba va adminlar uchun yagona boshqaruv ekotizimi.
+            </div>
+          </div>
+          <div class="footer-right">
+            <div class="footer-links">
+              <a href="#portal">Portal</a>
+              <a href="#courses">Kurslar</a>
+              <a href="#mentors">Mentorlar</a>
+              <a href="#contact">Aloqa</a>
+            </div>
+            <div class="footer-copy">
+              © <span id="year">2025</span> IT Center
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="auth-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close></div>
+      <div class="auth-modal-card">
+        <button class="auth-close" type="button" data-close aria-label="Yopish">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <div class="auth-brand">
+          <div class="auth-logo">
+            <span class="auth-logo-text">it</span>
+            <div class="auth-logo-glow"></div>
+          </div>
+          <h2 class="auth-title">IT Center Portal</h2>
+          <p class="auth-subtitle">Talaba kabineti yoki admin boshqaruvi</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button
+            class="auth-tab auth-tab-active"
+            data-auth-tab="login"
+            type="button"
+          >
+            Kirish
+          </button>
+          <button class="auth-tab" data-auth-tab="register" type="button">
+            Ro‘yxatdan o‘tish
+          </button>
+        </div>
+
+        <div class="auth-panels">
+          <!-- LOGIN -->
+          <div class="auth-panel auth-panel-active" data-auth-panel="login">
+            <form id="portal-login-form">
+              <div class="field">
+                <label>Telefon yoki email</label>
+                <input
+                  class="input"
+                  id="login-identifier"
+                  required
+                  placeholder="+998… yoki email"
+                />
+              </div>
+              <div class="field">
+                <label>Parol</label>
+                <input
+                  class="input"
+                  id="login-password"
+                  type="password"
+                  required
+                  placeholder="Parolingiz"
+                />
+              </div>
+              <button class="btn btn-primary btn-xl" type="submit">
+                Portalga kirish
+              </button>
+              <div
+                class="form-msg"
+                id="portal-login-message"
+                aria-live="polite"
+              ></div>
+              <div class="hint">
+                Admin uchun: login/parol kiritilganda avtomatik admin panelga
+                yo‘naltiriladi.
+              </div>
+            </form>
+          </div>
+
+          <!-- REGISTER -->
+          <div class="auth-panel" data-auth-panel="register">
+            <form id="portal-register-form">
+              <div class="grid-2">
+                <div class="field">
+                  <label>To‘liq ism-familiya</label>
+                  <input class="input" required placeholder="Ism Familiya" />
+                </div>
+                <div class="field">
+                  <label>Telefon (SMS tasdiqlash)</label>
+                  <input
+                    class="input"
+                    required
+                    placeholder="+998 __ ___ __ __"
+                  />
+                </div>
+                <div class="field">
+                  <label>Tug‘ilgan sana</label>
+                  <input class="input" type="date" required />
+                </div>
+                <div class="field">
+                  <label>Yo‘nalish</label>
+                  <select class="select" required>
+                    <option value="">Tanlang</option>
+                    <option>Frontend</option>
+                    <option>Python</option>
+                    <option>Kids IT</option>
+                    <option>UI/UX</option>
+                    <option>Mobile</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Parol</label>
+                  <input
+                    class="input"
+                    id="reg-password"
+                    type="password"
+                    required
+                    placeholder="Parol yarating"
+                  />
+                </div>
+                <div class="field">
+                  <label>Parolni tasdiqlang</label>
+                  <input
+                    class="input"
+                    id="reg-password-confirm"
+                    type="password"
+                    required
+                    placeholder="Parolni qayta kiriting"
+                  />
+                </div>
+                <div class="field field--full">
+                  <label>Manzil (ixtiyoriy)</label>
+                  <input class="input" placeholder="Shahar / tuman" />
+                </div>
+              </div>
+
+              <label class="check">
+                <input type="checkbox" required />
+                <span
+                  >SMS orqali tasdiqlashga va ma’lumotlarimni qayta ishlashga
+                  roziman.</span>
+              </label>
+
+              <button class="btn btn-primary btn-xl" type="submit">
+                Ro‘yxatdan o‘tish
+              </button>
+              <div
+                class="form-msg"
+                id="portal-register-message"
+                aria-live="polite"
+              ></div>
+            </form>
+          </div>
+        </div>
+
+        <div class="auth-footer">
+          <span>© 2025 IT Center</span>
+          <span class="auth-footer-dot">•</span>
+          <a href="#">Yordam</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommendation Modal -->
+    <div class="modal" id="reco-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card">
+        <button
+          class="modal-close"
+          type="button"
+          data-close
+          aria-label="Yopish"
+        >
+          ✕
+        </button>
+
+        <div class="modal-head">
+          <h2>Kurs tavsiya tizimi</h2>
+          <p>2 ta savol — mos kursni tavsiya qilamiz.</p>
+        </div>
+
+        <form id="reco-form" class="reco-form">
+          <div class="grid-2">
+            <div class="field">
+              <label>Daraja</label>
+              <select class="select" name="level" required>
+                <option value="zero">Noldan</option>
+                <option value="beginner">Boshlang‘ich</option>
+                <option value="middle">O‘rta</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Maqsad</label>
+              <select class="select" name="goal" required>
+                <option value="start">Boshlash</option>
+                <option value="job">Ish topish</option>
+                <option value="upgrade">Ko‘nikmani kuchaytirish</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-xl" type="submit">
+            Tavsiya olish
+          </button>
+          <div class="form-msg" id="reco-result" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Shared Database Layer -->
+    <script src="db.js"></script>
+    <script src="translations.js"></script>
+    <script src="main.js"></script>
+
+    <!-- Fallback: main.js handles the animation fully -->
+  </body>
+</html>
